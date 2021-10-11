@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="textViewFontStyle" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/customfont</item>
+        <item name="android:letterSpacing">-0.07</item>
+    </style>
+
+</resources>

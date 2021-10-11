@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_small">5dp</dimen>
+    <dimen name="padding_bottom">15dp</dimen>
+
+    <dimen name="margin_layout">20dp</dimen>
+    <dimen name="margin_item">10dp</dimen>
+    <dimen name="margin_title">15dp</dimen>
+
+    <dimen name="text_title">17sp</dimen>
+    <dimen name="text_big">13sp</dimen>
+    <dimen name="text_normal">11sp</dimen>
+    <dimen name="text_small">9sp</dimen>
+
+    <dimen name="layout_height">150dp</dimen>
+</resources>

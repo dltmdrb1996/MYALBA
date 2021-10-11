@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/night_onPrimary</color>
+    <color name="colorOnPrimary">@color/night_onPrimary</color>
+    <color name="colorSecondary">@color/grey_600</color>
+    <color name="colorOnSecondary">@color/grey_200</color>
+    <color name="colorDivider">@color/grey_400</color>
+    <color name="colorScrim">#99323232</color>
+    <color name="colorBg">#101010</color>
+    <color name="colorText">@color/white</color>
+
+</resources>

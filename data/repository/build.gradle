@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlinx-serialization'
+
+}
+
+apply from: rootProject.file("android.gradle")
+
+dependencies {
+
+    implementation project(':model')
+    implementation project(":data:remote")
+    implementation project(":data:local")
+    implementation(AndroidX.CORE_KTX)
+
+    implementation(Kotlin.KOTLIN_STDLIB)
+    implementation(Kotlin.COROUTINES_CORE)
+    implementation(Kotlin.COROUTINES_ANDROID)
+
+    implementation(Android_Libraries.HILT_ANDROID)
+    kapt          (Android_Libraries.HILT_ANDROID_COMPILER)
+
+    testImplementation  'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation(Kotlin.KOTLIN_STDLIB)
+    implementation(Kotlin.SERIALIZATION)
+
+    implementation(Network.RETROFIT_CONVERTER_GSON)
+    implementation(Network.RETROFIT)
+    implementation(Network.SERIALIZATION)
+    implementation(Network.OKHTTP_LOGGING_INTERCEPTOR)
+}

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">내알빠</string>
+    <string name="kakao_appKey">b5265de78ded5dc60fd431110b04fdda</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

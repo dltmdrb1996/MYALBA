@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="MYALBA.app" target="11" />
+      <module name="MYALBA.buildSrc" target="11" />
+      <module name="MYALBA.core" target="11" />
+      <module name="MYALBA.data.local" target="11" />
+      <module name="MYALBA.data.remote" target="11" />
+      <module name="MYALBA.data.repository" target="11" />
+      <module name="MYALBA.feature.asset" target="11" />
+      <module name="MYALBA.feature.chat" target="11" />
+      <module name="MYALBA.feature.community" target="11" />
+      <module name="MYALBA.feature.home" target="11" />
+      <module name="MYALBA.feature.login" target="11" />
+      <module name="MYALBA.feature.member" target="11" />
+      <module name="MYALBA.feature.schedule" target="11" />
+      <module name="MYALBA.feature.setting" target="11" />
+      <module name="MYALBA.feature.splash" target="11" />
+      <module name="MYALBA.navigation" target="11" />
+      <module name="MYALBA.test" target="11" />
+      <module name="MyJob.buildSrc" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

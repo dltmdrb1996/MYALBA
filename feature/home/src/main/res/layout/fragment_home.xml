@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="adapter"
+            type="com.bottotop.home.TodayWorkAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.bottotop.home.HomeViewModel" />
+    </data>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_Scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_marginLeft="@dimen/margin_layout"
+                android:layout_marginTop="@dimen/margin_layout"
+                android:layout_marginRight="@dimen/margin_layout"
+                android:background="@drawable/radius_bg_20dp"
+                app:layout_constraintBottom_toTopOf="@id/home_container1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_weight="0.2">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_title"
+                    android:text="공지사항"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_container1_1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/layout_height"
+                android:layout_marginLeft="@dimen/margin_layout"
+                android:layout_marginTop="@dimen/margin_layout"
+                android:layout_marginRight="@dimen/margin_layout"
+                android:layout_marginBottom="@dimen/margin_layout"
+                android:background="@drawable/radius_bg_20dp"
+                app:layout_constraintBottom_toTopOf="@id/home_container2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/home_container1"
+                app:layout_constraintTop_toBottomOf="@id/home_container"
+                app:layout_constraintVertical_weight="0.3">
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_container1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/layout_height"
+                android:layout_marginLeft="@dimen/margin_layout"
+                android:layout_marginTop="@dimen/margin_layout"
+                android:background="@drawable/radius_bg_20dp"
+                app:layout_constraintBottom_toTopOf="@id/home_container2"
+                app:layout_constraintEnd_toStartOf="@+id/home_container1_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_container"
+                app:layout_constraintVertical_weight="0.3">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/home_Today_Tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_title"
+                    android:layout_marginTop="20dp"
+                    android:text="근무자"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_margin="@dimen/margin_item"
+                    android:adapter="@{adapter}"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="always"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_Today_Tv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_container2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_marginLeft="@dimen/margin_layout"
+                android:layout_marginTop="@dimen/margin_layout"
+                android:layout_marginRight="@dimen/margin_layout"
+                android:background="@drawable/radius_bg_20dp"
+                app:layout_constraintBottom_toTopOf="@id/home_container3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_container1"
+                app:layout_constraintVertical_weight="0.25">
+
+                <Button
+                    android:id="@+id/btn_kakao_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="카카오 로그아웃" />
+
+                <Button
+                    android:id="@+id/btn_naver_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="네이버로그아웃"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_container3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:layout_marginLeft="@dimen/margin_layout"
+                android:layout_marginTop="@dimen/margin_layout"
+                android:layout_marginRight="@dimen/margin_layout"
+                android:background="@drawable/radius_bg_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_container2"
+                app:layout_constraintVertical_weight="0.25">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

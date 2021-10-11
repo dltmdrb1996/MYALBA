@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+apply from: rootProject.file("android.gradle")
+
+dependencies {
+    implementation project(':model')
+    implementation project(":data:remote")
+    implementation project(":data:local")
+    implementation project(":data:repository")
+    implementation project(":feature:home")
+    implementation project(":feature:login")
+    implementation project(":feature:splash")
+    implementation project(":feature:asset")
+    implementation project(":feature:community")
+    implementation project(":feature:member")
+    implementation project(":feature:schedule")
+    implementation project(":feature:setting")
+    implementation project(":feature:splash")
+    implementation project(":core")
+
+    implementation(AndroidX.APP_COMPAT)
+    implementation(AndroidX.CORE_KTX)
+    implementation(AndroidX.MATERIAL)
+    implementation(AndroidX.CONSTRAINT_LAYOUT)
+    implementation(Kotlin.KOTLIN_STDLIB)
+
+    implementation(Android_Libraries.HILT_ANDROID)
+    kapt          (Android_Libraries.HILT_ANDROID_COMPILER)
+
+    implementation(Navigation.NAVIGATION_FRAGMENT)
+    implementation(Navigation.NAVIGATION_UI)
+    implementation(Navigation.NAVIGATION_DYNAMIC)
+
+    implementation(Android_Libraries.LIFECYCLE_LIVEDATA_KTX)
+    implementation(Android_Libraries.LIFECYCLE_VIEWMODEL_KTX)
+
+    implementation(View.VIEWPAGER)
+
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation "com.kakao.sdk:v2-user:2.5.2"
+}

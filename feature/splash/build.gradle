@@ -1,0 +1,17 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+apply from: rootProject.file("feature/feature.gradle")
+
+
+dependencies {
+
+    implementation "com.kakao.sdk:v2-user:2.5.2"
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+
+}

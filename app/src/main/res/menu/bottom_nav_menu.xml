@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/member_flow"
+        android:icon="@drawable/ic_baseline_supervisor_account_24"
+        android:title="맴버" />
+
+    <item
+        android:id="@+id/community_flow"
+        android:icon="@drawable/ic_baseline_add_comment_24"
+        android:title="커뮤" />
+
+    <item
+        android:id="@+id/home_flow"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="메인" />
+
+    <item
+        android:id="@+id/schedule_flow"
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="일정" />
+
+    <item
+        android:id="@+id/asset_flow"
+        android:icon="@drawable/ic_baseline_monetization_on_24"
+        android:title="자산" />
+</menu>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="home_flow" type="id" />
+    <item name="splash_flow" type="id" />
+    <item name="login_flow" type="id"/>
+    <item name="asset_flow" type="id"/>
+    <item name="chat_flow" type="id"/>
+    <item name="community_flow" type="id"/>
+    <item name="member_flow" type="id"/>
+    <item name="schedule_flow" type="id"/>
+    <item name="setting_flow" type="id"/>
+    <item name="main_flow" type="id"/>
+</resources>

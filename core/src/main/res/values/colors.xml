@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/white</color>
+    <color name="colorOnPrimary">@color/black</color>
+    <color name="colorSecondary">@color/grey_400</color>
+    <color name="colorOnSecondary">@color/grey_700</color>
+    <color name="colorDivider">@color/grey_600</color>
+    <color name="colorScrim">#99323232</color>
+    <color name="colorBg">@color/bg_color</color>
+    <color name="colorText">@color/black</color>
+</resources>

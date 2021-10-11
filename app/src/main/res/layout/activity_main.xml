@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        >
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_above="@id/nav_view_fragment"
+            >
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/Toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBg"
+                app:elevation="0dp">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/app_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:visibility="gone"
+                    app:layout_scrollFlags="scroll"
+                    app:title="내알빠" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                app:navGraph="@navigation/main_nav_graph" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_view_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:visibility="gone"
+            android:background="@drawable/bottom_border"
+            app:itemIconTint="@drawable/menu_selctor"
+            app:itemTextColor="@drawable/menu_selctor"
+            app:menu="@menu/bottom_nav_menu" />
+
+
+        <com.bottotop.core.ContentLoadingProgressBar
+            android:id="@+id/loadingView"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_loading_bg"
+            android:elevation="12dp"
+            android:indeterminateDuration="500"
+            android:indeterminateOnly="true"
+            android:layout_centerHorizontal="true"
+            android:translationY="-60dp"
+            android:visibility="gone"
+            tools:translationY="50dp"
+            tools:visibility="visible"/>
+        
+    </RelativeLayout>
+
+</layout>

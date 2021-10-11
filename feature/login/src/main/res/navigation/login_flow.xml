@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/login_flow"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:label="login"
+        android:name="com.bottotop.login.LoginFragment"
+        tools:layout="@layout/fragment_login">
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="example://login/exampleArgs?msg={msg}" />
+
+    </fragment>
+
+<!--    <activity-->
+<!--        android:id="@+id/loginActivity"-->
+<!--        android:name="com.bottotop.login.LoginActivity"-->
+<!--        tools:layout="@layout/activity_login">-->
+
+<!--        <deepLink-->
+<!--        android:id="@+id/deepLink"-->
+<!--        app:uri="example://login/exampleArgs?msg={msg}" />-->
+<!--    </activity>-->
+
+</navigation>

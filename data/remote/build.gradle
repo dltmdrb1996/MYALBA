@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlinx-serialization'
+}
+
+apply from: rootProject.file("android.gradle")
+
+dependencies {
+    implementation project(':core')
+    implementation project(':model')
+
+    implementation(AndroidX.CORE_KTX)
+    implementation(AndroidX.APP_COMPAT)
+
+    implementation(Kotlin.KOTLIN_STDLIB)
+    implementation(Kotlin.COROUTINES_CORE)
+    implementation(Kotlin.COROUTINES_ANDROID)
+    implementation(Kotlin.SERIALIZATION)
+
+    implementation(Android_Libraries.HILT_ANDROID)
+    kapt          (Android_Libraries.HILT_ANDROID_COMPILER)
+
+    implementation(Network.RETROFIT_CONVERTER_GSON)
+    implementation(Network.RETROFIT)
+    implementation(Network.SERIALIZATION)
+    implementation(Network.OKHTTP_LOGGING_INTERCEPTOR)
+
+    testImplementation  'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation "com.kakao.sdk:v2-user:2.5.2"
+}

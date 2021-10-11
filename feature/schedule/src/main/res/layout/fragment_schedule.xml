@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.bottotop.schedule.ScheduleViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.bottotop.schedule.Schedule7DayAdapter" />
+    </data>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/schedule_Scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/schedule_Month_Select"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_pager1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/schedule_Previous_Tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="8월"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/schedule_Current_Tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9월"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/schedule_Previous_Tv"
+                        app:layout_constraintRight_toLeftOf="@id/schedule_Next_Tv"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/schedule_Next_Tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="10월"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/schedule_Current_Tv"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/schedule_Back_Btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_baseline_navigate_before_24"
+                        app:layout_constraintRight_toLeftOf="@id/schedule_Next_Btn" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/schedule_Next_Btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_baseline_navigate_next_24"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_pager1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1주차"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/pager1_Host"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/schedule_Month_Select" />
+
+                <com.bottotop.schedule.NestedScrollableHost
+                    android:id="@+id/pager1_Host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/tv_pager2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_pager1">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/view_pager1"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_centerInParent="true"
+                        android:clipToPadding="false"
+                        android:foregroundGravity="center"
+                        android:nestedScrollingEnabled="true"
+                        android:overScrollMode="never"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </com.bottotop.schedule.NestedScrollableHost>
+
+                <TextView
+                    android:id="@+id/tv_pager2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2주차"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/pager2_Host"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pager1_Host" />
+
+                <com.bottotop.schedule.NestedScrollableHost
+                    android:id="@+id/pager2_Host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/tv_pager3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_pager2">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/view_pager2"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_centerInParent="true"
+                        android:clipToPadding="false"
+                        android:foregroundGravity="center"
+                        android:overScrollMode="never"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </com.bottotop.schedule.NestedScrollableHost>
+
+                <TextView
+                    android:id="@+id/tv_pager3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3주차"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/pager3_Host"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pager2_Host" />
+
+                <com.bottotop.schedule.NestedScrollableHost
+                    android:id="@+id/pager3_Host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/tv_pager4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_pager3">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/view_pager3"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_centerInParent="true"
+                        android:clipToPadding="false"
+                        android:foregroundGravity="center"
+                        android:overScrollMode="never"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </com.bottotop.schedule.NestedScrollableHost>
+
+                <TextView
+                    android:id="@+id/tv_pager4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4주차"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/pager4_Host"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pager3_Host" />
+
+                <com.bottotop.schedule.NestedScrollableHost
+                    android:id="@+id/pager4_Host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/tv_pager5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_pager4">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/view_pager4"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_centerInParent="true"
+                        android:clipToPadding="false"
+                        android:foregroundGravity="center"
+                        android:overScrollMode="never"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </com.bottotop.schedule.NestedScrollableHost>
+
+
+                <TextView
+                    android:id="@+id/tv_pager5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5주차"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/pager5_Host"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pager4_Host" />
+
+                <com.bottotop.schedule.NestedScrollableHost
+                    android:id="@+id/pager5_Host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_pager5">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/view_pager5"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_centerInParent="true"
+                        android:clipToPadding="false"
+                        android:foregroundGravity="center"
+                        android:overScrollMode="never"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </com.bottotop.schedule.NestedScrollableHost>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+</layout>

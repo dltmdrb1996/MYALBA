@@ -1,0 +1,32 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+apply from: rootProject.file("android.gradle")
+
+dependencies {
+
+    implementation(AndroidX.APP_COMPAT)
+    implementation(AndroidX.CORE_KTX)
+    implementation(AndroidX.MATERIAL)
+    implementation(Kotlin.KOTLIN_STDLIB)
+
+    implementation(Android_Libraries.HILT_ANDROID)
+    kapt          (Android_Libraries.HILT_ANDROID_COMPILER)
+    implementation(Android_Libraries.LIFECYCLE_LIVEDATA_KTX)
+    implementation(Libraries.GLIDE)
+    annotationProcessor(Libraries.GLIDE_COMPILER)
+    implementation(Libraries.LOTTIE)
+
+    implementation(Navigation.NAVIGATION_FRAGMENT)
+    implementation(Navigation.NAVIGATION_UI)
+    implementation(Navigation.NAVIGATION_DYNAMIC)
+
+    implementation(View.insetter)
+    implementation(Android_Libraries.GSON)
+
+}

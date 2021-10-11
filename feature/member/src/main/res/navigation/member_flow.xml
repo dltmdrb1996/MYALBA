@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/member_flow"
+    app:startDestination="@id/memberFragment">
+
+    <fragment
+        android:id="@+id/memberFragment"
+        android:label="member"
+        android:name="com.bottotop.member.MemberFragment"
+        tools:layout="@layout/fragment_member">
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="example://member/exampleArgs?msg={msg}" />
+
+    </fragment>
+
+</navigation>

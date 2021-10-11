@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_right3"
+        android:title="검색"
+        android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_right2"
+        android:title="공유"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_right1"
+        android:title="공유"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        app:showAsAction="ifRoom" />
+</menu>

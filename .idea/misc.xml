@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/drawable/ic_baseline_add_comment_24.xml" value="0.5682291666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.5682291666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/drawable/ic_baseline_supervisor_account_24.xml" value="0.5682291666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/drawable/ic_launcher_background.xml" value="0.5682291666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/activity_first.xml" value="0.5" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/activity_login.xml" value="0.2684903748733536" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/activity_main.xml" value="0.26646403242147926" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/activity_splash.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/fragment_home.xml" value="0.2684903748733536" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/fragment_main.xml" value="0.3134057971014493" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/fragment_schedule.xml" value="0.5479166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/layout/layout.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/menu/bottom_nav_menu.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.5682291666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.5388888888888889" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/bottom_border.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_baseline_add_comment_24.xml" value="0.4962962962962963" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_baseline_cruelty_free_24.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_baseline_home_24.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_baseline_monetization_on_24.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_baseline_supervisor_account_24.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_menu_today_grey.xml" value="0.45" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/ic_stockr.xml" value="0.5092592592592593" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/loading_bg.xml" value="0.12" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/menu_selctor.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/radius_bg.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/radius_bg_10dp.xml" value="0.5127681307456589" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/radius_bg_20dp.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/drawable/radius_bg_30dp.xml" value="0.5229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/font-v26/font.xml" value="0.5306435137895812" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/font/font.xml" value="0.5306435137895812" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/layout/a.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/layout/clean_ui_simple_toolbar_clean_ui.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/layout/custom_progress_fragment.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/core/src/main/res/menu/schedule_menu.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/asset/src/main/res/layout/fragment_asset.xml" value="0.4461050724637681" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/asset/src/main/res/layout/fragment_login.xml" value="0.4461050724637681" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/community/src/main/res/layout/fragment_community.xml" value="0.24344096871846618" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/community/src/main/res/layout/fragment_login.xml" value="0.4461050724637681" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/home/src/main/res/layout/fragment_asset.xml" value="0.42436594202898553" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/home/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/login/src/main/res/layout/activity_login.xml" value="0.3138586956521739" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/login/src/main/res/layout/fragment_login.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/member/src/main/res/layout/fragment_login.xml" value="0.4388586956521739" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/member/src/main/res/layout/fragment_member.xml" value="0.24344096871846618" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/schedule/src/main/res/layout/fragment_login.xml" value="0.4388586956521739" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/schedule/src/main/res/layout/fragment_schedule.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/schedule/src/main/res/layout/item.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/schedule/src/main/res/layout/layout_main.xml" value="0.22" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/schedule/src/main/res/layout/layout_toolbar.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/schedule/src/main/res/layout/save_view_holder.xml" value="0.4984375" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/schedule/src/main/res/menu/toolbar_menu.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/setting/src/main/res/layout/fragment_login.xml" value="0.4388586956521739" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/setting/src/main/res/layout/fragment_setting.xml" value="0.24344096871846618" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/splash/src/main/res/layout/activity_splash.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/splash/src/main/res/layout/fragment_splash.xml" value="0.5328125" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/layout/activity_first.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/layout/activity_login.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/layout/activity_main.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/layout/activity_splash.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/layout/fragment_home.xml" value="0.2684903748733536" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/layout/fragment_schedule.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/layout/res.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MYALBA/feature/src/main/res/menu/bottom_nav_menu.xml" value="0.5520833333333334" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/app/src/main/res/menu/bottom_nav_menu.xml" value="0.43148148148148147" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/core/src/main/res/drawable/radius_bg_10dp.xml" value="0.4962962962962963" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/core/src/main/res/drawable/radius_bg_20dp.xml" value="0.4962962962962963" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/core/src/main/res/drawable/radius_bg_30dp.xml" value="0.4962962962962963" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/core/src/main/res/font-v26/customFont.xml" value="0.487962962962963" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/core/src/main/res/font/customFont.xml" value="0.3229166666666667" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/core/src/main/res/font/customfont.xml" value="0.4824074074074074" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/core/src/main/res/font/font.xml" value="0.487962962962963" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/community/src/main/res/layout/fragment_community.xml" value="0.24091826437941474" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/home/src/main/res/layout/fragment_home.xml" value="0.24344096871846618" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/home/src/main/res/layout/today_work_holder.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/member/src/main/res/layout/fragment_member.xml" value="0.24344096871846618" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/schedule/src/main/res/layout/day_schedule_holder.xml" value="0.42857142857142855" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/schedule/src/main/res/layout/fragment_schedule.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/schedule/src/main/res/layout/fragment_schedule_detail.xml" value="0.2828125" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/schedule/src/main/res/layout/item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/MyJob/feature/splash/src/main/res/layout/fragment_splash.xml" value="0.5026041666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/myjob/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/LSG/AppData/Local/Android/Sdk/platforms/android-30/data/res/layout/auto_complete_list.xml" value="0.5328125" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/splash_flow">
+
+    <include app:graph="@navigation/splash_flow" />
+    <include app:graph="@navigation/home_flow" />
+    <include app:graph="@navigation/login_flow" />
+    <include app:graph="@navigation/asset_flow" />
+    <include app:graph="@navigation/chat_flow" />
+    <include app:graph="@navigation/community_flow" />
+    <include app:graph="@navigation/member_flow" />
+    <include app:graph="@navigation/schedule_flow" />
+    <include app:graph="@navigation/setting_flow" />
+    <include app:graph="@navigation/main_flow" />
+
+    <action
+        android:id="@+id/action_global_setting_flow"
+        app:destination="@id/setting_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true">
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_login_flow"
+        app:destination="@id/login_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true">
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+
+
+    <action
+        android:id="@+id/action_global_home_flow"
+        app:destination="@id/home_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true"
+        >
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_asset_flow"
+        app:destination="@id/asset_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        >
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_member_flow"
+        app:destination="@id/member_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        >
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_schedule_flow"
+        app:destination="@id/schedule_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        >
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_community_flow"
+        app:destination="@id/community_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        >
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+
+
+
+
+    <action
+        android:id="@+id/action_global_main_flow"
+        app:destination="@id/main_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true">
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_chat_flow"
+        app:destination="@id/chat_flow"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true">
+        <argument
+            android:name="msg"
+            app:argType="string" />
+    </action>
+
+</navigation>

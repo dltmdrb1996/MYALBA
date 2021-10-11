@@ -1,0 +1,33 @@
+
+apply from: rootProject.file("android.gradle")
+
+dependencies {
+    implementation project(":core")
+    implementation project(":model")
+
+    implementation(AndroidX.CORE_KTX)
+    implementation(AndroidX.APP_COMPAT)
+    implementation(AndroidX.MATERIAL)
+    implementation(Kotlin.KOTLIN_STDLIB)
+    implementation(AndroidX.CONSTRAINT_LAYOUT)
+
+    implementation(Android_Libraries.HILT_ANDROID)
+    kapt          (Android_Libraries.HILT_ANDROID_COMPILER)
+
+    implementation(Android_Libraries.LIFECYCLE_LIVEDATA_KTX)
+    implementation(Android_Libraries.LIFECYCLE_VIEWMODEL_KTX)
+
+    implementation(Kotlin.COROUTINES_ANDROID)
+    implementation(Kotlin.COROUTINES_CORE)
+
+    implementation(Navigation.NAVIGATION_FRAGMENT)
+    implementation(Navigation.NAVIGATION_UI)
+    implementation(Navigation.NAVIGATION_DYNAMIC)
+
+    implementation(Libraries.LOTTIE)
+
+    testImplementation  'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}

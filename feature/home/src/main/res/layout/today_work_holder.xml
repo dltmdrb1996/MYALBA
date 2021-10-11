@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.bottotop.model.ScheduleInfo" />
+
+        <variable
+            name="viewModel"
+            type="com.bottotop.home.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_big"
+            android:text="@{item.name}"
+            />
+
+        <TextView
+            android:layout_marginLeft="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_big"
+            android:text="@{item.start}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_big"
+            android:text="~"/>
+
+        <TextView
+            android:textSize="@dimen/text_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.end}"/>
+    </LinearLayout>
+</layout>
