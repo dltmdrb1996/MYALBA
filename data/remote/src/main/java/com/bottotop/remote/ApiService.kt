@@ -15,16 +15,29 @@
  */
 package com.bottotop.remote
 
-import retrofit2.Call
+import com.bottotop.remote.entity.CompaniesEntity
+import com.bottotop.remote.entity.UserEntity
 import retrofit2.http.*
 
 interface ApiService {
 
-    @Headers("Content-Type: application/json")
     @GET("user")
     suspend fun getUser(
-        @Query("lsgnum") lsgnum : String ,
-        @Query("lsg") test : String
-    ): SampleEntity
+        @Query("id") id : String
+    ) : UserEntity
 
+    @POST("user")
+    suspend fun setUser(
+        @Query("user") user : String
+    )
+
+    @PUT("user")
+    suspend fun updateUser(
+        @Query("query") query : String ,
+    )
+
+    @GET("companies")
+    suspend fun getCompanies(
+        @Query("id") id : String
+    ) : CompaniesEntity
 }

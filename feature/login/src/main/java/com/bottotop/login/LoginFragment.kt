@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.setOnSingleClickListener
 import com.bottotop.core.ext.showToast
+import com.bottotop.core.model.LoginState
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.login.databinding.FragmentLoginBinding
@@ -35,46 +36,50 @@ class LoginFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLogin()
+        observeToken()
+        setBtn()
+        observeToast()
+    }
 
+    fun setBtn(){
         _binding?.apply {
-            btnKakaoLogin.setOnSingleClickListener {
-                loginKakao()
-            }
+//            btnKakaoLogin.setOnSingleClickListener {
+//                loginKakao()
+//            }
             btnNaverLogin.setOnSingleClickListener {
                 mOAuthLoginModule.startOauthLoginActivity(requireActivity(),
                     this@LoginFragment.viewModel.getAuth())
             }
         }
-        observeToast()
     }
 
-    fun loginKakao() {
-        if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
-            UserApiClient.instance.loginWithKakaoTalk(
-                requireContext(),
-                callback = viewModel.getKakaoCallBack()
-            )
-        } else {
-            UserApiClient.instance.loginWithKakaoAccount(
-                requireContext(),
-                callback = viewModel.getKakaoCallBack()
-            )
-        }
-    }
+//    fun loginKakao() {
+//        if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+//            UserApiClient.instance.loginWithKakaoTalk(
+//                requireContext(),
+//                callback = viewModel.getKakaoCallBack()
+//            )
+//        } else {
+//            UserApiClient.instance.loginWithKakaoAccount(
+//                requireContext(),
+//                callback = viewModel.getKakaoCallBack()
+//            )
+//        }
+//    }
 
-    fun observeLogin() {
-        viewModel.token.observe(viewLifecycleOwner, {
-            if (it) {
-                (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
-            } else {
-                showToast("로그인실패")
+    fun observeToken(){
+        viewModel.login.observe(viewLifecycleOwner,{
+            when(it){
+                LoginState.Suceess -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
+                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("test"))
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("no"))
+                LoginState.NoToken -> showToast("로그인시도가 실패했습니다.")
             }
         })
     }
 }
 
-@BindingAdapter("OAuthHandler")
-fun setOAuthHandler(oAuthLoginButton: OAuthLoginButton, oAuthLoginHandler: OAuthLoginHandler){
-    oAuthLoginButton.setOAuthLoginHandler(oAuthLoginHandler)
-}
+//@BindingAdapter("OAuthHandler")
+//fun setOAuthHandler(oAuthLoginButton: OAuthLoginButton, oAuthLoginHandler: OAuthLoginHandler){
+//    oAuthLoginButton.setOAuthLoginHandler(oAuthLoginHandler)
+//}

@@ -1,20 +1,17 @@
 package com.bottotop.home
 
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.home.databinding.FragmentHomeBinding
-import com.bottotop.model.UserInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.appcompat.app.AppCompatActivity
-import com.bottotop.core.ext.waitForMeasure
+import androidx.fragment.app.activityViewModels
+import com.bottotop.core.global.SharedViewModel
+import com.bottotop.model.ScheduleInfo
 
 
 @AndroidEntryPoint
@@ -26,6 +23,7 @@ class HomeFragment :
     private val vm by viewModels<HomeViewModel>()
     override val viewModel get() = vm
     private val adapter : TodayWorkAdapter by lazy { TodayWorkAdapter(viewModel) }
+    private val mainViewModel : SharedViewModel by activityViewModels()
 
     override fun setBindings() {
         _binding?.viewModel = viewModel
@@ -52,7 +50,8 @@ class HomeFragment :
     fun setBtn(){
         _binding?.apply {
             btnKakaoLogout.setOnClickListener {
-                this@HomeFragment.viewModel.logoutKakao()
+//                this@HomeFragment.viewModel.logoutKakao()
+                mainViewModel.test("test")
             }
             btnNaverLogout.setOnClickListener {
                 this@HomeFragment.viewModel.logoutNaver()
@@ -72,7 +71,11 @@ class HomeFragment :
     }
 
     fun todayWorkAdapter(){
-        val dummy = listOf(UserInfo.scheduleInfo , UserInfo.scheduleInfo ,UserInfo.scheduleInfo)
+        val dummy = listOf(
+            ScheduleInfo("이승규" , "08","16") ,
+            ScheduleInfo("이승규" , "08","16") ,
+            ScheduleInfo("이승규" , "08","16") ,
+            )
         adapter.submitList(dummy)
     }
 }

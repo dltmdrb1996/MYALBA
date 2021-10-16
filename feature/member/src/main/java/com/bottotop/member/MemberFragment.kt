@@ -48,7 +48,7 @@ class MemberFragment :
 
     fun smaple(){
         viewModel.sample.observe(viewLifecycleOwner,{
-            showToast("${it.body} , ${it.statusCode} , ${it.lsg}")
+            showToast("${it.code} , ${it.company}")
         })
     }
 }

@@ -1,7 +1,7 @@
 package com.bottotop.remote.login
 
 import android.util.Log
-import com.bottotop.model.UserInfo
+import com.bottotop.core.global.SocialInfo
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
@@ -49,10 +49,10 @@ class KakaoDataSource @Inject constructor() {
 
                     )
                     // 현재 카카오 정보동의 미설정
-                    UserInfo.name = "이승규"
-                    UserInfo.mobile = "010"
-                    UserInfo.email = "이메일"
-                    UserInfo.birth = "1996"
+                    SocialInfo.name = "이승규"
+                    SocialInfo.tel = "010"
+                    SocialInfo.email = "이메일"
+                    SocialInfo.birth = "1996"
                     cont.resume(true)
                 }
             }

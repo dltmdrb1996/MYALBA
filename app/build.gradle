@@ -22,6 +22,7 @@ dependencies {
     implementation project(":feature:schedule")
     implementation project(":feature:setting")
     implementation project(":feature:splash")
+    implementation project(":feature:register")
     implementation project(":core")
 
     implementation(AndroidX.APP_COMPAT)
@@ -42,6 +43,7 @@ dependencies {
 
     implementation(View.VIEWPAGER)
 
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation "com.kakao.sdk:v2-user:2.5.2"
+    implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
+
 }

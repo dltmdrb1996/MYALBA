@@ -1,25 +1,15 @@
 package com.bottotop.schedule
 
-import android.content.Context
 import android.graphics.Color
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.aryanmo.utils.utils.getResources
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.Navigator
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.Schedule
 import com.bottotop.schedule.databinding.ItemBinding
-import dagger.hilt.android.qualifiers.ApplicationContext
+import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,23 +37,33 @@ class Schedule7DayAdapter(private val viewModel: ScheduleViewModel) :
         private val adapter : DayAdapter by lazy { DayAdapter(viewModel) }
         fun bind(item: Schedule) {
             binding.apply {
-                val week = item.day.takeLast(3)
-                if (item.itemMonth != item.currentMonth) this.itemCard.alpha = 0.5f
-                if (week == "토요일" || week == "일요일") {
-                    title.setTextColor(Color.rgb(186, 7, 9))
-                }
-                if (item.day == today && item.currentMonth == month) {
-                    this.itemCard.strokeWidth = 8
-                } else {
-                    this.itemCard.strokeWidth = 0
-                }
                 schedule = item
-                viewModel = this@AdapterViewHolder.viewModel
-                adapter = this@AdapterViewHolder.adapter
+                val week = item.day.takeLast(3)
+                var str  = StringBuilder()
+
+                if (item.itemMonth != item.currentMonth) this.itemCard.alpha = 0.5f
+                if (week == "토요일" || week == "일요일") title.setTextColor(Color.rgb(186, 7, 9))
+
+                if (item.day == today && item.currentMonth == month) this.itemCard.strokeWidth = 8
+                else this.itemCard.strokeWidth = 0
+
                 cardBtn.setOnClickListener {
                     it.findNavController().navigate(R.id.action_scheduleFragment_to_scheduleDetailFragment)
                 }
-                this@AdapterViewHolder.adapter.submitList(item.text)
+
+                item.text.forEachIndexed { idx , it ->
+                    if(idx != item.text.size-1) {
+                        str.append("${it.name} : ${it.start}~${it.end}\n")
+                    }
+                    else {
+                        str.append("${it.name} : ${it.start}~${it.end}")
+                    }
+                }
+
+                content.text = str
+//                viewModel = this@AdapterViewHolder.viewModel
+//                adapter = this@AdapterViewHolder.adapter
+//                this@AdapterViewHolder.adapter.submitList(item.text)
                 executePendingBindings()
             }
         }

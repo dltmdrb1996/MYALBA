@@ -1,8 +1,8 @@
 package com.bottotop.local
 
-import kotlinx.coroutines.flow.Flow
+import com.bottotop.local.entity.LocalUserEntity
 
 interface LocalDataSource {
-    suspend fun insertSample(sample: LocalEntity)
-    suspend fun getAllSamples(): Flow<List<LocalEntity>>
+    suspend fun insertSample(sample: LocalUserEntity)
+    suspend fun getAllSamples(): LocalUserEntity
 }

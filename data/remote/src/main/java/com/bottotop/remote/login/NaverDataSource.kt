@@ -2,8 +2,7 @@ package com.bottotop.remote.login
 
 import android.content.Context
 import android.util.Log
-import com.aryanmo.utils.utils.getResources
-import com.bottotop.model.UserInfo
+import com.bottotop.core.global.SocialInfo
 import com.nhn.android.naverlogin.OAuthLogin
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +17,7 @@ class NaverDataSource @Inject constructor(@ApplicationContext context: Context) 
 
     private val mOAuthLoginInstance = OAuthLogin.getInstance()
     private val context = context
-    val userInfo = UserInfo
+    val userInfo = SocialInfo
 
     suspend fun checkToken(): Boolean {
         return mOAuthLoginInstance.getAccessToken(context) != null
@@ -48,10 +47,10 @@ class NaverDataSource @Inject constructor(@ApplicationContext context: Context) 
                 val mobile = response.getString("mobile")
                 val birth = response.getString("birthyear")
                 val name = response.getString("name")
-                UserInfo.name = name
-                UserInfo.mobile = mobile
-                UserInfo.birth = birth
-                UserInfo.email = email
+                SocialInfo.name = name
+                SocialInfo.tel = mobile
+                SocialInfo.birth = birth
+                SocialInfo.email = email
                 it.resume(true)
             }
         } catch (e: JSONException) {

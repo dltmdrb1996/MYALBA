@@ -1,4 +1,4 @@
-package com.evolve.rosiautils
+package com.bottotop.core.util.test.rosiautils;
 
 import android.graphics.Bitmap
 import android.graphics.Color

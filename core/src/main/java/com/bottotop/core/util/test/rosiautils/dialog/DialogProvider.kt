@@ -1,4 +1,4 @@
-package com.evolve.rosiautils.dialog
+package com.bottotop.core.util.test.rosiautils.dialog
 
 import android.content.Context
 

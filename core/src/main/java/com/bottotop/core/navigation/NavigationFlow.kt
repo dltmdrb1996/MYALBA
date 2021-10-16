@@ -10,4 +10,5 @@ sealed class NavigationFlow {
     class ScheduleFlow(val msg: String) : NavigationFlow()
     class SettingFlow(val msg: String) : NavigationFlow()
     class MainFlow(val msg: String) : NavigationFlow()
+    class RegisterFlow(val msg: String) : NavigationFlow()
 }

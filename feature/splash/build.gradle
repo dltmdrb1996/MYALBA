@@ -12,6 +12,6 @@ apply from: rootProject.file("feature/feature.gradle")
 dependencies {
 
     implementation "com.kakao.sdk:v2-user:2.5.2"
-    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
 
 }

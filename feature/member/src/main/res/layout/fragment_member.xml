@@ -27,7 +27,7 @@
 
 
         <Button
-            android:onClick="@{()->viewModel.test()}"
+            android:onClick="@{()->viewModel.setUser()}"
             android:id="@+id/login_Btn_Go_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

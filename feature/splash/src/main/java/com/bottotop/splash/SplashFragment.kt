@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.ext.isVisible
+import com.bottotop.core.model.LoginState
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.core.util.addOnAnimationListener
@@ -23,9 +24,9 @@ class SplashFragment :
     BaseFragment<FragmentSplashBinding, SplashViewModel>(R.layout.fragment_splash, "스플래쉬") {
 
     override val viewModel: SplashViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         Log.e(TAG, "onCreate: test")
     }
 
@@ -88,11 +89,12 @@ class SplashFragment :
     }
 
     fun observeToken(){
-        viewModel.token.observe(viewLifecycleOwner,{
-            if(it){
-                (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
-            }else{
-                (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("test"))
+        viewModel.login.observe(viewLifecycleOwner,{
+            when(it){
+                LoginState.Suceess -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
+                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("test"))
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("no"))
+                LoginState.NoToken -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("test"))
             }
         })
     }

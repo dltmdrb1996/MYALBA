@@ -6,16 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
-import com.bottotop.model.LoginFlag
-import com.bottotop.model.UserInfo
-import com.bottotop.model.repository.LoginRepository
+import com.bottotop.core.global.SocialInfo
+import com.bottotop.model.repository.SocialLoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val loginRepository: LoginRepository,
+    private val socialLoginRepository: SocialLoginRepository,
     private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel("홈뷰모델") {
 
@@ -23,7 +22,7 @@ class HomeViewModel @Inject constructor(
     val info : LiveData<Boolean> = _info
 
     init {
-        if(UserInfo.name.isEmpty()) {
+        if(SocialInfo.name.isEmpty()) {
             loadUser()
         }else{
             handleLoading(false)
@@ -37,9 +36,9 @@ class HomeViewModel @Inject constructor(
 
     fun loadUser(){
         viewModelScope.launch(dispatcherProvider.io) {
-            when(UserInfo.login_flag){
-                LoginFlag.Kakao -> {
-                    if(loginRepository.getKakaoInfo()){
+            when(SocialInfo.social){
+                "kakao" -> {
+                    if(socialLoginRepository.getKakaoInfo()){
                         _info.postValue(true)
                         handleLoading(false)
                     }else{
@@ -47,8 +46,8 @@ class HomeViewModel @Inject constructor(
                         handleLoading(false)
                     }
                 }
-                LoginFlag.Naver -> {
-                    if(loginRepository.getNaverInfo()){
+                "naver" -> {
+                    if(socialLoginRepository.getNaverInfo()){
                         _info.postValue(true)
                         handleLoading(false)
                     }else{
@@ -62,25 +61,25 @@ class HomeViewModel @Inject constructor(
 
     fun logoutKakao() {
         viewModelScope.launch(dispatcherProvider.io) {
-            loginRepository.loagoutKakao()
+            socialLoginRepository.loagoutKakao()
         }
     }
 
     fun disconnectKakao() {
         viewModelScope.launch(dispatcherProvider.io) {
-            loginRepository.disconectKakao()
+            socialLoginRepository.disconectKakao()
         }
     }
 
     fun logoutNaver() {
         viewModelScope.launch(dispatcherProvider.io) {
-            loginRepository.logoutNaver()
+            socialLoginRepository.logoutNaver()
         }
     }
 
     fun disconnectNaver() {
         viewModelScope.launch(dispatcherProvider.io) {
-            loginRepository.disconectNaver()
+            socialLoginRepository.disconectNaver()
         }
     }
 

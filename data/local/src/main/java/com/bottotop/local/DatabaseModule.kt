@@ -2,6 +2,7 @@ package com.bottotop.local
 
 import android.content.Context
 import androidx.room.Room
+import com.bottotop.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,20 +14,20 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object DatabaseModule {
 
-    private const val DB_NAME = "sample.db"
+    private const val DB_NAME = "myjob.db"
 
     @Singleton
     @Provides
     fun provideDatabase(
         @ApplicationContext context: Context
-    ): SampleDatabase {
-        return Room.databaseBuilder(context, SampleDatabase::class.java, DB_NAME).build()
+    ): MyjobDatabase {
+        return Room.databaseBuilder(context, MyjobDatabase::class.java, DB_NAME).build()
     }
 
     @Singleton
     @Provides
-    fun provideSampleDao(database: SampleDatabase) : SampleDao {
-        return database.sampleDao()
+    fun provideSampleDao(database: MyjobDatabase) : UserDao {
+        return database.userDao()
     }
 
     @Singleton

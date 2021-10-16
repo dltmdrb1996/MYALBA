@@ -1,18 +1,19 @@
 
 object Apps {
+    const val APP_ID = "com.bottotop.myalba"
     const val COMPILE_SDK = 30
     const val BUILD_TOOLS_VERSION = "30.0.2"
     const val MIN_SDK = 23
     const val TARGET_SDK = 30
-    const val VERSION_CODE = 1
-    const val VERSION_NAME = "1.0"
+    const val VERSION_CODE = 2
+    const val VERSION_NAME = "1.0.1"
 
 }
 
 object Versions {
     //Project Setting
-    const val BUILD_GRADLE = "7.0.1"
-    const val KOTLIN_VERSION = "1.5.30"
+    const val BUILD_GRADLE = "4.2.2"
+    const val KOTLIN_VERSION = "1.5.31"
     const val CORE_KTX = "1.6.0"
     const val APP_COMPAT = "1.3.1"
     const val ACTIVITY_KTX = "1.2.3"
@@ -26,7 +27,7 @@ object Versions {
     const val FRAGMENT_KTX = "1.3.6"
     const val LIFECYCLE_KTX = "2.3.1"
     const val ROOM = "2.3.0"
-    const val HILT = "2.38.1"
+    const val HILT = "2.35"
     const val NAVIGATION = "2.3.5"
 
     //network

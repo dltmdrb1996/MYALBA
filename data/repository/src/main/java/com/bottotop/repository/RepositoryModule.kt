@@ -1,7 +1,7 @@
 package com.bottotop.repository
 
 import com.bottotop.model.repository.DataRepository
-import com.bottotop.model.repository.LoginRepository
+import com.bottotop.model.repository.SocialLoginRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ internal object RepositoryModule {
 
     @Singleton
     @Provides
-    fun providesLoginRepository(repository: LoginRepositoryImpl): LoginRepository {
+    fun providesLoginRepository(repository: SocialLoginRepositoryImpl): SocialLoginRepository {
         return repository
     }
 

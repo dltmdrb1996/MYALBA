@@ -15,6 +15,10 @@ open class BaseViewModel(private val name : String) : ViewModel() {
 private val _isLoading = MutableLiveData<Boolean>()
     val isLoading : LiveData<Boolean> = _isLoading
 
+    init {
+        Log.e(TAG, ":뷰모델생성 ", )
+    }
+
     private val _toast by lazy { MutableLiveData<Event<String>>() }
     val toast: LiveData<Event<String>> by lazy { _toast }
 

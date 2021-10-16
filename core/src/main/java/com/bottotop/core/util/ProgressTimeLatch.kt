@@ -1,4 +1,4 @@
-package io.github.droidkaigi.feeder.core.util
+package com.bottotop.core.util
 
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting

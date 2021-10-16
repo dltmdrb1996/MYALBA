@@ -1,4 +1,4 @@
-package com.caner.extension
+package com.bottotop.core.util
 
 const val DATE_FORMAT_1 = "yyyy-MM-dd HH:mm:ss"
 const val DATE_FORMAT_2 = "yyyy-MM-dd HH:mm"

@@ -1,7 +1,7 @@
 package com.bottotop.repository.mapper
 
 import com.bottotop.model.Sample
-import com.bottotop.remote.SampleEntity
+import com.bottotop.remote.entity.SampleEntity
 import com.bottotop.repository.Mapper
 
 internal object SampleEntityMapper : Mapper<SampleEntity, Sample>() {

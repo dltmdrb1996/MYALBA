@@ -6,13 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
-import com.bottotop.model.Sample
-import com.bottotop.model.UserInfo
+import com.bottotop.core.global.SocialInfo
+import com.bottotop.model.User
 import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,8 +19,8 @@ class MemberViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel("맴버뷰모델") {
 
-    private val _sample = MutableLiveData<Sample>()
-    val sample : LiveData<Sample> = _sample
+    private val _sample = MutableLiveData<User>()
+    val sample: LiveData<User> = _sample
 
     init {
         test()
@@ -34,10 +31,31 @@ class MemberViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
     }
-    
-    fun test(){
+
+    fun test() {
         viewModelScope.launch(dispatcherProvider.io) {
-            _sample.postValue(dataRepository.getUser("LSGTEST" ,  "GGG"))
+            _sample.postValue(dataRepository.getUser(SocialInfo.id))
+            dataRepository.updateUser(
+                mapOf(
+                    Pair("id", SocialInfo.id),
+                    Pair("target", "com_id"),
+                    Pair("change", SocialInfo.id)
+                )
+            )
+        }
+    }
+
+    fun setUser() {
+        viewModelScope.launch(dispatcherProvider.io) {
+            dataRepository.setUser(
+                mapOf<String, String>(
+                    Pair("id", SocialInfo.id),
+                    Pair("tel", SocialInfo.tel),
+                    Pair("birth", SocialInfo.birth),
+                    Pair("name", SocialInfo.name),
+                    Pair("email", SocialInfo.email),
+                )
+            )
         }
     }
 }

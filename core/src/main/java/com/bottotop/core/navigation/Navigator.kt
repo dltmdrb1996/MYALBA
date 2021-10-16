@@ -9,8 +9,8 @@ class Navigator {
 
     // navigate on main thread or nav component crashes sometimes
     fun navigateToFlow(navigationFlow: NavigationFlow) = when (navigationFlow) {
-        is NavigationFlow.HomeFlow ->
-            navController.navigate(MainNavGraphDirections.actionGlobalHomeFlow(navigationFlow.msg))
+        is NavigationFlow.HomeFlow -> navController
+            .navigate(MainNavGraphDirections.actionGlobalHomeFlow(navigationFlow.msg))
         is NavigationFlow.LoginFlow -> navController
             .navigate(MainNavGraphDirections.actionGlobalLoginFlow(navigationFlow.msg))
         is NavigationFlow.AssetFlow -> navController
@@ -27,5 +27,7 @@ class Navigator {
             .navigate(MainNavGraphDirections.actionGlobalCommunityFlow(navigationFlow.msg))
         is NavigationFlow.MainFlow -> navController
             .navigate(MainNavGraphDirections.actionGlobalMainFlow(navigationFlow.msg))
+        is NavigationFlow.RegisterFlow -> navController
+            .navigate(MainNavGraphDirections.actionGlobalRegisterFlow(navigationFlow.msg))
     }
 }

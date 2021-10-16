@@ -14,12 +14,14 @@
       <module name="MYALBA.feature.home" target="11" />
       <module name="MYALBA.feature.login" target="11" />
       <module name="MYALBA.feature.member" target="11" />
+      <module name="MYALBA.feature.register" target="11" />
       <module name="MYALBA.feature.schedule" target="11" />
       <module name="MYALBA.feature.setting" target="11" />
       <module name="MYALBA.feature.splash" target="11" />
       <module name="MYALBA.navigation" target="11" />
       <module name="MYALBA.test" target="11" />
       <module name="MyJob.buildSrc" target="11" />
+      <module name="PartTimeJob.buildSrc" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

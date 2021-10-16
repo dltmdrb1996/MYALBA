@@ -38,6 +38,7 @@ sealed class DeepLinkDestination(val address: String) {
     class Setting(msg: String) : DeepLinkDestination("example://setting/exampleArgs?msg={msg}")
     class Main(msg: String) : DeepLinkDestination("example://main/exampleArgs?msg={msg}")
     class ScheduleDetail(msg: String) : DeepLinkDestination("example://scheduleDetail/exampleArgs?msg={msg}")
+    class Register(msg:String) : DeepLinkDestination("example://register/exampleArgs?msg={msg}")
 }
 
 //navigate_to_next_deeplink.setOnClickListener {

@@ -10,4 +10,5 @@
     <item name="schedule_flow" type="id"/>
     <item name="setting_flow" type="id"/>
     <item name="main_flow" type="id"/>
+    <item name="register_flow" type="id"/>
 </resources>
