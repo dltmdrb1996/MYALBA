@@ -40,4 +40,10 @@ interface ApiService {
     suspend fun getCompanies(
         @Query("id") id : String
     ) : CompaniesEntity
+
+    @POST("companies")
+    suspend fun setCompany(
+        @Query("company") company : String
+    )
+
 }

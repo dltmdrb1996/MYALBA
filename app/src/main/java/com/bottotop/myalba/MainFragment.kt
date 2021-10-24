@@ -160,6 +160,7 @@ class MainFragment : Fragment() {
             Log.i(TAG, "disableCacheOfViewPager: " + e.message)
         }
     }
+
     companion object {
         private val TAG = "몌인프럐그먼트"
     }

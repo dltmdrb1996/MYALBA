@@ -1,4 +1,4 @@
-package com.bottotop.core.util
+package com.bottotop.core.ext
 
 import android.content.Context
 import android.os.Handler

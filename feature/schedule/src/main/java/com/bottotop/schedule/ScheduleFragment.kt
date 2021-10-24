@@ -64,11 +64,6 @@ class ScheduleFragment :
         observeLoading()
         setViewPager()
         setChangeMonthBtn()
-//        _binding?.apply {
-//            tvPager3.setOnSingleClickListener {
-//                findNavController().navigate(R.id.action_scheduleFragment_to_scheduleDetailFragment)
-//            }
-//        }
     }
 
     override fun onDestroyView() {

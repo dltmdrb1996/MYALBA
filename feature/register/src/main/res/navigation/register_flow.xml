@@ -3,18 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/register_flow"
-    app:startDestination="@id/registerFragment"
+    app:startDestination="@id/onBoardingFragment"
     >
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.bottotop.register.RegisterFragment"
+        android:id="@+id/onBoardingFragment"
+        android:name="com.bottotop.register.onboarding.OnBoardingFragment"
         android:label="register"
-        tools:layout="@layout/fragment_register">
+        tools:layout="@layout/fragment_onboarding">
+
+
+        <argument
+            android:defaultValue=""
+            android:name="msg"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_to_register"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.bottotop.register.register.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true"
+        >
 
         <deepLink
-            android:id="@+id/deepLink"
-            app:uri="example://register/exampleArgs?msg={msg}"
-            />
+            android:id="@+id/deepLink2"
+            app:uri="example:/register/exampleArgs?msg={msg}" />
+
     </fragment>
+
 
 </navigation>

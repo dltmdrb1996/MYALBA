@@ -8,9 +8,10 @@ internal class LocalDataSourceImpl @Inject constructor(
     private val userDao: UserDao
 ) : LocalDataSource {
 
-    override suspend fun insertSample(localUser: LocalUserEntity) {
-        userDao.insert(localUser)
+    override suspend fun insertUser(user: LocalUserEntity) {
+        userDao.insert(user)
     }
 
-    override suspend fun getAllSamples() = userDao.getUser()
+    override suspend fun getUser(): LocalUserEntity = userDao.getUser()
+
 }

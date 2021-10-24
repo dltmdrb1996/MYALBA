@@ -10,11 +10,11 @@ import androidx.fragment.app.viewModels
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.ext.isVisible
+import com.bottotop.core.ext.withDelayOnMain
 import com.bottotop.core.model.LoginState
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.core.util.addOnAnimationListener
-import com.bottotop.core.util.withDelayOnMain
 import com.bottotop.splash.databinding.FragmentSplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.max
@@ -91,10 +91,10 @@ class SplashFragment :
     fun observeToken(){
         viewModel.login.observe(viewLifecycleOwner,{
             when(it){
-                LoginState.Suceess -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
-                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("test"))
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("no"))
-                LoginState.NoToken -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("test"))
+                LoginState.Suceess -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("first"))
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
+                LoginState.NoToken -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("noToken"))
             }
         })
     }

@@ -1,5 +1,6 @@
 package com.bottotop.myalba
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Rect
 import android.os.Build
@@ -40,6 +41,9 @@ import android.os.Looper
 import com.bottotop.core.ext.connectivityManager
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.NetworkCallback
+import androidx.core.content.ContentProviderCompat.requireContext
+import com.bottotop.core.MainNavGraphDirections
+import com.bottotop.core.ext.withDelayOnMain
 
 
 @AndroidEntryPoint
@@ -49,7 +53,8 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
     private var networkCheck: Boolean = true
     lateinit var binding: ActivityMainBinding
     private val viewModel: SharedViewModel by viewModels()
-    lateinit var cm : ConnectivityManager
+    private var backPressedTime: Long = 0
+    lateinit var cm: ConnectivityManager
     lateinit var mNetworkCallback: NetworkCallback
 
 
@@ -179,7 +184,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
         }
     }
 
-    fun firstNetworkCheck(){
+    fun firstNetworkCheck() {
         cm = getSystemService(ConnectivityManager::class.java)
         val check = cm.activeNetworkInfo?.isConnectedOrConnecting
         if (check == false || check == null) {
@@ -197,13 +202,13 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
             // 와이파이 연결해제시 lost에서 다시 연결까지의 약간의 텀이있음
             override fun onLost(network: Network) {
                 networkCheck = false
-                Handler(Looper.getMainLooper()).postDelayed({
+                withDelayOnMain(1000){
                     if (networkCheck) {
                         Log.e(TAG, "onLost: 연결되있음")
                     } else {
                         showToast("네트워크 연결이 끊어졌습니다.")
                     }
-                }, 1000)
+                }
             }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -220,10 +225,18 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
     }
 
     override fun onBackPressed() {
-        if (NavigationRouter.currentState == NavigationTable.Home) {
-            super.onBackPressed()
-        } else {
-            navigateToFlow(NavigationFlow.HomeFlow("test"))
+        when (NavigationRouter.currentState) {
+            is NavigationTable.Asset, NavigationTable.Community ,
+                NavigationTable.Member, NavigationTable.Schedule -> navigateToFlow(NavigationFlow.HomeFlow("back"))
+            is NavigationTable.Login, NavigationTable.Register , NavigationTable.Home -> {
+                if (System.currentTimeMillis() > backPressedTime + 3000) {
+                    backPressedTime = System.currentTimeMillis()
+                    Toast.makeText(this, "한번더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+                } else if (System.currentTimeMillis() <= backPressedTime + 3000) {
+                    finish()
+                }
+            }
+            else -> super.onBackPressed()
         }
     }
 
@@ -244,6 +257,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
         }
         return super.dispatchTouchEvent(ev)
     }
+
 
     companion object {
         const val TAG = "메인액티비티"

@@ -50,7 +50,7 @@
 
         <argument
             android:name="msg"
-            app:argType="String"/>
+            app:argType="string"/>
 
     </action>
     <action

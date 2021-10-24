@@ -26,7 +26,7 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
 
     protected abstract fun setBindings()
 
-    override fun    onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         performDataBinding()
         return binding.root

@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.setOnSingleClickListener
+import com.bottotop.core.ext.showSnackbar
 import com.bottotop.core.ext.showToast
 import com.bottotop.core.model.LoginState
 import com.bottotop.core.navigation.NavigationFlow
@@ -43,9 +44,9 @@ class LoginFragment :
 
     fun setBtn(){
         _binding?.apply {
-//            btnKakaoLogin.setOnSingleClickListener {
-//                loginKakao()
-//            }
+            btnKakaoLogin.setOnSingleClickListener {
+                showSnackbar("사업자등록을 해야 정보를제공해주어 막아두었습니다.",3000)
+            }
             btnNaverLogin.setOnSingleClickListener {
                 mOAuthLoginModule.startOauthLoginActivity(requireActivity(),
                     this@LoginFragment.viewModel.getAuth())
@@ -70,9 +71,9 @@ class LoginFragment :
     fun observeToken(){
         viewModel.login.observe(viewLifecycleOwner,{
             when(it){
-                LoginState.Suceess -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
-                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("test"))
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("no"))
+                LoginState.Suceess -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("first"))
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
                 LoginState.NoToken -> showToast("로그인시도가 실패했습니다.")
             }
         })

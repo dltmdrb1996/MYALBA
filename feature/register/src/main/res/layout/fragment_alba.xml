@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.bottotop.register.register.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".register.alba.AlbaFragment">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사장님에게 초대코드를 받거나 QR코드를 통해 \n        가게에 직원으로 등록 될 수 있습니다."
+            android:textSize="@dimen/text_big"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/unregistered"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_code"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius_bg_20dp"
+            android:text="고유코드로 등록"
+            android:textColor="@color/colorText"
+            app:icon="@drawable/file_text"
+            app:iconGravity="start"
+            app:iconTint="@color/colorText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_QR"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius_bg_20dp"
+            android:layout_marginTop="@dimen/margin_layout"
+            android:textColor="@color/colorText"
+            android:text="QR스캔으로 등록"
+            app:icon="@drawable/ic_baseline_qr_code_24"
+            app:iconGravity="start"
+            app:iconTint="@color/colorText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_code" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

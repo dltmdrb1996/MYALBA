@@ -41,19 +41,27 @@ class LoginViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(dispatcherProvider.io){
-            user = dataRepository.getUser(SocialInfo.id)
+            user = dataRepository.getUser()
         }
     }
 
-//    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-//        if (error != null) {
-//            _login.postValue(false)
-//            Log.e(TAG, "로그인 실패", error)
-//        } else if (token != null) {
-//            SocialInfo.social = "kakao"
-//            _login.postValue(true)
-//        }
-//    }
+    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            _login.postValue(LoginState.NoToken)
+            Log.e(TAG, "로그인 실패", error)
+        } else if (token != null) {
+            SocialInfo.social = "kakao"
+            if (user.code == "200") {
+                if (user.company.isEmpty()) {
+                    _login.postValue(LoginState.NoCompany)
+                } else{
+                    _login.postValue(LoginState.Suceess)
+                }
+            } else if (user.code == "404") {
+                _login.postValue(LoginState.Register)
+            }
+        }
+    }
 
     val mOAuthLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
@@ -61,13 +69,13 @@ class LoginViewModel @Inject constructor(
                 val expiresAt = mOAuthLoginModule.getExpiresAt(context)
                 Log.e(TAG, "naver 남은시간 : ${expiresAt}", )
                 SocialInfo.social = "naver"
-                if(user.code=="200"){
-                    if(user.company.isEmpty()){
+                if (user.code == "200") {
+                    if (user.company == "null") {
                         _login.postValue(LoginState.NoCompany)
-                    }else{
+                    } else{
                         _login.postValue(LoginState.Suceess)
                     }
-                }else{
+                } else if (user.code == "404") {
                     _login.postValue(LoginState.Register)
                 }
             } else {

@@ -34,7 +34,7 @@ class MemberViewModel @Inject constructor(
 
     fun test() {
         viewModelScope.launch(dispatcherProvider.io) {
-            _sample.postValue(dataRepository.getUser(SocialInfo.id))
+            _sample.postValue(dataRepository.getUser())
             dataRepository.updateUser(
                 mapOf(
                     Pair("id", SocialInfo.id),

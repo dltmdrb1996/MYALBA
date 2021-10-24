@@ -4,28 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.bottotop.register.RegisterViewModel" />
+            type="com.bottotop.register.register.RegisterViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AssetFragment">
+        tools:context=".register.RegisterFragment">
 
-        <TextView
-            android:id="@+id/tv_Login"
+        <com.google.android.material.tabs.TabLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="등록프래그먼트"
-            android:textSize="30sp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tabLayout"
+            android:background="@drawable/radius_toggle_off_30dp"
+            app:tabMode="scrollable"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabPaddingStart="16dp"
+            app:tabPaddingEnd="16dp"
+            app:tabIndicatorHeight="0dp"
+            app:layout_constraintBottom_toTopOf="@id/viewPager"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

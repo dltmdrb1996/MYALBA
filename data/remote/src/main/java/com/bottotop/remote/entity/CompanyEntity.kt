@@ -15,10 +15,12 @@ data class CompaniesEntity(
 
 @Serializable
 data class CompanyEntity(
+    val code: String = "",
     val pay: String = "",
     val SK: String = "",
     val address: String = "",
     val com_tel: String = "",
+    val com_name: String = "",
     val PK: String = "",
     val position: String = "",
     val com_id: String = ""
