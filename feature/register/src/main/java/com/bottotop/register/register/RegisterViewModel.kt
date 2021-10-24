@@ -56,10 +56,10 @@ class RegisterViewModel @Inject constructor(
         }
         viewModelScope.launch(dispatcherProvider.io){
             val companies = dataRepository.getCompanies(code.value!!)
-            if(companies[0].code=="404"){
-                showToast("등록하려는 정보가 없습니다.")
-                return@launch
-            }
+//            if(companies[0].code=="404"){
+//                showToast("등록하려는 정보가 없습니다.")
+//                return@launch
+//            }
             val company = companies[0]
             Log.e(TAG, "setCompany: ${company}", )
             updateUserCompany(code.value!!)
@@ -88,6 +88,11 @@ class RegisterViewModel @Inject constructor(
                     Pair("change", id)
                 )
             )
+            if(dataRepository.refreshUser((SocialInfo.id))){
+                Log.e(TAG, "updateUserCompany: 불러오기 성공", )
+            } else {
+                Log.e(TAG, "updateUserCompany: 유저갱신 실패", )
+            }
             dataRepository.refreshUser(SocialInfo.id)
     }
 

@@ -15,8 +15,12 @@
  */
 package com.bottotop.remote
 
+import com.bottotop.core.model.Failure
 import com.bottotop.remote.entity.CompaniesEntity
+import com.bottotop.remote.entity.ResponseResult
 import com.bottotop.remote.entity.UserEntity
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -24,26 +28,26 @@ interface ApiService {
     @GET("user")
     suspend fun getUser(
         @Query("id") id : String
-    ) : UserEntity
+    ) : Response<UserEntity>
 
     @POST("user")
     suspend fun setUser(
         @Query("user") user : String
-    )
+    ) : Response<ResponseResult>
 
     @PUT("user")
     suspend fun updateUser(
         @Query("query") query : String ,
-    )
+    ) : Response<ResponseResult>
 
     @GET("companies")
     suspend fun getCompanies(
         @Query("id") id : String
-    ) : CompaniesEntity
+    ) : Call<CompaniesEntity>
 
     @POST("companies")
     suspend fun setCompany(
         @Query("company") company : String
-    )
+    ) : Response<ResponseResult>
 
 }

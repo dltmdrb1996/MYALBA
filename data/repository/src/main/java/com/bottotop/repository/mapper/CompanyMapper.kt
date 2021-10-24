@@ -6,7 +6,6 @@ import com.bottotop.remote.entity.CompanyEntity
 internal object CompanyMapper : Mapper<CompanyEntity, Company>() {
     override fun from(from: CompanyEntity): Company {
         return Company(
-            code = from.code,
             PK = from.PK,
             SK = from.SK,
             pay = from.pay,

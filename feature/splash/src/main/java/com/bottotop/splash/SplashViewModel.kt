@@ -41,10 +41,11 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(dispatcherProvider.io) {
-            Log.e(TAG, "${SocialInfo.id}: ")
+            Log.e(TAG, "${SocialInfo.id} , ?? ")
             dataRepository.refreshUser(SocialInfo.id)
-            Log.e(TAG, ": ${dataRepository.getUser()}")
-            user = dataRepository.getUser()
+
+//            Log.e(TAG, ": ${dataRepository.getUser()}")
+//            user = dataRepository.getUser()
             check_Token_User()
         }
     }

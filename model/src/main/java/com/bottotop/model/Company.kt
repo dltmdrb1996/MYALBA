@@ -1,7 +1,6 @@
 package com.bottotop.model
 
 data class Company(
-    val code : String,
     val pay : String,
     val SK : String,
     val address : String,

@@ -58,4 +58,15 @@ class MemberViewModel @Inject constructor(
             )
         }
     }
+
+    suspend fun setCompany() {
+        val query : Map<String,String> = mapOf(
+            Pair("id", SocialInfo.id),
+            Pair("target", "com_id"),
+            Pair("change" , SocialInfo.social)
+        )
+        dataRepository.updateUser(query)
+
+    }
+
 }

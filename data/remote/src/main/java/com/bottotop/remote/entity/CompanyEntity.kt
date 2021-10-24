@@ -8,7 +8,7 @@ import kotlinx.serialization.json.JsonTransformingSerializer
 
 @Serializable
 data class CompaniesEntity(
-    val code: String,
+    val code: String ="",
     @Serializable(with = CompanyListSerializer::class)
     val companies: List<CompanyEntity>
 )
