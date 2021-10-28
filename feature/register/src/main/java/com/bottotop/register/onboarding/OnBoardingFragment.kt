@@ -12,6 +12,7 @@ import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.ext.isVisible
 import com.bottotop.core.ext.setOnSingleClickListener
+import com.bottotop.core.ext.showToast
 import com.bottotop.register.R
 import com.bottotop.register.databinding.FragmentOnboardingBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,9 +39,7 @@ class OnBoardingFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG, "onCreate: ${navArg.toString()}", )
         if(navArg.msg == "noCompany"){
-            Log.e(TAG, "onCreate: 43536346", )
             findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
         }
     }
@@ -48,8 +47,8 @@ class OnBoardingFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewpager()
-        observeToast()
         observeLoading()
+        navSuccess()
     }
 
     override fun onDestroyView() {
@@ -63,7 +62,6 @@ class OnBoardingFragment :
             onboardNext.setOnSingleClickListener {
                 if (viewpager.currentItem == 3) {
                     this@OnBoardingFragment.viewModel.setUser()
-                    findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
                 }
                 else{
                     viewPager.setCurrentItem(viewpager.currentItem + 1)
@@ -93,6 +91,16 @@ class OnBoardingFragment :
     fun observeLoading() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
+        })
+    }
+
+    fun navSuccess(){
+        viewModel.success.observe(viewLifecycleOwner,{
+            if(it){
+                findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
+            }else{
+                showToast("계정생성에 실패했습니다.")
+            }
         })
     }
 }

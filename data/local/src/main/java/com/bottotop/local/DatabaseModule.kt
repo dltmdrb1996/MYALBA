@@ -2,6 +2,7 @@ package com.bottotop.local
 
 import android.content.Context
 import androidx.room.Room
+import com.bottotop.local.dao.CompanyDao
 import com.bottotop.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -26,8 +27,14 @@ internal object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideSampleDao(database: MyjobDatabase) : UserDao {
+    fun provideUserDao(database: MyjobDatabase) : UserDao {
         return database.userDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCompanyDao(database: MyjobDatabase) : CompanyDao {
+        return database.companyDao()
     }
 
     @Singleton

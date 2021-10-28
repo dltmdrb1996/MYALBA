@@ -23,7 +23,6 @@ class MemberViewModel @Inject constructor(
     val sample: LiveData<User> = _sample
 
     init {
-        test()
         handleLoading(false)
         Log.e(TAG, "뷰모델시작")
     }
@@ -32,41 +31,5 @@ class MemberViewModel @Inject constructor(
         super.onCleared()
     }
 
-    fun test() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            _sample.postValue(dataRepository.getUser())
-            dataRepository.updateUser(
-                mapOf(
-                    Pair("id", SocialInfo.id),
-                    Pair("target", "com_id"),
-                    Pair("change", SocialInfo.id)
-                )
-            )
-        }
-    }
-
-    fun setUser() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            dataRepository.setUser(
-                mapOf<String, String>(
-                    Pair("id", SocialInfo.id),
-                    Pair("tel", SocialInfo.tel),
-                    Pair("birth", SocialInfo.birth),
-                    Pair("name", SocialInfo.name),
-                    Pair("email", SocialInfo.email),
-                )
-            )
-        }
-    }
-
-    suspend fun setCompany() {
-        val query : Map<String,String> = mapOf(
-            Pair("id", SocialInfo.id),
-            Pair("target", "com_id"),
-            Pair("change" , SocialInfo.social)
-        )
-        dataRepository.updateUser(query)
-
-    }
 
 }

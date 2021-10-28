@@ -25,8 +25,7 @@ class NaverDataSource @Inject constructor(@ApplicationContext context: Context) 
 
     suspend fun loadUser(): Boolean {
         val result = getNaverUser()
-        val map = parseNaverUser(result)
-        return map
+        return parseNaverUser(result)
     }
 
     private suspend fun getNaverUser(): String =

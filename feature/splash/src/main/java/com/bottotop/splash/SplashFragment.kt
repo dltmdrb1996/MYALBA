@@ -24,10 +24,9 @@ class SplashFragment :
     BaseFragment<FragmentSplashBinding, SplashViewModel>(R.layout.fragment_splash, "스플래쉬") {
 
     override val viewModel: SplashViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.e(TAG, "onCreate: test")
     }
 
     override fun onCreateView(
@@ -91,13 +90,12 @@ class SplashFragment :
     fun observeToken(){
         viewModel.login.observe(viewLifecycleOwner,{
             when(it){
-                LoginState.Suceess -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                LoginState.Success -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
                 LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("first"))
                 LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
                 LoginState.NoToken -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("noToken"))
+                LoginState.NoData -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("noData"))
             }
         })
     }
-
-
 }

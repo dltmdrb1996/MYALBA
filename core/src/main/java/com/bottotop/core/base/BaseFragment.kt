@@ -20,7 +20,7 @@ import kotlin.reflect.KClass
 abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes private val layoutResId: Int , name : String) : Fragment() {
 
     protected var _binding: B? = null
-    private val binding get() = _binding!!
+    protected val binding get() = _binding!!
     protected abstract val viewModel : VM
     protected val TAG = name
 
@@ -29,6 +29,7 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         performDataBinding()
+        observeToast()
         return binding.root
     }
 
@@ -45,7 +46,7 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
 
     open fun observeToast(){
         viewModel.toast.observe(viewLifecycleOwner, EventObserver{
-            showToast(it)
+            showToast(it,false)
         })
     }
 

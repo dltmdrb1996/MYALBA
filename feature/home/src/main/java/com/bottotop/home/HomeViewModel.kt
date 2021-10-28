@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
+import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,18 +16,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val socialLoginRepository: SocialLoginRepository,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider,
+    private val dataRepository: DataRepository
 ) : BaseViewModel("홈뷰모델") {
 
     private val _info = MutableLiveData<Boolean>()
     val info : LiveData<Boolean> = _info
 
     init {
-        if(SocialInfo.name.isEmpty()) {
-            loadUser()
-        }else{
-            handleLoading(false)
-            _info.value= true
+        viewModelScope.launch(dispatcherProvider.io) {
+            Log.e(TAG, "${dataRepository.getMembers()}: ")
+            Log.e(TAG, "${dataRepository.getCompanies()}: ")
         }
     }
 
@@ -34,30 +34,6 @@ class HomeViewModel @Inject constructor(
         super.onCleared()
     }
 
-    fun loadUser(){
-        viewModelScope.launch(dispatcherProvider.io) {
-            when(SocialInfo.social){
-                "kakao" -> {
-                    if(socialLoginRepository.getKakaoInfo()){
-                        _info.postValue(true)
-                        handleLoading(false)
-                    }else{
-                        Log.e(TAG, "searchToken: 카카오 정보 불러오기 실패", )
-                        handleLoading(false)
-                    }
-                }
-                "naver" -> {
-                    if(socialLoginRepository.getNaverInfo()){
-                        _info.postValue(true)
-                        handleLoading(false)
-                    }else{
-                        Log.e(TAG, "searchToken: 네이버 정보 불러오기 실패", )
-                        handleLoading(false)
-                    }
-                }
-            }
-        }
-    }
 
     fun logoutKakao() {
         viewModelScope.launch(dispatcherProvider.io) {

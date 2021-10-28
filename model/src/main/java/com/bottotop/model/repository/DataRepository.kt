@@ -1,18 +1,30 @@
 package com.bottotop.model.repository
 
-import com.bottotop.model.APIResult
 import com.bottotop.model.Company
-import com.bottotop.model.Sample
 import com.bottotop.model.User
-import kotlinx.coroutines.flow.Flow
+import com.bottotop.model.wrapper.APIResult
+import com.bottotop.model.wrapper.Result
 
 interface DataRepository {
-    suspend fun getUser() : User
-    suspend fun setUser(info : Map<String,String>) : APIResult
-    suspend fun updateUser(id_target_change : Map<String,String>)
-    suspend fun refreshUser(id : String) : APIResult
-    suspend fun refreshAndGetUser(id : String) : User
 
-    suspend fun getCompanies(id : String) : List<Company>
-    suspend fun setCompany(info : Map<String,String>) : APIResult
+    //로컬에 갱신된 데이터저장
+    //refresh
+    suspend fun refreshUser(id : String) : APIResult
+    suspend fun refreshCompanies(id : String) : APIResult
+
+    // 로컬에서 데이터를 불러옴
+    //get
+    suspend fun getUser(id : String) : User
+    suspend fun getCompanies() : List<Company>
+    suspend fun getMembers() : List<User>
+    suspend fun getCompany(id : String) : Company
+
+    //set
+    suspend fun setCompany(info : Map<String,String>): APIResult
+    suspend fun setUser(info : Map<String,String>) : APIResult
+
+    //update
+    suspend fun updateUser(id_target_change : Map<String,String>) : APIResult
+
+    suspend fun handleError(code : Int , tag : String) : APIResult.Error
 }

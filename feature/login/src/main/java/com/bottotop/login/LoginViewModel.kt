@@ -33,31 +33,30 @@ class LoginViewModel @Inject constructor(
 
     lateinit var user : User
 
-    private val _movie = MutableLiveData<String>()
-    val movie: LiveData<String> = _movie
-
     private val _login = MutableLiveData<LoginState>()
     val login : LiveData<LoginState> = _login
 
-    init {
-        viewModelScope.launch(dispatcherProvider.io){
-            user = dataRepository.getUser()
+    var userFlag = false
+
+    fun getUser(){
+        viewModelScope.launch(dispatcherProvider.io) {
+            user = dataRepository.getUser(SocialInfo.id)
         }
     }
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
-            _login.postValue(LoginState.NoToken)
+            _login.postValue(LoginState.NoData)
             Log.e(TAG, "로그인 실패", error)
         } else if (token != null) {
             SocialInfo.social = "kakao"
-            if (user.code == "200") {
-                if (user.company.isEmpty()) {
+            if (userFlag) {
+                if (user.company == "null") {
                     _login.postValue(LoginState.NoCompany)
                 } else{
-                    _login.postValue(LoginState.Suceess)
+                    _login.postValue(LoginState.Success)
                 }
-            } else if (user.code == "404") {
+            } else {
                 _login.postValue(LoginState.Register)
             }
         }
@@ -69,19 +68,19 @@ class LoginViewModel @Inject constructor(
                 val expiresAt = mOAuthLoginModule.getExpiresAt(context)
                 Log.e(TAG, "naver 남은시간 : ${expiresAt}", )
                 SocialInfo.social = "naver"
-                if (user.code == "200") {
+                if (userFlag) {
                     if (user.company == "null") {
                         _login.postValue(LoginState.NoCompany)
                     } else{
-                        _login.postValue(LoginState.Suceess)
+                        _login.postValue(LoginState.Success)
                     }
-                } else if (user.code == "404") {
+                } else {
                     _login.postValue(LoginState.Register)
                 }
             } else {
                 val errorCode = mOAuthLoginModule.getLastErrorCode(context).code
                 val errorDesc = mOAuthLoginModule.getLastErrorDesc(context)
-                _login.postValue(LoginState.NoToken)
+                _login.postValue(LoginState.NoData)
                 Log.e(TAG, "NaverLoginHandle : ${errorCode} , ${errorDesc}", )
             }
         }

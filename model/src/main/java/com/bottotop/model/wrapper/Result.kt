@@ -1,4 +1,4 @@
-package com.bottotop.core.model
+package com.bottotop.model.wrapper
 
 /**
  * A generic class that holds a value with its loading status.
@@ -8,13 +8,11 @@ sealed class Result<out R> {
 
     data class Success<out T>(val data: T) : Result<T>()
     data class Error(val exception: Throwable) : Result<Nothing>()
-    object Loading : Result<Nothing>()
 
     override fun toString(): String {
         return when (this) {
             is Success<*> -> "Success[data=$data]"
             is Error -> "Error[exception=$exception]"
-            Loading -> "Loading"
         }
     }
 }
@@ -36,7 +34,6 @@ inline fun <R, T> Result<T>.map(transform: (T) -> R): Result<R> {
     return when (this) {
         is Result.Success -> Result.Success(transform(data))
         is Result.Error -> Result.Error(exception)
-        Result.Loading -> Result.Loading
     }
 }
 
@@ -50,6 +47,5 @@ inline fun <R, T> Result<T>.mapCatching(transform: (T) -> R): Result<R> {
             }
         }
         is Result.Error -> Result.Error(exception)
-        Result.Loading -> Result.Loading
     }
 }

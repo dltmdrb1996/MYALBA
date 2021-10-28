@@ -10,6 +10,7 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:background="@color/colorBg"
         android:padding="20dp"
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
@@ -46,10 +47,12 @@
                 android:id="@+id/edt_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.code}"
+                android:text="@={viewModel.com_name}"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
-                android:hint="코드를 입력해주세요"
+                android:hint="가게이름을 입력해주세요"
                 />
 
             <TextView
@@ -67,11 +70,25 @@
                 android:id="@+id/edt_Tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="번호입력"
+                android:hint="번호입력 010 포함"
                 android:inputType="number"
-                android:text="@={viewModel.startTime}"
+                android:text="@={viewModel.com_tel}"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_tel" />
+
+            <TextView
+                android:id="@+id/tv_Tel_Notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="번호를 정확히 입력해주세요 "
+                android:textSize="@dimen/text_normal"
+                android:textColor="@color/red_deep_font"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_Tel" />
+
 
             <TextView
                 android:id="@+id/tv_Pay"
@@ -88,33 +105,36 @@
                 android:id="@+id/edt_Pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="종료시간입력"
-                android:text="@={viewModel.endTime}"
+                android:hint="시급입력"
+                android:text="@={viewModel.pay}"
                 android:inputType="number"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_Pay" />
 
-            <EditText
-                android:id="@+id/edt_Pat"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_Pay_Notice"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="종료시간입력"
-                android:text="@={viewModel.endTime}"
-                android:inputType="number"
+                android:text="숫자가 정확하지 않습니다"
+                android:textSize="@dimen/text_normal"
+                android:textColor="@color/red_deep_font"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_Pay" />
+                app:layout_constraintTop_toBottomOf="@+id/edt_Pay" />
 
             <Button
+                android:id="@+id/btn_Reg_Com"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radius_bg_20dp"
                 android:text="입력완료"
-                android:onClick="@{()->viewModel.setCompany()}"
+                android:onClick="@{()->viewModel.makeCompany()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_Pay" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

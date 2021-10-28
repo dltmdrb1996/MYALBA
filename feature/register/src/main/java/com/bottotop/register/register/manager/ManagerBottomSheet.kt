@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import com.bottotop.core.base.BaseBottomSheet
+import com.bottotop.core.ext.isInvisible
+import com.bottotop.core.ext.isVisible
+import com.bottotop.core.ext.showToast
+import com.bottotop.core.navigation.NavigationFlow
+import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.register.R
-import com.bottotop.register.databinding.AlbaBottomSheetBinding
 import com.bottotop.register.databinding.ManagerBottomSheetBinding
 import com.bottotop.register.register.RegisterViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -44,6 +46,11 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initObserver()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -51,5 +58,39 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun initObserver(){
+        viewModel.pay.observe(viewLifecycleOwner,{
+            if(it.isNullOrEmpty()){
+                binding.tvPayNotice.isInvisible()
+                binding.btnRegCom.isEnabled = true
+                return@observe
+            }
+            if(it.first()=='0') {
+                binding.tvPayNotice.isVisible()
+                binding.btnRegCom.isEnabled = false
+            }
+            else binding.tvPayNotice.isInvisible()
+
+        })
+        viewModel.com_tel.observe(viewLifecycleOwner,{
+            if(it.isNullOrEmpty()){
+                binding.tvTelNotice.isInvisible()
+                return@observe
+            }
+            if(it.length>=12) {
+                binding.tvTelNotice.isVisible()
+            }
+            else binding.tvTelNotice.isInvisible()
+        })
+        viewModel.managerComplete.observe(viewLifecycleOwner,{
+            if(it){
+                (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                this.dismiss()
+            }else{
+                showToast("등록에 실패했습니다.")
+            }
+        })
     }
 }

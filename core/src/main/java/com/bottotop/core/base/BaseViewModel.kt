@@ -5,6 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bottotop.core.model.Event
+import com.bottotop.model.APIError
+import com.bottotop.model.wrapper.APIResult
+import com.bottotop.model.wrapper.Result
+import com.bottotop.model.wrapper.data
 
 open class BaseViewModel(private val name : String) : ViewModel() {
 
@@ -30,8 +34,29 @@ private val _isLoading = MutableLiveData<Boolean>()
         _toast.postValue(Event(message))
     }
 
+    fun getAPIResult(result : APIResult) : Boolean{
+        return when(result){
+            is APIResult.Success -> true
+            is APIResult.Error -> getAPIError(result.error)
+        }
+    }
+
+    fun getAPIError(error : APIError) : Boolean{
+        when(error){
+            is APIError.SeverError -> showToast("서버접속이 원할하지 않습니다.")
+            is APIError.KeyValueError ->showToast("해당하는 데이터가 존재하지 않습니다")
+            is APIError.NullValueError ->showToast("데이터가 없습니다.")
+            is APIError.Error -> {
+                Log.e(TAG, "getAPIError: ${error.e}", )
+                showToast("에러가 발생했습니다.")
+            }
+        }
+        return false
+    }
+
     override fun onCleared() {
         Log.e(TAG, "onCleared: 종료", )
         super.onCleared()
     }
+
 }

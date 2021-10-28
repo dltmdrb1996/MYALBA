@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.bottotop.core.ext.showToast
 import com.bottotop.register.databinding.FragmentAlbaBinding
 import com.bottotop.register.register.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,12 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AlbaFragment : Fragment() {
 
-    private var _binding: FragmentAlbaBinding? = null
-    private val binding: FragmentAlbaBinding get() = _binding!!
-
     private val parentViewModel: RegisterViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
+
+    private var _binding: FragmentAlbaBinding? = null
+    private val binding: FragmentAlbaBinding get() = _binding!!
+    private lateinit var bottomSheet : AlbaBottomSheet
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,8 +33,8 @@ class AlbaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bottomSheet=AlbaBottomSheet(parentViewModel)
         setBtn()
-        parentViewModel.showToast("알바화면")
     }
 
     override fun onDestroyView() {
@@ -42,10 +45,10 @@ class AlbaFragment : Fragment() {
     fun setBtn(){
         binding.apply {
             btnCode.setOnClickListener {
-                val bottomSheet = AlbaBottomSheet(parentViewModel)
                 bottomSheet.show(childFragmentManager, bottomSheet.tag)
             }
         }
     }
+
 
 }

@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserEntity(
-    @SerialName("code")
-    val code: String= "",
     @SerialName("PK")
     val id: String =  "",
     @SerialName("tel")
@@ -18,5 +16,8 @@ data class UserEntity(
     @SerialName("email")
     val email: String = "",
     @SerialName("com_id")
-    val com_id: String = ""
+    val com_id: String = "",
+    @SerialName("social")
+    val social: String = "",
+
 )

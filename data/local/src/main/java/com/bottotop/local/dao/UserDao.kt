@@ -13,5 +13,9 @@ internal interface UserDao {
     suspend fun insert(obj: LocalUserEntity)
 
     @Query("SELECT * FROM user")
-    fun getUser(): LocalUserEntity
+    fun getMember(): List<LocalUserEntity>
+
+    @Query("SELECT * FROM user WHERE pk LIKE (:id)")
+    fun getUser(id : String): LocalUserEntity
+
 }

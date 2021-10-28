@@ -28,27 +28,20 @@ class MemberFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLoading()
-        smaple()
         _binding?.loginBtnGoHome?.setOnSingleClickListener {
             (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
         }
-        observeToast()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
     }
 
-    fun observeLoading(){
+    fun observeLoading() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
-            Log.e(TAG, "observeLoading: ${it}", )
+            Log.e(TAG, "observeLoading: ${it}",)
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
 
-    fun smaple(){
-        viewModel.sample.observe(viewLifecycleOwner,{
-            showToast("${it.code} , ${it.company}")
-        })
-    }
 }

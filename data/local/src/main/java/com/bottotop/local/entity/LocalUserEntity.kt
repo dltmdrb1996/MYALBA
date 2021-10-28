@@ -7,20 +7,18 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "user")
 data class LocalUserEntity(
     @PrimaryKey
-    @ColumnInfo(name = "pk" , defaultValue = "user")
+    @ColumnInfo(name = "pk")
     val pk: String,
-    @ColumnInfo(name = "id")
-    val id: String,
-    @ColumnInfo(name = "code")
-    val code: String,
-    @ColumnInfo(name = "birth" , defaultValue = "")
+    @ColumnInfo(name = "birth")
     val birth: String,
-    @ColumnInfo(name = "email" , defaultValue = "")
+    @ColumnInfo(name = "email")
     val email: String,
-    @ColumnInfo(name = "name" , defaultValue = "")
+    @ColumnInfo(name = "name")
     val name: String,
-    @ColumnInfo(name = "tell" , defaultValue = "")
+    @ColumnInfo(name = "tell")
     val tel: String,
-    @ColumnInfo(name = "com_id" , defaultValue = "")
+    @ColumnInfo(name = "com_id")
     val com_id: String,
+    @ColumnInfo(name = "social")
+    val social: String,
 )

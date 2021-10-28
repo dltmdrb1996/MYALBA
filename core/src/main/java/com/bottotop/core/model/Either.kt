@@ -7,6 +7,10 @@ sealed class Either<out L, out R> {
     /** * Represents the right side of [Either] class which by convention is a "Success". */
     data class Right<out R>(val b: R) : Either<Nothing, R>()
 
+
+    val Either<*,*>.succeeded
+        get() = this is Right<*> && b != null
+
     /**
      * Returns true if this is a Right, false otherwise.
      * @see Right

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.bottotop.register.register.RegisterViewModel" />
@@ -11,11 +12,12 @@
 
 
     <androidx.core.widget.NestedScrollView
-        android:padding="20dp"
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:gravity="center"
+        android:padding="20dp"
         android:text="bottomSheet Dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,119 +34,127 @@
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:id="@+id/tv_Code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="등록코드입력 (테스트용 코드 test)"
                 android:textSize="@dimen/text_big"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="등록코드입력 (테스트용 코드 test)"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/edt_Code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.code}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_Code"
                 android:hint="코드를 입력해주세요"
-                />
+                android:text="@={viewModel.code}"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_Code" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:text="근무요일선택"
                 android:textSize="@dimen/text_big"
                 android:textStyle="bold"
-                android:text="근무요일선택"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_Code" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(근무시작날짜가 기준)"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                app:layout_constraintStart_toEndOf="@+id/textView3" />
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/check_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@={viewModel.checkMon}"
                 android:text="월요일"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView3"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/text_normal"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView3" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/check_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="화요일"
                 android:checked="@={viewModel.checkTus}"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/check_1"
+                android:text="화요일"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/text_normal"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_1" />
+
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/check_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="수요일"
                 android:checked="@={viewModel.checkWed}"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/check_2"
+                android:text="수요일"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/text_normal"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_2" />
+
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/check_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="목요일"
                 android:checked="@={viewModel.checkThu}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/check_3"
+                android:text="목요일"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/text_normal"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_3" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/check_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="금요일"
                 android:checked="@={viewModel.checkFri}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/check_4"
+                android:text="금요일"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/text_normal"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_4" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/check_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@={viewModel.checkSat}"
-                android:text="월요일"
-                app:layout_constraintStart_toStartOf="@id/check_5"
-                app:layout_constraintTop_toBottomOf="@id/check_5"
+                android:text="토요일"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/text_normal"
-                />
+                app:layout_constraintStart_toStartOf="@id/check_5"
+                app:layout_constraintTop_toBottomOf="@id/check_5" />
+
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/check_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@={viewModel.checkSun}"
-                android:text="월요일"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/check_6"
+                android:text="일요일"
+                android:textColor="@color/colorText"
                 android:textSize="@dimen/text_normal"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_6" />
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:id="@+id/tv_Work_Start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="근무 시작 시간을 입력해주세요"
                 android:textSize="@dimen/text_big"
                 android:textStyle="bold"
@@ -156,16 +166,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(날짜가 바뀌는 근무도 그대로 입력해주세요)"
-                app:layout_constraintTop_toBottomOf="@id/tv_Work_Start"
-                />
+                android:textColor="@color/colorText"
+                app:layout_constraintTop_toBottomOf="@id/tv_Work_Start" />
+
             <EditText
-                android:maxLength="2"
                 android:id="@+id/edt_Start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="시작시간입력"
                 android:inputType="number"
+                android:maxLength="2"
                 android:text="@={viewModel.startTime}"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_Work_Start2" />
 
@@ -174,9 +187,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="숫자가 정확하지 않습니다"
-                android:visibility="gone"
-                android:textSize="@dimen/text_normal"
                 android:textColor="@color/red_deep_font"
+                android:textSize="@dimen/text_normal"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_Start" />
 
@@ -196,31 +209,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="종료시간입력"
-                android:text="@={viewModel.endTime}"
                 android:inputType="number"
+                android:text="@={viewModel.endTime}"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_Work_End" />
 
             <TextView
-                android:maxLength="2"
                 android:id="@+id/tv_end_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="숫자가 정확하지 않습니다"
-                android:textSize="@dimen/text_normal"
                 android:textColor="@color/red_deep_font"
+                android:textSize="@dimen/text_normal"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_End" />
 
-
             <Button
-                android:layout_marginTop="@dimen/margin_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_layout"
                 android:background="@drawable/radius_bg_20dp"
-                android:text="입력완료"
                 android:onClick="@{()->viewModel.setCompany()}"
+                android:text="입력완료"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

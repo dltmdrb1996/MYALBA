@@ -30,7 +30,6 @@ class AssetFragment :
         _binding?.loginBtnGoHome?.setOnSingleClickListener {
             (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
         }
-        observeToast()
         observeLoading()
     }
 

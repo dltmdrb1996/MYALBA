@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import com.bottotop.core.base.BaseBottomSheet
 import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.ext.isVisible
+import com.bottotop.core.ext.showToast
+import com.bottotop.core.navigation.NavigationFlow
+import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.register.R
 import com.bottotop.register.databinding.AlbaBottomSheetBinding
 import com.bottotop.register.register.RegisterViewModel
@@ -58,7 +58,6 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
     }
 
     fun initObserver(){
-
         viewModel.startTime.observe(viewLifecycleOwner,{
             if(it.isNullOrEmpty()) {
                 binding.tvStartNotice.isInvisible()
@@ -75,5 +74,15 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
             if(it.toInt()>=25) binding.tvEndNotice.isVisible()
             else binding.tvEndNotice.isInvisible()
         })
+        viewModel.albaComplete.observe(viewLifecycleOwner,{
+            if(it){
+                (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                this.dismiss()
+            }else{
+                showToast("등록에 실패했습니다.")
+            }
+        })
     }
+
+
 }

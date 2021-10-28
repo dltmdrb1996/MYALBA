@@ -12,31 +12,45 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".register.manager.ManagerFragment">
+        tools:context=".register.alba.AlbaFragment">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="가게를 등록하세요"
+            android:text="가게를 등록하고 직원을 쉽게 관리해보세요"
             android:textSize="@dimen/text_big"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.core.widget.NestedScrollView
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/email"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginTop="30dp"
+            android:id="@+id/btn_reg"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius_bg_20dp"
+            android:text="가게 등록"
+            android:textColor="@color/colorText"
+            app:icon="@drawable/file_text"
+            app:iconGravity="start"
+            app:iconTint="@color/colorText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-             >
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 
-        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

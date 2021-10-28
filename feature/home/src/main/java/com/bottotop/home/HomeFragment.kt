@@ -39,7 +39,6 @@ class HomeFragment :
         setBtn()
         setUserInfo()
         todayWorkAdapter()
-        observeToast()
         observeLoading()
     }
 

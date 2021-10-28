@@ -9,6 +9,7 @@ plugins {
 apply from: rootProject.file("android.gradle")
 
 dependencies {
+    implementation project(':model')
 
     implementation(AndroidX.APP_COMPAT)
     implementation(AndroidX.CORE_KTX)

@@ -60,7 +60,6 @@ class ScheduleFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setViewPagerData(month)
-        observeToast()
         observeLoading()
         setViewPager()
         setChangeMonthBtn()
@@ -116,30 +115,53 @@ class ScheduleFragment :
     }
 
     fun setChangeMonthBtn() {
-        _binding?.apply {
+        binding.apply {
+            schedulePreviousTv.text = (month - 1).toString() + "월"
+            scheduleCurrentTv.text = month.toString() + "월"
+            scheduleNextTv.text = (month + 1).toString() + "월"
             scheduleBackBtn.setOnSingleClickListener {
                 if (month <= 1) return@setOnSingleClickListener
-                if (scheduleNextTv.isInvisible) scheduleNextTv.isVisible()
-                month = month - 1
-                this@ScheduleFragment.viewModel.setViewPagerData(month)
-                schedulePreviousTv.text = (month - 1).toString() + "월"
-                scheduleCurrentTv.text = month.toString() + "월"
-                scheduleNextTv.text = (month + 1).toString() + "월"
-                if (month == 1) {
-                    schedulePreviousTv.isInvisible()
-                }
+                changeMonthBack()
+            }
+            schedulePreviousTv.setOnSingleClickListener {
+                if (month <= 1) return@setOnSingleClickListener
+                changeMonthBack()
             }
             scheduleNextBtn.setOnSingleClickListener {
                 if (month >= 12) return@setOnSingleClickListener
-                if (schedulePreviousTv.isInvisible) schedulePreviousTv.isVisible()
-                month = month + 1
-                this@ScheduleFragment.viewModel.setViewPagerData(month)
-                schedulePreviousTv.text = (month - 1).toString() + "월"
-                scheduleCurrentTv.text = month.toString() + "월"
-                scheduleNextTv.text = (month + 1).toString() + "월"
-                if (month == 12) {
-                    if (month == 12) scheduleNextTv.isInvisible()
-                }
+                changeMonthPrev()
+            }
+            scheduleNextTv.setOnSingleClickListener {
+                if (month >= 12) return@setOnSingleClickListener
+                changeMonthPrev()
+            }
+        }
+    }
+
+    private fun changeMonthBack(){
+        binding.apply {
+            if (scheduleNextTv.isInvisible) scheduleNextTv.isVisible()
+            month = month - 1
+            this@ScheduleFragment.viewModel.setViewPagerData(month)
+            schedulePreviousTv.text = (month - 1).toString() + "월"
+            scheduleCurrentTv.text = month.toString() + "월"
+            scheduleNextTv.text = (month + 1).toString() + "월"
+            if (month == 1) {
+                schedulePreviousTv.isInvisible()
+            }
+        }
+    }
+
+    private fun changeMonthPrev(){
+        binding.apply {
+            if (schedulePreviousTv.isInvisible) schedulePreviousTv.isVisible()
+            month = month + 1
+            this@ScheduleFragment.viewModel.setViewPagerData(month)
+            schedulePreviousTv.text = (month - 1).toString() + "월"
+            scheduleCurrentTv.text = month.toString() + "월"
+            scheduleNextTv.text = (month + 1).toString() + "월"
+            if (month == 12) {
+                if (month == 12) scheduleNextTv.isInvisible()
             }
         }
     }
