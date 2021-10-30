@@ -62,4 +62,8 @@ interface ApiService {
         @Query("month") month : String,
     ) : Response<ScheduleEntity>
 
+    @PUT("schedule")
+    suspend fun updateSchedule(
+        @Query("query") query : String ,
+    ) : Response<ResponseBody>
 }

@@ -26,6 +26,8 @@ interface DataRepository {
 
     //update
     suspend fun updateUser(id_target_change : Map<String,String>) : APIResult
+    suspend fun updateSchedule(id_target_scheduleInfo : Map<String,String>) : APIResult
+
 
     suspend fun handleError(code : Int , tag : String) : APIResult.Error
 }

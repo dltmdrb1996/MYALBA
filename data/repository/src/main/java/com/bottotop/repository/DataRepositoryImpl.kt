@@ -94,7 +94,7 @@ internal class DataRepositoryImpl @Inject constructor(
             }
             member
         } catch (e: Exception) {
-            Log.e(TAG, "getUser: Room에서 유저불러오기 에러")
+            Log.e(TAG, "getMembers: Room에서 유저불러오기 에러")
             error(e)
         }
     }
@@ -105,7 +105,7 @@ internal class DataRepositoryImpl @Inject constructor(
             val member = CompanyMapper.from(memberEntity)
             member
         } catch (e: Exception) {
-            Log.e(TAG, "getUser: Room에서 유저불러오기 에러")
+            Log.e(TAG, "getCompany: Room에서 유저불러오기 에러")
             error(e)
         }
     }
@@ -120,9 +120,11 @@ internal class DataRepositoryImpl @Inject constructor(
                     Result.Success(schedule)
                 }
                 404 -> {
+                    Log.e(TAG, "getSchedule: 404에러", )
                     Result.Error(Error("찾는 Key 정보가 없음"))
                 }
                 else -> {
+                    Log.e(TAG, "getSchedule: 서버에러", )
                     Result.Error(Throwable("서버에러"))
                 }
             }
@@ -205,6 +207,20 @@ internal class DataRepositoryImpl @Inject constructor(
             }
         } catch (e: Throwable) {
             Log.e(TAG, "updateUser: ${e}")
+            APIResult.Error(APIError.Error(e))
+        }
+    }
+
+    override suspend fun updateSchedule(query : Map<String,String>): APIResult {
+        return try {
+            val json = Json.encodeToString(query)
+            val response = apiService.updateSchedule(json)
+            when {
+                response.code() == 200 -> APIResult.Success
+                else -> handleError(response.code(), "updateSchedule")
+            }
+        } catch (e: Throwable) {
+            Log.e(TAG, "updateSchedule: ${e}")
             APIResult.Error(APIError.Error(e))
         }
     }

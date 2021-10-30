@@ -9,7 +9,9 @@ java {
 }
 
 dependencies {
+
     implementation(Kotlin.COROUTINES_ANDROID)
     implementation(Kotlin.COROUTINES_CORE)
+
 
 }

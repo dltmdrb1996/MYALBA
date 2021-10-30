@@ -45,7 +45,10 @@ class HomeViewModel @Inject constructor(
                 dataUtil.currentMonth.toString(),
                 scheduleInfo
                 )
-            dataRepository.setSchedule(schedule)
+            dataRepository.updateSchedule(mapOf(
+                Pair("id",SocialInfo.id),
+                Pair("month","10")
+            ))
             Log.e(TAG, "${dataRepository.getMembers()}: ")
             Log.e(TAG, "${dataRepository.getCompanies()}: ")
         }

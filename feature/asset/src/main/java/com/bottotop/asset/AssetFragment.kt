@@ -10,7 +10,9 @@ import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.setOnSingleClickListener
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigatable
+import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AssetFragment :
@@ -18,6 +20,7 @@ class AssetFragment :
 
     private val vm by viewModels<AssetViewModel>()
     override val viewModel get() = vm
+
 
     override fun setBindings() {
         _binding?.viewModel = viewModel
