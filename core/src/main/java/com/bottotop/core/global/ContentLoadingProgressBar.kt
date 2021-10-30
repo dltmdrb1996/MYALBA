@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bottotop.core
+
+package com.bottotop.core.global
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ProgressBar
+import com.bottotop.core.util.Interpolators
 
 /**
  * The following codes are copied from ContentLoadingProgressBar

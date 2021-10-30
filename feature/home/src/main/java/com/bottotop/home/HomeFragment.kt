@@ -71,9 +71,9 @@ class HomeFragment :
 
     fun todayWorkAdapter(){
         val dummy = listOf(
-            ScheduleInfo("이승규" , "08","16") ,
-            ScheduleInfo("이승규" , "08","16") ,
-            ScheduleInfo("이승규" , "08","16") ,
+            ScheduleInfo("29" , "08","16","8") ,
+            ScheduleInfo("29" , "08","16","8") ,
+            ScheduleInfo("29" , "08","16","8") ,
             )
         adapter.submitList(dummy)
     }

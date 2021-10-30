@@ -36,7 +36,6 @@ sealed class DeepLinkDestination(val address: String) {
     class Member(msg: String) : DeepLinkDestination("example://member/exampleArgs?msg={msg}")
     class Schedule(msg: String) : DeepLinkDestination("example://schedule/exampleArgs?msg={msg}")
     class Setting(msg: String) : DeepLinkDestination("example://setting/exampleArgs?msg={msg}")
-    class Main(msg: String) : DeepLinkDestination("example://main/exampleArgs?msg={msg}")
     class ScheduleDetail(msg: String) : DeepLinkDestination("example://scheduleDetail/exampleArgs?msg={msg}")
     class Register(msg:String) : DeepLinkDestination("example://register/exampleArgs?msg={msg}")
 }

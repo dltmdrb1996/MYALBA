@@ -8,8 +8,11 @@ interface LocalDataSource {
     suspend fun insertUser(user: LocalUserEntity)
     suspend fun getUser(id: String): LocalUserEntity
     suspend fun getMember(): List<LocalUserEntity>
+    suspend fun deleteMember(id : String)
 
     suspend fun insertCompany(company : LocalCompanyEntity)
     suspend fun getCompany(id: String): LocalCompanyEntity
     suspend fun getCompanies(): List<LocalCompanyEntity>
+    suspend fun nukeCompany()
+
 }

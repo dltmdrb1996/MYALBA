@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bottotop.core
+package com.bottotop.core.util
 
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
@@ -22,6 +22,7 @@ import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 import android.view.animation.PathInterpolator
+import com.bottotop.core.lazyFast
 
 object Interpolators {
 

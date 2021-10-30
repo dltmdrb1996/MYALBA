@@ -72,6 +72,7 @@ class DateTime {
     var HHFormat: DateFormat = SimpleDateFormat("HH")
     var mmFormat: DateFormat = SimpleDateFormat("mm")
     var ampmFormat: DateFormat = SimpleDateFormat("a")
+    private val TIME_PATTERN : String = "HH:mm"
     private val PATTERN : String = "MM dd일 E요일"
     private val DAY_PATTERN : String = "dd"
 
@@ -133,12 +134,15 @@ class DateTime {
         return Date()
     }
 
-    fun getCurrentDateTimeAsLong(): Long {
-        return Date().time
+    fun getCurrentDateTimeAsLong(): String {
+        return Date().time.toString()
     }
 
-    fun getCurrentDateFromStringFormat(format: String): String {
-        return getFormattedDate(getCurrentDate().time, format)
+    fun getTimeLongToString(time : Long) : String {
+        return getFormattedDate(time, TIME_PATTERN)
+    }
+    fun getCurrentDateFromStringFormat(): String {
+        return getFormattedDate(getCurrentDate().time, TIME_PATTERN)
     }
 
     fun getWeekStartDate(day: Int , month: Int): Date? {
@@ -212,6 +216,13 @@ class DateTime {
         return ddFormat.format(date)
     }
 
+    fun getDateRangeByNumberOfDays(date: Date?, numberOfDays: Int): Int{
+        val dates: Array<Date?> = arrayOfNulls(2)
+        val cal = Calendar.getInstance()
+        cal.time = date
+        cal.add(Calendar.DAY_OF_YEAR, numberOfDays)
+        return cal.get(Calendar.DAY_OF_MONTH)
+    }
 
     //endregion time Utilities
 

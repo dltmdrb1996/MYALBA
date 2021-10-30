@@ -19,6 +19,10 @@ internal class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun getMember(): List<LocalUserEntity> = userDao.getMember()
 
+    override suspend fun deleteMember(id: String) {
+        userDao.deleteMember(id)
+    }
+
     override suspend fun insertCompany(company : LocalCompanyEntity) {
         companyDao.insert(company)
     }
@@ -26,6 +30,10 @@ internal class LocalDataSourceImpl @Inject constructor(
     override suspend fun getCompany(id: String): LocalCompanyEntity = companyDao.getCompany(id)
 
     override suspend fun getCompanies(): List<LocalCompanyEntity> = companyDao.getCompanies()
+
+    override suspend fun nukeCompany() {
+        companyDao.nukeCompany()
+    }
 
 
 }

@@ -98,18 +98,18 @@ class ScheduleFragment :
         val today = dateUtil.getTodayWeek()
         val currentMonth = dateUtil.currentMonth
         schedule?.forEach {
-            if (it.day == today && it.itemMonth == currentMonth) {
-                val day = today.take(2).toInt()
-                val start =
-                    DateTime().getDayTimeToString(dateUtil.getWeekStartDate(day, month))?.toInt()
-                val focus = day - start!!
-                viewPager.setCurrentItem(97 + focus!!, false)
-                viewPager.requestFocus(View.FOCUS_LEFT)
-                textView.waitForMeasure { view, width, height, x, y ->
-                    _binding?.scheduleScroll?.scrollTo(0, y.toInt() + 100)
-                }
-                return
-            }
+//            if (it.day == today && it.itemMonth == currentMonth) {
+//                val day = today.take(2).toInt()
+//                val start =
+//                    DateTime().getDayTimeToString(dateUtil.getWeekStartDate(day, month))?.toInt()
+//                val focus = day - start!!
+//                viewPager.setCurrentItem(97 + focus!!, false)
+//                viewPager.requestFocus(View.FOCUS_LEFT)
+//                textView.waitForMeasure { view, width, height, x, y ->
+//                    _binding?.scheduleScroll?.scrollTo(0, y.toInt() + 100)
+//                }
+//                return
+//            }
             viewPager.setCurrentItem(98, false)
         }
     }

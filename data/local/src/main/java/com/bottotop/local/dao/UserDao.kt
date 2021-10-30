@@ -18,4 +18,7 @@ internal interface UserDao {
     @Query("SELECT * FROM user WHERE pk LIKE (:id)")
     fun getUser(id : String): LocalUserEntity
 
+    @Query("DELETE FROM user WHERE pk NOT LIKE (:id)")
+    fun deleteMember(id : String)
+
 }

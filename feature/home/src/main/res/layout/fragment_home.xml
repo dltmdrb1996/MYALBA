@@ -53,6 +53,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:padding="@dimen/margin_title"
                 android:id="@+id/home_container1_1"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/layout_height"
@@ -67,7 +68,6 @@
                 app:layout_constraintTop_toBottomOf="@id/home_container"
                 app:layout_constraintVertical_weight="0.3">
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,6 +76,7 @@
                 android:layout_height="@dimen/layout_height"
                 android:layout_marginLeft="@dimen/margin_layout"
                 android:layout_marginTop="@dimen/margin_layout"
+                android:padding="@dimen/margin_title"
                 android:background="@drawable/radius_bg_20dp"
                 app:layout_constraintBottom_toTopOf="@id/home_container2"
                 app:layout_constraintEnd_toStartOf="@+id/home_container1_1"
@@ -87,8 +88,6 @@
                     android:id="@+id/home_Today_Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_title"
-                    android:layout_marginTop="20dp"
                     android:text="근무자"
                     android:textSize="@dimen/text_title"
                     android:textStyle="bold"
@@ -98,7 +97,6 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:layout_margin="@dimen/margin_item"
                     android:adapter="@{adapter}"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="always"
@@ -112,6 +110,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:padding="@dimen/margin_title"
                 android:id="@+id/home_container2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/layout_height"
@@ -125,18 +124,53 @@
                 app:layout_constraintTop_toBottomOf="@id/home_container1"
                 app:layout_constraintVertical_weight="0.25">
 
-                <Button
-                    android:id="@+id/btn_kakao_logout"
+                <TextView
+                    android:id="@+id/text3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="카카오 로그아웃" />
+                    android:text="일한시간 :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tv_work_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="3 : 30"
+                    app:layout_constraintStart_toEndOf="@+id/text3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_item"
+                    android:text="오늘금액 :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text3" />
+
+                <TextView
+                    android:id="@+id/tv_work_money"
+                    android:layout_marginTop="@dimen/margin_item"
+                    android:layout_marginLeft="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="35000원"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_work_time" />
 
                 <Button
-                    android:id="@+id/btn_naver_logout"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/work_check"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="네이버로그아웃"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:background="@drawable/radius_bg_20dp"
+                    android:text="출근하기"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="0.3"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -153,6 +187,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/home_container2"
                 app:layout_constraintVertical_weight="0.25">
+
+                <Button
+                    android:id="@+id/btn_kakao_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="카카오 로그아웃" />
+
+                <Button
+                    android:id="@+id/btn_naver_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="네이버로그아웃"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

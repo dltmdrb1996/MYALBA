@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.bottotop.core.ext.showToast
+import com.bottotop.core.navigation.NavigationFlow
+import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.register.databinding.FragmentManagerBinding
 import com.bottotop.register.register.RegisterViewModel
 import com.bottotop.register.register.alba.AlbaBottomSheet
@@ -36,6 +38,7 @@ class ManagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheet = ManagerBottomSheet(parentViewModel)
+        completeRegister()
         setBtn()
     }
 
@@ -50,6 +53,13 @@ class ManagerFragment : Fragment() {
                 bottomSheet.show(childFragmentManager, bottomSheet.tag)
             }
         }
+    }
+
+    fun completeRegister(){
+        parentViewModel.managerComplete.observe(viewLifecycleOwner,{
+            bottomSheet.dismiss()
+            if(it) (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+        })
     }
 
 }

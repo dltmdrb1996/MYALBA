@@ -13,7 +13,6 @@
     <include app:graph="@navigation/member_flow" />
     <include app:graph="@navigation/schedule_flow" />
     <include app:graph="@navigation/setting_flow" />
-    <include app:graph="@navigation/main_flow" />
     <include app:graph="@navigation/register_flow"/>
 
     <action
@@ -56,8 +55,6 @@
     <action
         android:id="@+id/action_global_home_flow"
         app:destination="@id/home_flow"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
         app:popUpTo="@id/main_nav_graph"
         app:popUpToInclusive="true"
         >
@@ -114,22 +111,6 @@
         app:popUpTo="@id/main_nav_graph"
         app:popUpToInclusive="true"
         >
-        <argument
-            android:name="msg"
-            app:argType="string" />
-    </action>
-
-
-
-
-
-    <action
-        android:id="@+id/action_global_main_flow"
-        app:destination="@id/main_flow"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popUpTo="@id/main_nav_graph"
-        app:popUpToInclusive="true">
         <argument
             android:name="msg"
             app:argType="string" />

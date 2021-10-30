@@ -63,7 +63,7 @@
             app:menu="@menu/bottom_nav_menu" />
 
 
-        <com.bottotop.core.ContentLoadingProgressBar
+        <com.bottotop.core.global.ContentLoadingProgressBar
             android:id="@+id/loadingView"
             style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="48dp"

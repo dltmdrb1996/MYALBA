@@ -1,9 +1,8 @@
 package com.bottotop.model
 
 data class ScheduleInfo(
-    val name : String ,
-    val start : String ,
-    val end : String
-){
-
-}
+    val day : String,
+    val startTime : String,
+    val endTime : String,
+    val workTime : String,
+)

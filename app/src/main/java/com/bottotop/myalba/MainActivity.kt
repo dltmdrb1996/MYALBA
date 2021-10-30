@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         firstNetworkCheck()
-        observeSherdViewModel()
+        observeSharedViewModel()
         initBottomNavigation()
         setSupportActionBar(binding.appToolbar)
         getDivice()
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
         binding.loadingView.isInProgress = isLoading
     }
 
-    fun observeSherdViewModel() {
+    private fun observeSharedViewModel() {
         viewModel.sample.observe(this, {
             showToast("공유성공")
         })
@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
         }
     }
 
-    fun observeNetwork() {
+    private fun observeNetwork() {
         mNetworkCallback = object : NetworkCallback() {
             override fun onAvailable(network: Network) {
                 Log.e(TAG, "네트워크 활성화")

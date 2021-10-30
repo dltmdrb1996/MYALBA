@@ -46,7 +46,7 @@ class DayAdapter(private val viewModel: ScheduleViewModel) :
 
 class TaskDiffCallback : DiffUtil.ItemCallback<ScheduleInfo>() {
     override fun areItemsTheSame(oldItem: ScheduleInfo, newItem: ScheduleInfo): Boolean {
-        return oldItem.name == newItem.name && oldItem.start == newItem.start && oldItem.end == newItem.end
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: ScheduleInfo, newItem: ScheduleInfo): Boolean {

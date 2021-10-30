@@ -25,8 +25,6 @@ class Navigator {
             .navigate(MainNavGraphDirections.actionGlobalSettingFlow(navigationFlow.msg))
         is NavigationFlow.CommunityFlow -> navController
             .navigate(MainNavGraphDirections.actionGlobalCommunityFlow(navigationFlow.msg))
-        is NavigationFlow.MainFlow -> navController
-            .navigate(MainNavGraphDirections.actionGlobalMainFlow(navigationFlow.msg))
         is NavigationFlow.RegisterFlow -> navController
             .navigate(MainNavGraphDirections.actionGlobalRegisterFlow(navigationFlow.msg))
     }

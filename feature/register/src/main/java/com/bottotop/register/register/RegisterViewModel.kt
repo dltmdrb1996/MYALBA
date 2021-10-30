@@ -46,6 +46,7 @@ class RegisterViewModel @Inject constructor(
                 val companies = dataRepository.getCompanies()
                 val company = companies[0]
                 updateUserCompany(code.value!!)
+
                 company.apply {
                     val companySuccess = getAPIResult(dataRepository.setCompany(
                         mapOf<String, String>(
@@ -60,19 +61,23 @@ class RegisterViewModel @Inject constructor(
                             Pair("workday", checkWeek()),
                         )
                     ))
+
                     if(companySuccess){
-                        Log.e(TAG, "setCompany: test", )
                         val refresh = getAPIResult(dataRepository.refreshCompanies(code.value!!))
                         if(refresh){
+                            Log.e(TAG, "setCompany: test", )
                             handleLoading(false)
                             _albaComplete.postValue(true)
+                        }else{
+                            Log.e(TAG, "setCompany: testfaile", )
+                            _albaComplete.postValue(false)
                         }
+                    }else{
+                        _albaComplete.postValue(false)
                     }
-                    Log.e(TAG, "setCompany: testfaile", )
-                    handleLoading(false)
-                    _albaComplete.postValue(false)
                 }
             }
+            handleLoading(false)
         }
     }
 
@@ -167,10 +172,13 @@ class RegisterViewModel @Inject constructor(
                 if(refresh) {
                     handleLoading(false)
                     _managerComplete.postValue(true)
+                }else{
+                    _managerComplete.postValue(false)
                 }
+            }else{
+                _managerComplete.postValue(false)
             }
             handleLoading(false)
-            _managerComplete.postValue(false)
         }
     }
 

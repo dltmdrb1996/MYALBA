@@ -38,32 +38,25 @@ class Schedule7DayAdapter(private val viewModel: ScheduleViewModel) :
         fun bind(item: Schedule) {
             binding.apply {
                 schedule = item
-                val week = item.day.takeLast(3)
-                var str  = StringBuilder()
-
-                if (item.itemMonth != item.currentMonth) this.itemCard.alpha = 0.5f
-                if (week == "토요일" || week == "일요일") title.setTextColor(Color.rgb(186, 7, 9))
-
-                if (item.day == today && item.currentMonth == month) this.itemCard.strokeWidth = 8
-                else this.itemCard.strokeWidth = 0
-
-                cardBtn.setOnClickListener {
-                    it.findNavController().navigate(R.id.action_scheduleFragment_to_scheduleDetailFragment)
-                }
-
-                item.text.forEachIndexed { idx , it ->
-                    if(idx != item.text.size-1) {
-                        str.append("${it.name} : ${it.start}~${it.end}\n")
-                    }
-                    else {
-                        str.append("${it.name} : ${it.start}~${it.end}")
-                    }
-                }
-
-                content.text = str
-//                viewModel = this@AdapterViewHolder.viewModel
-//                adapter = this@AdapterViewHolder.adapter
-//                this@AdapterViewHolder.adapter.submitList(item.text)
+//                val week = "월요일"
+//                var str  = StringBuilder()
+//
+//                if (item.month != item.month) this.itemCard.alpha = 0.5f
+//                if (week == "토요일" || week == "일요일") title.setTextColor(Color.rgb(186, 7, 9))
+////
+//                if (item.day == today && item.currentMonth == month) this.itemCard.strokeWidth = 8
+//                else this.itemCard.strokeWidth = 0
+//
+//                item.scheduleInfo.forEachIndexed { idx , it ->
+//                    if(idx != item.text.size-1) {
+//                        str.append("${it.name} : ${it.start}~${it.end}\n")
+//                    }
+//                    else {
+//                        str.append("${it.name} : ${it.start}~${it.end}")
+//                    }
+//                }
+//
+//                content.text = str
                 executePendingBindings()
             }
         }
@@ -123,7 +116,7 @@ private class DiffUtilCallback(
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldItem = oldItems[oldItemPosition]
         val newItem = newItems[newItemPosition]
-        return oldItem.currentMonth == newItem.currentMonth
+        return oldItem.scheduleInfo == newItem.scheduleInfo
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

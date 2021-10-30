@@ -86,7 +86,6 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
         })
         viewModel.managerComplete.observe(viewLifecycleOwner,{
             if(it){
-                (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
                 this.dismiss()
             }else{
                 showToast("등록에 실패했습니다.")

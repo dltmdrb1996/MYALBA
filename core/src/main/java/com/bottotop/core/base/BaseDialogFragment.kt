@@ -20,15 +20,12 @@ abstract class BaseDialogFragment<B : ViewDataBinding>(private val layoutId: Int
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-
         performDataBinding()
-
         return binding.root
     }
 
     private fun performDataBinding() {
         setBindings()
-
         binding.lifecycleOwner = this
         binding.executePendingBindings()
     }

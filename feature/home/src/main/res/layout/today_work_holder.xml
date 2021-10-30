@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_big"
-            android:text="@{item.name}"
+            android:text="이승규"
             />
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_big"
-            android:text="@{item.start}"/>
+            android:text="@{item.startTime}"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,6 +42,6 @@
             android:textSize="@dimen/text_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.end}"/>
+            android:text="@{item.endTime}"/>
     </LinearLayout>
 </layout>

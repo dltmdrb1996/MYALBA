@@ -23,8 +23,9 @@ class MemberViewModel @Inject constructor(
     val sample: LiveData<User> = _sample
 
     init {
-        handleLoading(false)
-        Log.e(TAG, "뷰모델시작")
+        viewModelScope.launch(dispatcherProvider.io){
+            dataRepository.getSchedule(SocialInfo.id,"10")
+        }
     }
 
     override fun onCleared() {

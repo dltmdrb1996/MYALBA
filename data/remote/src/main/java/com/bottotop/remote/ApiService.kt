@@ -17,6 +17,7 @@ package com.bottotop.remote
 
 import com.bottotop.remote.entity.CompaniesEntity
 import com.bottotop.remote.entity.ResponseResult
+import com.bottotop.remote.entity.ScheduleEntity
 import com.bottotop.remote.entity.UserEntity
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -49,4 +50,16 @@ interface ApiService {
     suspend fun setCompany(
         @Query("company") company : String
     ) : Response<ResponseBody>
+
+    @POST("schedule")
+    suspend fun setSchedule(
+        @Query("schedule") schedule : String
+    ) : Response<ResponseBody>
+
+    @GET("schedule")
+    suspend fun getSchedule(
+        @Query("id") id : String,
+        @Query("month") month : String,
+    ) : Response<ScheduleEntity>
+
 }

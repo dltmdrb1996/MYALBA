@@ -19,4 +19,7 @@ internal interface CompanyDao {
     @Query("SELECT * FROM company WHERE pk LIKE (:id)")
     fun getCompany(id : String): LocalCompanyEntity
 
+    @Query("DELETE FROM company")
+    fun nukeCompany()
+
 }
