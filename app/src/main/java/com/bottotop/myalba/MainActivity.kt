@@ -83,6 +83,9 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
     }
 
     override fun showLoading(isLoading: Boolean) {
+        if(isLoading) binding.mainLayout.alpha = 0.5f
+        else binding.mainLayout.alpha = 1f
+        binding.mainLayout.isClickable = isLoading
         binding.loadingView.isInProgress = isLoading
     }
 

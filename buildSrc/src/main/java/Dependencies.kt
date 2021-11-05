@@ -7,7 +7,6 @@ object Apps {
     const val TARGET_SDK = 30
     const val VERSION_CODE = 2
     const val VERSION_NAME = "1.0.1"
-
 }
 
 object Versions {

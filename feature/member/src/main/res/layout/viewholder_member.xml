@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+        <import type="androidx.core.content.ContextCompat" />
+        <variable
+            name="viewModel"
+            type="com.bottotop.member.MemberViewModel" />
+        <variable
+            name="item"
+            type="com.bottotop.member.MemberModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_margin="15dp"
+        android:background="@drawable/radius_bg_20dp"
+        android:backgroundTint="@{context.getResources().getColor(item.color[0])}"
+        android:layout_width="150dp"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_person_pin_24"
+
+            />
+
+        <TextView
+            android:layout_margin="@dimen/margin_item"
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"
+            android:text="@{item.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_Work_On"
+            android:layout_width="2dp"
+            android:layout_height="10dp"
+            android:textColor="@{item.color[2]}"
+            android:layout_margin="@dimen/margin_item"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_margin="@dimen/margin_item"
+            android:id="@+id/textview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:textStyle="bold"
+            android:textColor="@{context.getResources().getColor(item.color[2])}"
+            android:text="나이: "
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/tv_Age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@{context.getResources().getColor(item.color[1])}"
+            android:textSize="@dimen/text_normal"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintStart_toEndOf="@id/textview1"
+            android:text="@{item.age}"
+            />
+
+        <TextView
+            android:layout_margin="@dimen/margin_item"
+            android:id="@+id/textview2"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@{context.getResources().getColor(item.color[2])}"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="시급: "
+            app:layout_constraintTop_toBottomOf="@id/textview1"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/tv_Pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@{context.getResources().getColor(item.color[1])}"
+            android:textSize="@dimen/text_normal"
+            app:layout_constraintTop_toBottomOf="@id/textview1"
+            app:layout_constraintStart_toEndOf="@id/textview2"
+            android:text="@{item.pay}"
+            />
+
+        <TextView
+            android:id="@+id/textview3"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/margin_item"
+            android:textColor="@{context.getResources().getColor(item.color[2])}"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:textStyle="bold"
+            android:text="tel: "
+            app:layout_constraintTop_toBottomOf="@id/textview2"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/tv_Tel"
+            android:textColor="@{context.getResources().getColor(item.color[1])}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_normal"
+            app:layout_constraintTop_toBottomOf="@id/textview2"
+            app:layout_constraintStart_toEndOf="@id/textview3"
+            android:text="@{item.tel}"
+            />
+
+        <TextView
+            android:id="@+id/textview4"
+            android:layout_margin="@dimen/margin_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@{context.getResources().getColor(item.color[2])}"
+            android:text="email: "
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/textview3"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/tv_Email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_small"
+            android:textColor="@{context.getResources().getColor(item.color[1])}"
+            app:layout_constraintTop_toBottomOf="@id/textview3"
+            app:layout_constraintStart_toEndOf="@id/textview4"
+            android:text="@{item.email}"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            app:cornerRadius="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전화걸기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

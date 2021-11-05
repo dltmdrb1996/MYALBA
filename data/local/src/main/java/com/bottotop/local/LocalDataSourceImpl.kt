@@ -2,8 +2,10 @@ package com.bottotop.local
 
 import com.bottotop.local.dao.CompanyDao
 import com.bottotop.local.dao.UserDao
+import com.bottotop.local.entity.DayScheduleEntity
 import com.bottotop.local.entity.LocalCompanyEntity
 import com.bottotop.local.entity.LocalUserEntity
+import com.bottotop.model.DaySchedule
 import javax.inject.Inject
 
 internal class LocalDataSourceImpl @Inject constructor(
@@ -33,6 +35,19 @@ internal class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun nukeCompany() {
         companyDao.nukeCompany()
+    }
+
+    override suspend fun deleteDaySchedule() {
+        userDao.deleteSchedule()
+    }
+
+    override suspend fun insertDaySchedule(day : String , time : String) {
+        userDao.insertSchedule(DayScheduleEntity(day, time))
+    }
+
+    override suspend fun getDaySchedule(): DaySchedule {
+        val entity = userDao.getSchedule()
+        return DaySchedule(entity.day,entity.time)
     }
 
 

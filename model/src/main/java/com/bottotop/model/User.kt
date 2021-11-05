@@ -7,5 +7,6 @@ data class User(
     val name: String,
     val email: String,
     val company: String,
-    val social : String
+    val social : String,
+    val workOn : String
 )

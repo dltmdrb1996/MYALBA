@@ -14,26 +14,26 @@
         android:layout_height="match_parent"
         tools:context=".CommunityFragment">
 
-        <TextView
-            android:id="@+id/tv_Login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="커뮤니티프래그먼트"
-            android:textSize="30sp"
-            android:textStyle="bold"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <Button
-            android:onClick="@{()->viewModel.test()}"
-            android:id="@+id/login_Btn_Go_home"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/community_Btn_Create"
+            android:layout_margin="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이동"/>
-
+            android:src="@drawable/ic_baseline_create_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

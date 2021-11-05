@@ -19,7 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDialogFragment() {
 
-    protected var _binding: AlbaBottomSheetBinding? = null
+    private var _binding: AlbaBottomSheetBinding? = null
     private val binding get() = _binding!!
 
 //    private val viewModel : RegisterViewModel by viewModels(
@@ -75,11 +75,8 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
             else binding.tvEndNotice.isInvisible()
         })
         viewModel.albaComplete.observe(viewLifecycleOwner,{
-            if(it){
-                this.dismiss()
-            }else{
-                showToast("등록에 실패했습니다.")
-            }
+            if(it) this.dismiss()
+            else showToast("등록에 실패했습니다.")
         })
     }
 

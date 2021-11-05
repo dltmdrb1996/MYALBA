@@ -68,6 +68,7 @@
                 app:layout_constraintTop_toBottomOf="@id/home_container"
                 app:layout_constraintVertical_weight="0.3">
 
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,9 +78,9 @@
                 android:layout_marginLeft="@dimen/margin_layout"
                 android:layout_marginTop="@dimen/margin_layout"
                 android:padding="@dimen/margin_title"
+                app:layout_constraintEnd_toStartOf="@id/home_container1_1"
                 android:background="@drawable/radius_bg_20dp"
                 app:layout_constraintBottom_toTopOf="@id/home_container2"
-                app:layout_constraintEnd_toStartOf="@+id/home_container1_1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/home_container"
                 app:layout_constraintVertical_weight="0.3">
@@ -88,15 +89,16 @@
                     android:id="@+id/home_Today_Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="근무자"
-                    android:textSize="@dimen/text_title"
+                    android:text="오늘의 근무자"
+                    android:textSize="@dimen/text_big"
                     android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="wrap_content"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:adapter="@{adapter}"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="always"
@@ -138,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
-                    android:text="3 : 30"
+                    android:text="@{viewModel.workTime}"
                     app:layout_constraintStart_toEndOf="@+id/text3"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -157,16 +159,19 @@
                     android:layout_marginLeft="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="35000원"
+                    android:text="@{viewModel.workPay}"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toBottomOf="@+id/tv_work_time" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/work_check"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/radius_bg_20dp"
-                    android:text="출근하기"
+                    app:cornerRadius="30dp"
+                    app:strokeWidth="0.5dp"
+                    app:strokeColor="@color/colorText"
+                    android:text="@{viewModel.workOn}"
+                    android:onClick="@{()->viewModel.checkWork()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="0.3"
@@ -192,7 +197,8 @@
                     android:id="@+id/btn_kakao_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="카카오 로그아웃" />
+                    android:onClick="@{()->viewModel.endWork()}"
+                    android:text="퇴근하기" />
 
                 <Button
                     android:id="@+id/btn_naver_logout"

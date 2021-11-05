@@ -12,7 +12,6 @@
         android:background="@color/blue_bg"
         >
 
-
         <ImageView
             android:id="@+id/board_img"
             android:layout_width="match_parent"
@@ -56,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:textAlignment="center"
-                android:text="    환영합니다 내알빠는 쉽게 \n 직원들을 관리해주는 앱입니다."
                 android:textSize="@dimen/text_title"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +66,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="   가게의 스케줄관리 , 커뮤니티와 공지 \n 급여관리등 많은 작업들을 보조해줍니다."
                 android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

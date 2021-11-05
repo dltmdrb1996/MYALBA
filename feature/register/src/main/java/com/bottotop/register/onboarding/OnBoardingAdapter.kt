@@ -38,6 +38,8 @@ class OnBoardingAdapter : RecyclerView.Adapter<OnBoardingAdapter.ViewHolder>() {
                         binding.onboardTvSub.text = ""
                     }
                 }
+                this.executePendingBindings()
+                this.notifyChange()
             }
         }
 
@@ -59,6 +61,7 @@ class OnBoardingAdapter : RecyclerView.Adapter<OnBoardingAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.requestLayout()
         holder.bind(position)
     }
 

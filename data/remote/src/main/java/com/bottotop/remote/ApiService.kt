@@ -15,12 +15,11 @@
  */
 package com.bottotop.remote
 
+import com.bottotop.remote.entity.CommunityListEntity
 import com.bottotop.remote.entity.CompaniesEntity
-import com.bottotop.remote.entity.ResponseResult
 import com.bottotop.remote.entity.ScheduleEntity
 import com.bottotop.remote.entity.UserEntity
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -53,7 +52,7 @@ interface ApiService {
 
     @POST("schedule")
     suspend fun setSchedule(
-        @Query("schedule") schedule : String
+        @Query("query") query : String
     ) : Response<ResponseBody>
 
     @GET("schedule")
@@ -66,4 +65,19 @@ interface ApiService {
     suspend fun updateSchedule(
         @Query("query") query : String ,
     ) : Response<ResponseBody>
+
+    @PATCH("schedule")
+    suspend fun updateDetailSchedule(
+        @Query("query") query: String
+    ) : Response<ResponseBody>
+
+    @POST("community")
+    suspend fun setCommunity(
+        @Query("query") query : String
+    ) : Response<ResponseBody>
+
+    @GET("community")
+    suspend fun getCommunity(
+        @Query("com_id") query : String
+    ) : Response<CommunityListEntity>
 }

@@ -9,10 +9,7 @@ import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
-import com.bottotop.model.wrapper.APIResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,7 +27,7 @@ class OnBoardingViewModel @Inject constructor(
     private val _success = MutableLiveData<Boolean>()
     val success : LiveData<Boolean> = _success
 
-    fun getUserInfo(){
+    private fun getUserInfo(){
         viewModelScope.launch(dispatcherProvider.io) {
             if(SocialInfo.social=="naver"){
                 socialLoginRepository.getNaverInfo()
@@ -43,24 +40,23 @@ class OnBoardingViewModel @Inject constructor(
     fun setUser() {
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
-            val success = getAPIResult(dataRepository.setUser(
+            val setUser = getAPIResult(dataRepository.setUser(
                 mapOf<String, String>(
-                    // 여기서 id를 이메일로 바꾸면됨 네이버로그인이 계속 유지되면 바꾸는 시도 ㄱㄱ
                     Pair("id", SocialInfo.id),
                     Pair("tel", SocialInfo.tel),
                     Pair("birth", SocialInfo.birth),
                     Pair("name", SocialInfo.name),
                     Pair("email", SocialInfo.email),
                     Pair("social", SocialInfo.social),
-                    Pair("com_id", "null")
+                    Pair("com_id", "null"),
+                    Pair("workOn","off")
                 )
-            ))
-            Log.e(TAG, "setUser: ${success}", )
-            if(success) {
-                dataRepository.refreshUser(SocialInfo.id)
+            ), "$TAG : setUser")
+            if(setUser) {
+                val refreshUser = getAPIResult(dataRepository.refreshUser(SocialInfo.id),"$TAG : refreshUser")
+                if(refreshUser) _success.postValue(true)
+                else showToast("유저생성에 에러가 발생했습니다 잠시후 다시실행해주세요")
                 handleLoading(false)
-                _success.postValue(true)
-                Log.e(TAG, "setUser: ${dataRepository.getUser(SocialInfo.id)}", )
             }else{
                 handleLoading(false)
                 _success.postValue(false)

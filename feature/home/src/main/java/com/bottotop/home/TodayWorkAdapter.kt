@@ -5,26 +5,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bottotop.core.util.DateTime
 import com.bottotop.home.databinding.TodayWorkHolderBinding
 import com.bottotop.model.ScheduleInfo
+import com.bottotop.model.ScheduleItem
 
 class TodayWorkAdapter(private val viewModel: HomeViewModel) :
-    ListAdapter<ScheduleInfo, TodayWorkAdapter.ViewHolder>(TaskDiffCallback()) {
+    ListAdapter<ScheduleItem, TodayWorkAdapter.ViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(viewModel, item)
+        holder.bind(viewModel, item )
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-
     class ViewHolder private constructor(val binding: TodayWorkHolderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: HomeViewModel, item: ScheduleInfo) {
+        fun bind(viewModel: HomeViewModel, item: ScheduleItem ) {
             binding.item = item
             binding.viewModel = viewModel
             binding.executePendingBindings()
@@ -40,12 +41,12 @@ class TodayWorkAdapter(private val viewModel: HomeViewModel) :
     }
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<ScheduleInfo>() {
-    override fun areItemsTheSame(oldItem: ScheduleInfo, newItem: ScheduleInfo): Boolean {
+class TaskDiffCallback : DiffUtil.ItemCallback<ScheduleItem>() {
+    override fun areItemsTheSame(oldItem: ScheduleItem, newItem: ScheduleItem): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: ScheduleInfo, newItem: ScheduleInfo): Boolean {
+    override fun areContentsTheSame(oldItem: ScheduleItem, newItem: ScheduleItem): Boolean {
         return oldItem == newItem
     }
 }

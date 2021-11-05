@@ -21,4 +21,6 @@ data class LocalUserEntity(
     val com_id: String,
     @ColumnInfo(name = "social")
     val social: String,
+    @ColumnInfo(name = "workOn")
+    val workOn : String
 )

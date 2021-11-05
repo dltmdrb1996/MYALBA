@@ -19,7 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDialogFragment() {
 
-    protected var _binding: ManagerBottomSheetBinding? = null
+    private var _binding: ManagerBottomSheetBinding? = null
     private val binding get() = _binding!!
 
 //    private val viewModel : RegisterViewModel by viewModels(
@@ -61,6 +61,7 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
     }
 
     fun initObserver(){
+
         viewModel.pay.observe(viewLifecycleOwner,{
             if(it.isNullOrEmpty()){
                 binding.tvPayNotice.isInvisible()
@@ -72,24 +73,20 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
                 binding.btnRegCom.isEnabled = false
             }
             else binding.tvPayNotice.isInvisible()
-
         })
+
         viewModel.com_tel.observe(viewLifecycleOwner,{
             if(it.isNullOrEmpty()){
                 binding.tvTelNotice.isInvisible()
                 return@observe
             }
-            if(it.length>=12) {
-                binding.tvTelNotice.isVisible()
-            }
+            if(it.length>=12) binding.tvTelNotice.isVisible()
             else binding.tvTelNotice.isInvisible()
         })
+
         viewModel.managerComplete.observe(viewLifecycleOwner,{
-            if(it){
-                this.dismiss()
-            }else{
-                showToast("등록에 실패했습니다.")
-            }
+            if(it) this.dismiss()
+            else showToast("등록에 실패했습니다.")
         })
     }
 }

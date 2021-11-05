@@ -1,12 +1,12 @@
 package com.bottotop.register.register
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
+import com.bottotop.core.util.DateTime
 import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -41,14 +41,15 @@ class RegisterViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcherProvider.io) {
             handleLoading(true)
-            val success = getAPIResult(dataRepository.refreshCompanies(code.value!!))
-            if (success) {
+            val refreshCompanies1 = getAPIResult(dataRepository.refreshCompanies(code.value!!),
+                "$TAG : refreshCompanies1"
+            )
+            if (refreshCompanies1) {
                 val companies = dataRepository.getCompanies()
                 val company = companies[0]
-                updateUserCompany(code.value!!)
-
+                if(!updateUserCompany(code.value!!)) return@launch
                 company.apply {
-                    val companySuccess = getAPIResult(dataRepository.setCompany(
+                    val setCompany = getAPIResult(dataRepository.setCompany(
                         mapOf<String, String>(
                             Pair("id", SocialInfo.id),
                             Pair("com_id", com_id),
@@ -59,62 +60,59 @@ class RegisterViewModel @Inject constructor(
                             Pair("start", startTime.value!!),
                             Pair("end", endTime.value!!),
                             Pair("workday", checkWeek()),
-                        )
-                    ))
+                        )),
+                        "$TAG : setCompany1"
+                    )
 
-                    if(companySuccess){
-                        val refresh = getAPIResult(dataRepository.refreshCompanies(code.value!!))
-                        if(refresh){
-                            Log.e(TAG, "setCompany: test", )
+                    if(setCompany){
+                        val refreshCompanies1_2 = getAPIResult(dataRepository.refreshCompanies(code.value!!),
+                            "$TAG : refreshCompanies1_2"
+                        )
+                        if(refreshCompanies1_2){
                             handleLoading(false)
                             _albaComplete.postValue(true)
                         }else{
-                            Log.e(TAG, "setCompany: testfaile", )
                             _albaComplete.postValue(false)
                         }
                     }else{
                         _albaComplete.postValue(false)
                     }
                 }
+
+                dataRepository.setSchedule(mapOf(Pair("id",SocialInfo.id), Pair("month", DateTime().getYearMonth())))
+
             }
             handleLoading(false)
         }
     }
 
-    private suspend fun updateUserCompany(id: String) {
-        val success = getAPIResult(
+    private suspend fun updateUserCompany(change : String) : Boolean {
+        val updateUser = getAPIResult(
             dataRepository.updateUser(
                 mapOf(
                     Pair("id", SocialInfo.id),
                     Pair("target", "com_id"),
-                    Pair("change", id)
+                    Pair("change", change)
                 )
-            )
-        )
-        if (success) {
-            dataRepository.refreshUser(SocialInfo.id)
-            Log.e(TAG, "updateUserCompany: ${dataRepository.getUser(SocialInfo.id)}")
+            ), "$TAG : updateUser")
+        return if (updateUser) {
+            getAPIResult(dataRepository.refreshUser(SocialInfo.id), "$TAG : refreshUser")
+        }else{
+            false
         }
     }
 
-    fun checkWeek(): String {
+    private fun checkWeek(): String {
         var workBinary : String =""
         val list = listOf(
-            checkMon.value,
-            checkTus.value,
-            checkWed.value,
-            checkThu.value,
-            checkFri.value,
-            checkSat.value,
-            checkSun.value
+            checkMon.value, checkTus.value, checkWed.value, checkThu.value,
+            checkFri.value, checkSat.value, checkSun.value
         )
-        list.forEach {
-            workBinary += if(it==true) "1" else "0"
-        }
+        list.forEach { workBinary += if(it==true) "1" else "0" }
         return workBinary
     }
 
-    fun checkAlbaInform() : Boolean{
+    private fun checkAlbaInform() : Boolean{
         val workBinary = checkWeek()
         if (code.value.isNullOrEmpty()) {
             showToast("코드를 입력해주세요")
@@ -128,10 +126,10 @@ class RegisterViewModel @Inject constructor(
             showToast("시간을 입력해주세요")
             return true
         }
-        if(startTime.value!!.first()=='0' ){
+        if(startTime.value!!.first()=='0' ) {
             startTime.postValue(startTime.value!![1].toString())
         }
-        if( endTime.value!!.first()=='0') {
+        if(endTime.value!!.first()=='0') {
             endTime.postValue(endTime.value!![1].toString())
         }
         if(startTime.value!!.toInt() > 24 || endTime.value!!.toInt() >24){
@@ -153,8 +151,8 @@ class RegisterViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcherProvider.io) {
             handleLoading(true)
-            updateUserCompany(SocialInfo.id)
-            val success = getAPIResult(dataRepository.setCompany(
+            if(!updateUserCompany(SocialInfo.id)) return@launch
+            val setCompany2 = getAPIResult(dataRepository.setCompany(
                 mapOf<String, String>(
                     Pair("id", SocialInfo.id),
                     Pair("com_id", SocialInfo.id),
@@ -164,20 +162,20 @@ class RegisterViewModel @Inject constructor(
                     Pair("position", "A"),
                     Pair("start","null"),
                     Pair("end","null"),
-                    Pair("workday","null")
+                    Pair("workday","0000000")
                 )
-            ))
-            if(success) {
-                val refresh = getAPIResult(dataRepository.refreshCompanies(SocialInfo.id))
-                if(refresh) {
+            ),"$TAG : setCompany2")
+            if(setCompany2) {
+                val refreshCompanies2 = getAPIResult(dataRepository.refreshCompanies(SocialInfo.id),
+                    "$TAG : refreshCompanies2"
+                )
+                if(refreshCompanies2) {
                     handleLoading(false)
                     _managerComplete.postValue(true)
-                }else{
-                    _managerComplete.postValue(false)
                 }
-            }else{
-                _managerComplete.postValue(false)
+                else _managerComplete.postValue(false)
             }
+            else _managerComplete.postValue(false)
             handleLoading(false)
         }
     }

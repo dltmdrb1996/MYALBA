@@ -129,6 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radius_bg_20dp"
+                android:enabled="@{!viewModel.isLoading()}"
                 android:text="입력완료"
                 android:onClick="@{()->viewModel.makeCompany()}"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -19,17 +19,15 @@ class MemberViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel("맴버뷰모델") {
 
-    private val _sample = MutableLiveData<User>()
-    val sample: LiveData<User> = _sample
-
     init {
         viewModelScope.launch(dispatcherProvider.io){
-            dataRepository.getSchedule(SocialInfo.id,"10")
+            try {
+                val member = dataRepository.getMembers()
+                val companies = dataRepository.getCompanies()
+            } catch (e : Throwable){
+                Log.e(TAG, "룸불러오기 에러 : e", )
+            }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 
 

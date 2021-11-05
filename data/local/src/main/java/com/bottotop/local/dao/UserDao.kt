@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.bottotop.local.entity.DayScheduleEntity
 import com.bottotop.local.entity.LocalUserEntity
 
 @Dao
@@ -20,5 +21,14 @@ internal interface UserDao {
 
     @Query("DELETE FROM user WHERE pk NOT LIKE (:id)")
     fun deleteMember(id : String)
+
+    @Query("DELETE FROM schedule")
+    fun deleteSchedule()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSchedule(obj : DayScheduleEntity)
+
+    @Query("SELECT * FROM schedule")
+    fun getSchedule() : DayScheduleEntity
 
 }

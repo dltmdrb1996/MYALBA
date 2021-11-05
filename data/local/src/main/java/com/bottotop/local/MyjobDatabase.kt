@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.bottotop.local.dao.CompanyDao
 import com.bottotop.local.dao.UserDao
+import com.bottotop.local.entity.DayScheduleEntity
 import com.bottotop.local.entity.LocalCompanyEntity
 import com.bottotop.local.entity.LocalUserEntity
 
@@ -11,6 +12,7 @@ import com.bottotop.local.entity.LocalUserEntity
     entities = [
         LocalUserEntity::class,
         LocalCompanyEntity::class,
+        DayScheduleEntity::class
     ],
     version = 1,
     exportSchema = false

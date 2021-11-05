@@ -6,18 +6,20 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserEntity(
     @SerialName("PK")
-    val id: String =  "",
+    val id: String,
     @SerialName("tel")
-    val tel: String = "",
+    val tel: String,
     @SerialName("birth")
-    val birth: String = "",
+    val birth: String,
     @SerialName("name")
-    val name: String = "",
+    val name: String,
     @SerialName("email")
-    val email: String = "",
+    val email: String,
     @SerialName("com_id")
     val com_id: String = "",
     @SerialName("social")
     val social: String = "",
+    @SerialName("workOn")
+    val workOn : String = "off"
 
 )

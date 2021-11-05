@@ -5,9 +5,9 @@ import com.bottotop.local.LocalDataSource
 import com.bottotop.model.*
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.wrapper.APIResult
-import com.bottotop.model.wrapper.Result
 import com.bottotop.remote.ApiService
 import com.bottotop.repository.mapper.*
+import com.bottotop.repository.mapper.CommunityMapper
 import com.bottotop.repository.mapper.CompanyEntityMapper
 import com.bottotop.repository.mapper.CompanyMapper
 import com.bottotop.repository.mapper.ScheduleMapper
@@ -45,18 +45,19 @@ internal class DataRepositoryImpl @Inject constructor(
     override suspend fun refreshCompanies(id: String): APIResult {
         return try {
             val response = apiService.getCompanies(id)
+            Log.e(TAG, "refreshCompanies: ${response.code()}", )
             when {
                 response.code() == 200 -> {
                     if (response.body() == null) return APIResult.Error(APIError.NullValueError)
                     response.body()!!.companies.forEach {
                         val company = CompanyEntityMapper.from(it)
                         localDataSource.insertCompany(company)
-                        val responseUser = apiService.getUser(it.PK)
-                        if (responseUser.code() == 200) {
-                            val user = UserEntityMapper.from(responseUser.body()!!)
+                        val getUser = apiService.getUser(it.PK)
+                        if (getUser.code() == 200) {
+                            val user = UserEntityMapper.from(getUser.body()!!)
                             localDataSource.insertUser(user)
                         } else {
-                            Log.e(TAG, "refreshCompanies: 맴버저장과정에서 에러발생")
+                            handleError(getUser.code(),"getUser in refreshUser")
                         }
                     }
                     APIResult.Success
@@ -69,33 +70,29 @@ internal class DataRepositoryImpl @Inject constructor(
         }
     }
 
-//    override suspend fun refreshMember(): APIResult {
-//
-//    }
-
 
     // GET //
     ////////////////////////////////////////////////////////////////
     override suspend fun getUser(id: String): User {
-        return try {
+        try {
             val user = UserMapper.from(localDataSource.getUser(id))
-            user
+            return user
         } catch (e: Exception) {
             Log.e(TAG, "getUser: Room에서 유저불러오기 에러")
-            error(e)
+            return error(e)
         }
     }
 
     override suspend fun getMembers(): List<User> {
-        return try {
+        try {
             val memberEntity = localDataSource.getMember()
             val member = memberEntity.map {
                 UserMapper.from(it)
             }
-            member
+            return member
         } catch (e: Exception) {
             Log.e(TAG, "getMembers: Room에서 유저불러오기 에러")
-            error(e)
+            return error(e)
         }
     }
 
@@ -117,19 +114,44 @@ internal class DataRepositoryImpl @Inject constructor(
                 200 -> {
                     val entity = response.body()!!
                     val schedule = ScheduleMapper.from(entity)
-                    Result.Success(schedule)
+                    Result.success(schedule)
                 }
                 404 -> {
                     Log.e(TAG, "getSchedule: 404에러", )
-                    Result.Error(Error("찾는 Key 정보가 없음"))
+                    Result.failure(Throwable("찾는 데이터가 없습니다."))
                 }
                 else -> {
                     Log.e(TAG, "getSchedule: 서버에러", )
-                    Result.Error(Throwable("서버에러"))
+                    Result.failure(Throwable("서버에러"))
                 }
             }
         } catch (e: Throwable) {
-            return Result.Error(e)
+            Log.e(TAG, "getSchedule: 에러발생 ${e.message}", )
+            return Result.failure(e)
+        }
+    }
+
+    override suspend fun getCommunity(com_id: String): Result<List<Community>> {
+        try {
+            val response = apiService.getCommunity(com_id)
+            return when (response.code()) {
+                200 -> {
+                    val entity = response.body()!!
+                    val schedule = entity.community.map { CommunityMapper.from(it) }
+                    Result.success(schedule)
+                }
+                404 -> {
+                    Log.e(TAG, "getSchedule: 404에러", )
+                    Result.failure(Throwable("찾는 데이터가 없습니다."))
+                }
+                else -> {
+                    Log.e(TAG, "getSchedule: 서버에러", )
+                    Result.failure(Throwable("서버에러"))
+                }
+            }
+        } catch (e: Throwable) {
+            Log.e(TAG, "getSchedule: 에러발생 ${e.message}", )
+            return Result.failure(e)
         }
     }
 
@@ -154,7 +176,6 @@ internal class DataRepositoryImpl @Inject constructor(
             val response = apiService.setUser(json)
             when {
                 response.code() == 200 -> {
-                    Log.e(TAG, "setUser: ${response.body()}")
                     APIResult.Success
                 }
                 else -> handleError(response.code(), "setUser")
@@ -179,21 +200,34 @@ internal class DataRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setSchedule(schedule: Schedule): APIResult {
+    override suspend fun setSchedule(query : Map<String,String>): APIResult {
         return try {
-            val entity = ScheduleMapper.to(schedule)
-            val json = Json.encodeToString(entity)
-            Log.e(TAG, "setSchedule: ${json}")
+            val json = Json.encodeToString(query)
             val response = apiService.setSchedule(json)
             when {
                 response.code() == 200 -> APIResult.Success
-                else -> handleError(response.code(), "setSchedule")
+                else -> APIResult.Error(APIError.Error(Throwable("이미만들어진상태")))
             }
         } catch (e: Throwable) {
             Log.e(TAG, "setSchedule: ${e}")
             APIResult.Error(APIError.Error(e))
         }
     }
+
+    override suspend fun setCommunity(query : Map<String, String>): APIResult {
+        return try {
+            val json = Json.encodeToString(query)
+            val response = apiService.setCommunity(json)
+            when {
+                response.code() == 200 -> APIResult.Success
+                else -> handleError(response.code(), "setCommunity")
+            }
+        } catch (e: Throwable) {
+            Log.e(TAG, "setCommunity: ${e}")
+            APIResult.Error(APIError.Error(e))
+        }
+    }
+
 
     // UPDATE //
     ////////////////////////////////////////////////////////////////
@@ -217,6 +251,17 @@ internal class DataRepositoryImpl @Inject constructor(
             val response = apiService.updateSchedule(json)
             when {
                 response.code() == 200 -> APIResult.Success
+                response.code() == 300 -> {
+                    val setSchedule = apiService.setSchedule(json)
+                    return when(setSchedule.code()){
+                        200-> {
+                            val setUpdate =apiService.updateSchedule(json)
+                            if (setUpdate.code()==200)APIResult.Success
+                            else handleError(setUpdate.code(),"retry updateSchedule")
+                        }
+                        else -> handleError(setSchedule.code(),"setSchedule in updateSchedule")
+                    }
+                }
                 else -> handleError(response.code(), "updateSchedule")
             }
         } catch (e: Throwable) {
@@ -224,6 +269,33 @@ internal class DataRepositoryImpl @Inject constructor(
             APIResult.Error(APIError.Error(e))
         }
     }
+
+    override suspend fun patchSchedule(query: Map<String, String>): APIResult {
+        return try {
+            val json = Json.encodeToString(query)
+            val response = apiService.updateDetailSchedule(json)
+            when {
+                response.code() == 200 -> APIResult.Success
+                else -> handleError(response.code(), "patchSchedule")
+            }
+        } catch (e: Throwable) {
+            Log.e(TAG, "patchSchedule: ${e}")
+            APIResult.Error(APIError.Error(e))
+        }
+    }
+
+    override suspend fun getDaySchedule(): DaySchedule {
+        return localDataSource.getDaySchedule()
+    }
+
+    override suspend fun insertDaySchedule(day : String , time : String) {
+        localDataSource.insertDaySchedule(day , time)
+    }
+
+    override suspend fun deleteDaySchedule() {
+        localDataSource.getDaySchedule()
+    }
+
 
     override suspend fun handleError(code: Int, tag: String): APIResult.Error {
         return when (code) {
@@ -236,12 +308,12 @@ internal class DataRepositoryImpl @Inject constructor(
                 APIResult.Error(APIError.SeverError)
             }
             else -> {
-                Log.e(TAG, "$tag : 알수없는 statusCode")
+                Log.e(TAG, "$tag : 알수없는 statusCode , 코드 : ${code}")
                 APIResult.Error(APIError.Error(Throwable("설정하지 않은 http code가 날라옴 ")))
             }
         }
     }
-    
+
     companion object {
         val TAG = "DataRepositoryImpl"
     }

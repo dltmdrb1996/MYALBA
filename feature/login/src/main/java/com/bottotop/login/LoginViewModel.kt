@@ -9,6 +9,7 @@ import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.model.LoginState
+import com.bottotop.core.util.DateTime
 import com.bottotop.model.User
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
@@ -44,39 +45,15 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            _login.postValue(LoginState.NoData)
-            Log.e(TAG, "로그인 실패", error)
-        } else if (token != null) {
-            SocialInfo.social = "kakao"
-            if (userFlag) {
-                if (user.company == "null") {
-                    _login.postValue(LoginState.NoCompany)
-                } else{
-                    _login.postValue(LoginState.Success)
-                }
-            } else {
-                _login.postValue(LoginState.Register)
-            }
-        }
-    }
-
-    val mOAuthLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
+    private val mOAuthLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
-                val expiresAt = mOAuthLoginModule.getExpiresAt(context)
-                Log.e(TAG, "naver 남은시간 : ${expiresAt}", )
                 SocialInfo.social = "naver"
                 if (userFlag) {
-                    if (user.company == "null") {
-                        _login.postValue(LoginState.NoCompany)
-                    } else{
-                        _login.postValue(LoginState.Success)
-                    }
-                } else {
-                    _login.postValue(LoginState.Register)
+                    if (user.company == "null") _login.postValue(LoginState.NoCompany)
+                    else initInfo()
                 }
+                else _login.postValue(LoginState.Register)
             } else {
                 val errorCode = mOAuthLoginModule.getLastErrorCode(context).code
                 val errorDesc = mOAuthLoginModule.getLastErrorDesc(context)
@@ -86,13 +63,47 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun initInfo(){
+        handleLoading(true)
+        viewModelScope.launch(dispatcherProvider.io){
+            dataRepository.setSchedule(mapOf(Pair("id",SocialInfo.id), Pair("month",DateTime().getYearMonth())))
+            val refreshCompanies = getAPIResult(dataRepository.refreshCompanies(user.company),
+                "$TAG : refreshCompanies"
+            )
+            handleLoading(false)
+            if(refreshCompanies) _login.postValue(LoginState.Success)
+        }
+    }
+
+    fun getAuth() = mOAuthLoginHandler
+
+
+//
+//    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+//        if (error != null) {
+//            _login.postValue(LoginState.NoData)
+//            Log.e(TAG, "로그인 실패", error)
+//        } else if (token != null) {
+//            SocialInfo.social = "kakao"
+//            if (userFlag) {
+//                if (user.company == "null") {
+//                    _login.postValue(LoginState.NoCompany)
+//                } else{
+//                    _login.postValue(LoginState.Success)
+//                }
+//            } else {
+//                _login.postValue(LoginState.Register)
+//            }
+//        }
+//    }
+//
+
+//    fun getKakaoCallBack() = callback
+
     override fun onCleared() {
         super.onCleared()
         Log.e(TAG, "onCleared: 종료", )
     }
-
-    fun getAuth() = mOAuthLoginHandler
-//    fun getKakaoCallBack() = callback
 
 }
 

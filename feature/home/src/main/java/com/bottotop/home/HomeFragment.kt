@@ -1,6 +1,7 @@
 package com.bottotop.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
@@ -10,7 +11,10 @@ import com.bottotop.home.databinding.FragmentHomeBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.activityViewModels
+import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.global.SharedViewModel
+import com.bottotop.core.util.DateTime
+import com.bottotop.model.ScheduleContent
 import com.bottotop.model.ScheduleInfo
 
 
@@ -24,6 +28,7 @@ class HomeFragment :
     override val viewModel get() = vm
     private val adapter : TodayWorkAdapter by lazy { TodayWorkAdapter(viewModel) }
     private val mainViewModel : SharedViewModel by activityViewModels()
+    private val today = DateTime().getTOdayWeek()
 
     override fun setBindings() {
         _binding?.viewModel = viewModel
@@ -37,9 +42,9 @@ class HomeFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setBtn()
-        setUserInfo()
-        todayWorkAdapter()
+        setTodayWorkAdapter()
         observeLoading()
+        initMasterPage()
     }
 
     override fun onDestroyView() {
@@ -58,23 +63,26 @@ class HomeFragment :
         }
     }
 
-    fun setUserInfo(){
-        viewModel.info.observe(viewLifecycleOwner,{
+    private fun setTodayWorkAdapter(){
+        viewModel.scheduleItem.observe(viewLifecycleOwner,{ list ->
+            adapter.submitList(list)
         })
     }
 
-    fun observeLoading(){
+    private fun observeLoading(){
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
 
-    fun todayWorkAdapter(){
-        val dummy = listOf(
-            ScheduleInfo("29" , "08","16","8") ,
-            ScheduleInfo("29" , "08","16","8") ,
-            ScheduleInfo("29" , "08","16","8") ,
-            )
-        adapter.submitList(dummy)
+    private fun initMasterPage(){
+        viewModel.master.observe(viewLifecycleOwner,{
+            if(it){
+                binding.workCheck.isInvisible()
+                binding.text3.isInvisible()
+                binding.textView2.isInvisible()
+            }
+
+        })
     }
 }

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item"
-            type="com.bottotop.model.ScheduleInfo" />
+            type="com.bottotop.model.ScheduleItem" />
 
         <variable
             name="viewModel"
@@ -21,27 +21,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_big"
-            android:text="이승규"
+            android:textSize="@dimen/text_medium"
+            android:text="@{item.name}"
             />
 
         <TextView
             android:layout_marginLeft="7dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_big"
-            android:text="@{item.startTime}"/>
+            android:textSize="@dimen/text_medium"
+            android:text="@{item.start}"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_big"
+            android:textSize="@dimen/text_small"
             android:text="~"/>
 
         <TextView
-            android:textSize="@dimen/text_big"
+            android:textSize="@dimen/text_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.endTime}"/>
+            android:text="@{item.end}"
+            />
     </LinearLayout>
 </layout>

@@ -21,17 +21,8 @@ class AssetViewModel @Inject constructor(
 ) : BaseViewModel("자원뷰모델") {
 
     init {
-        viewModelScope.launch(dispatcherProvider.io){
-            dataRepository.updateSchedule(mapOf(Pair("id",SocialInfo.id),Pair("month","10")))
-        }
         Log.e(TAG, "뷰모델시작")
     }
 
-    fun clickTest(){
-        Log.e(TAG, "clickTest: 됨?", )
-    }
 
-    fun test(){
-        showToast("test")
-    }
 }

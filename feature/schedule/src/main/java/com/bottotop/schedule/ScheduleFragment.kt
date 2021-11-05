@@ -42,15 +42,6 @@ class ScheduleFragment :
 
     var month by Delegates.notNull<Int>()
     private val dateUtil: DateTime = DateTime()
-    private val adapters: List<Schedule7DayAdapter> by lazy {
-        listOf(
-            Schedule7DayAdapter(viewModel),
-            Schedule7DayAdapter(viewModel),
-            Schedule7DayAdapter(viewModel),
-            Schedule7DayAdapter(viewModel),
-            Schedule7DayAdapter(viewModel)
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,57 +50,68 @@ class ScheduleFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setViewPagerData(month)
         observeLoading()
-        setViewPager()
         setChangeMonthBtn()
+        setViewPager()
+        observeWorkSchedule()
     }
 
     override fun onDestroyView() {
-        _binding?.apply {
-            val list =
-                listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
-            list.forEach { it.adapter = null }
-        }
+//        _binding?.apply {
+//            val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
+//            list.forEach { it.adapter = null }
+//        }
         super.onDestroyView()
     }
 
-    fun setViewPager() {
-        viewModel.schedule.observe(viewLifecycleOwner, { schedule ->
+    private fun observeWorkSchedule(){
+        viewModel.scheduleItem.observe(viewLifecycleOwner,{
+            viewModel.setViewPagerData(month)
+        })
+    }
+
+    private fun setViewPager() {
+        viewModel.viewPager.observe(viewLifecycleOwner, { schedule ->
             _binding?.apply {
                 val tvList = listOf<TextView>(tvPager1, tvPager2, tvPager3, tvPager4, tvPager5)
                 val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
                 list.forEachIndexed { index, viewPager ->
-                    viewPager.adapter = null
-                    viewPager.adapter = adapters[index]
+                    viewPager.adapter = Schedule7DayAdapter(
+                        this@ScheduleFragment.viewModel,
+                        schedule[index]!!,
+                        this@ScheduleFragment.viewModel.scheduleItem.value!!
+                        )
                     viewPager.offscreenPageLimit = 3
                     viewPager.setPageTransformer { page, position ->
                         val offset = position * -(2 * 250 + 250)
                         page.translationX = offset
                     }
-                    schedule[index]?.let { adapters[index].addHeaderAndSumbitList(it) }
                     setLocationViewPager(viewPager, schedule[index], tvList[index])
                 }
             }
         })
     }
 
-    fun setLocationViewPager(viewPager: ViewPager2, schedule: List<Schedule>?, textView: TextView) {
-        val today = dateUtil.getTodayWeek()
-        val currentMonth = dateUtil.currentMonth
+    // 현재 날짜에맞게 포커스를 맞춰준다.
+    private fun setLocationViewPager(
+        viewPager: ViewPager2,
+        schedule: List<List<String>>?,
+        textView: TextView
+    ) {
+        val today = if(dateUtil.getToday().length==1) "0"+dateUtil.getToday() else dateUtil.getToday()
+        val currentMonth = if(dateUtil.currentMonth<=9) "0"+dateUtil.currentMonth.toString() else dateUtil.currentMonth.toString()
         schedule?.forEach {
-//            if (it.day == today && it.itemMonth == currentMonth) {
-//                val day = today.take(2).toInt()
-//                val start =
-//                    DateTime().getDayTimeToString(dateUtil.getWeekStartDate(day, month))?.toInt()
-//                val focus = day - start!!
-//                viewPager.setCurrentItem(97 + focus!!, false)
-//                viewPager.requestFocus(View.FOCUS_LEFT)
-//                textView.waitForMeasure { view, width, height, x, y ->
-//                    _binding?.scheduleScroll?.scrollTo(0, y.toInt() + 100)
-//                }
-//                return
-//            }
+            if (it[1] == today && it[0] == currentMonth.toString()) {
+                val day = today.take(2).toInt()
+                val start = DateTime().getDayTimeToString(dateUtil.getWeekStartDate(day, month))?.toInt()
+                val focus = day - start!!
+                viewPager.setCurrentItem(97 + focus!!, false)
+                viewPager.requestFocus(View.FOCUS_LEFT)
+                viewPager.waitForMeasure { view, width, height, x, y ->
+                    _binding?.scheduleScroll?.scrollTo(0, y.toInt() + 100)
+                }
+                return
+            }
             viewPager.setCurrentItem(98, false)
         }
     }
@@ -138,7 +140,7 @@ class ScheduleFragment :
         }
     }
 
-    private fun changeMonthBack(){
+    private fun changeMonthBack() {
         binding.apply {
             if (scheduleNextTv.isInvisible) scheduleNextTv.isVisible()
             month = month - 1
@@ -152,7 +154,7 @@ class ScheduleFragment :
         }
     }
 
-    private fun changeMonthPrev(){
+    private fun changeMonthPrev() {
         binding.apply {
             if (schedulePreviousTv.isInvisible) schedulePreviousTv.isVisible()
             month = month + 1
@@ -168,7 +170,6 @@ class ScheduleFragment :
 
     fun observeLoading() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
-            Log.e(TAG, "observeLoading: ${it}")
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }

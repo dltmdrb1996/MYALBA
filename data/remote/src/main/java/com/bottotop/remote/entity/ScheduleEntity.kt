@@ -1,14 +1,14 @@
 package com.bottotop.remote.entity
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ScheduleEntity(
-    @SerializedName("id")
+    @SerialName("id")
     val id : String,
-    @SerializedName("month")
+    @SerialName("month")
     val month : String,
-    @SerializedName("scheduleInfo")
-    val scheduleInfo : List<ScheduleInfoEntity>
+    @SerialName("scheduleInfo")
+    val scheduleInfo : List<ScheduleInfoEntity> = emptyList()
 )

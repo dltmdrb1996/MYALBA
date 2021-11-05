@@ -18,29 +18,48 @@ class CommunityFragment :
 
     private val vm by viewModels<CommunityViewModel>()
     override val viewModel get() = vm
-
+    private val adapter : CommunityAdapter by lazy { CommunityAdapter(viewModel) }
+    lateinit var bottomSheet : CreateBottomSheet
     override fun setBindings() {
         _binding?.viewModel = viewModel
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding?.loginBtnGoHome?.setOnSingleClickListener {
-            (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
-        }
+        bottomSheet = CreateBottomSheet(viewModel)
+        initCommunity()
         observeLoading()
+        obersveCreateSuccess()
+        setBtn()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    fun observeLoading(){
+    private fun observeLoading(){
         viewModel.isLoading.observe(viewLifecycleOwner, {
             Log.e(TAG, "observeLoading: ${it}", )
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
 
+    private fun initCommunity(){
+        binding.recyclerView.adapter = adapter
+        viewModel.communityList.observe(viewLifecycleOwner,{
+            adapter.submitList(it)
+        })
+    }
+
+    fun setBtn(){
+        binding.apply {
+            communityBtnCreate.setOnClickListener {
+                bottomSheet.show(childFragmentManager, bottomSheet.tag)
+            }
+        }
+    }
+
+    fun obersveCreateSuccess(){
+        viewModel.success.observe(viewLifecycleOwner,{
+            if(it){ bottomSheet.dismiss() }
+        })
+    }
 }

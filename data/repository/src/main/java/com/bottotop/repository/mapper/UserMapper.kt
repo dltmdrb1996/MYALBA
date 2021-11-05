@@ -14,7 +14,8 @@ internal object UserEntityMapper : Mapper<UserEntity, LocalUserEntity>() {
             name = from.name,
             email = from.email,
             com_id = from.com_id,
-            social = from.social
+            social = from.social,
+            workOn = from.workOn
         )
     }
 
@@ -26,7 +27,8 @@ internal object UserEntityMapper : Mapper<UserEntity, LocalUserEntity>() {
             name = to.name,
             email = to.email,
             com_id = to.com_id,
-            social = to.social
+            social = to.social,
+            workOn = to.workOn
         )
     }
 }
@@ -41,7 +43,8 @@ internal object UserMapper : Mapper<LocalUserEntity, User>() {
             name = from.name,
             email = from.email,
             company = from.com_id,
-            social = from.social
+            social = from.social,
+            workOn = from.workOn
         )
     }
 
@@ -53,7 +56,8 @@ internal object UserMapper : Mapper<LocalUserEntity, User>() {
             name = to.name,
             email = to.email,
             com_id = to.company,
-            social = to.social
+            social = to.social,
+            workOn = to.workOn
         )
     }
 }

@@ -22,4 +22,5 @@ internal interface CompanyDao {
     @Query("DELETE FROM company")
     fun nukeCompany()
 
+
 }

@@ -83,11 +83,11 @@ class SplashFragment :
         _binding?.splashLogoImageView?.isVisible()
         _binding?.splashLogoLottieView?.isInvisible()
         withDelayOnMain(100) {
-            observeToken()
+            observeLogin()
         }
     }
 
-    fun observeToken(){
+    fun observeLogin(){
         viewModel.login.observe(viewLifecycleOwner,{
             when(it){
                 LoginState.Success -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))

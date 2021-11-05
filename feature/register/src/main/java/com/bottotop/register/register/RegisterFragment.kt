@@ -42,13 +42,13 @@ class RegisterFragment :
         super.onDestroyView()
     }
 
-    fun observeLoading(){
+    private fun observeLoading(){
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
 
-    fun init_Tab_Viewpager(){
+    private fun init_Tab_Viewpager(){
         adapter.run {
             addItem(AlbaFragment())
             addItem(ManagerFragment())
@@ -57,10 +57,7 @@ class RegisterFragment :
             viewPager.adapter = adapter
             TabLayoutMediator(tabLayout,viewPager){ tab , pos ->
                 when(pos){
-                    0 -> {
-                        tab.text = "알바등록"
-                        tab
-                    }
+                    0 -> tab.text = "알바등록"
                     1 -> tab.text = "가게등록"
                 }
             }.attach()

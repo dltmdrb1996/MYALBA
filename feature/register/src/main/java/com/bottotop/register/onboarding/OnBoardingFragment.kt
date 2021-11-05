@@ -1,7 +1,6 @@
 package com.bottotop.register.onboarding
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,10 +8,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
-import com.bottotop.core.ext.isInvisible
-import com.bottotop.core.ext.isVisible
-import com.bottotop.core.ext.setOnSingleClickListener
-import com.bottotop.core.ext.showToast
+import com.bottotop.core.ext.*
 import com.bottotop.register.R
 import com.bottotop.register.databinding.FragmentOnboardingBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,35 +42,34 @@ class OnBoardingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         initViewpager()
         observeLoading()
-        navSuccess()
+        observeSuccess()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
     }
 
-    fun initViewpager() {
+    private fun initViewpager() {
         _binding?.apply {
             val viewpager = this.viewPager
             viewPager.registerOnPageChangeCallback(PageChangeCallback())
             onboardNext.setOnSingleClickListener {
-                if (viewpager.currentItem == 3) {
-                    this@OnBoardingFragment.viewModel.setUser()
-                }
-                else{
-                    viewPager.setCurrentItem(viewpager.currentItem + 1)
-                }
+                if (viewpager.currentItem == 3) this@OnBoardingFragment.viewModel.setUser()
+                else viewPager.currentItem = viewpager.currentItem + 1
             }
             onboardBack.setOnSingleClickListener {
-                viewPager.setCurrentItem(viewpager.currentItem - 1)
+                viewPager.currentItem = viewpager.currentItem - 1
             }
         }
     }
 
     private inner class PageChangeCallback : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
+
             _binding?.apply {
                 when (position) {
                     0 -> onboardBack.isInvisible()
@@ -88,13 +83,13 @@ class OnBoardingFragment :
         }
     }
 
-    fun observeLoading() {
+    private fun observeLoading() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
 
-    fun navSuccess(){
+    private fun observeSuccess(){
         viewModel.success.observe(viewLifecycleOwner,{
             if(it){
                 findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
@@ -103,4 +98,24 @@ class OnBoardingFragment :
             }
         })
     }
+
+//    private fun updatePagerHeightForChild(view: View, pager: ViewPager2) {
+//        val myFragment = childFragmentManager.findFragmentByTag("f$position")
+//        myFragment?.view?.let { updatePagerHeightForChild(it,binding.viewPager) }
+//        view.post {
+//            val wMeasureSpec =
+//                View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+//            val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+//            view.measure(wMeasureSpec, hMeasureSpec)
+//
+//            if (pager.layoutParams.height != view.measuredHeight) {
+//                pager.layoutParams = (pager.layoutParams)
+//                    .also { lp ->
+//                        lp.height = view.measuredHeight
+//                    }
+//            }
+//        }
+//    }
+
+
 }

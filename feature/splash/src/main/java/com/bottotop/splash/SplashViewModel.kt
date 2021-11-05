@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
-import com.bottotop.core.ext.withDelayOnMain
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
@@ -16,6 +15,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.bottotop.core.model.LoginState
+import com.bottotop.core.util.DateTime
 import com.bottotop.model.APIError
 import com.bottotop.model.User
 import com.bottotop.model.wrapper.APIResult
@@ -29,15 +29,10 @@ class SplashViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel("스플래쉬뷰모델") {
 
-    private val context = context
     private lateinit var user: User
-
-    private val _movie = MutableLiveData<String>()
-    val movie: LiveData<String> = _movie
 
     private val _login = MutableLiveData<LoginState>()
     val login: LiveData<LoginState> = _login
-
 
     init {
         viewModelScope.launch(dispatcherProvider.io) {
@@ -46,22 +41,28 @@ class SplashViewModel @Inject constructor(
     }
 
     suspend fun checkUserData() {
-        val userResult = dataRepository.refreshUser(SocialInfo.id)
-        when (userResult) {
+        val refreshUser = dataRepository.refreshUser(SocialInfo.id)
+        when (refreshUser) {
             is APIResult.Success -> {
                 user = dataRepository.getUser(SocialInfo.id)
-                Log.e(TAG, "checkUserData: ${user}", )
                 checkSocialToken()
             }
             is APIResult.Error -> {
-                when (userResult.error) {
+                when (refreshUser.error) {
                     is APIError.SeverError -> {
-                        showToast("서버접속이 원할하지 않습니다.")
+                        Log.e(TAG, "checkUserData: SeverError" )
+                        showToast("서버접속이 원할하지 않습니다 잠시 후 다시접속해 주세요.")
                     }
-                    is APIError.KeyValueError -> _login.postValue(LoginState.NoData)
-                    is APIError.NullValueError -> showToast("데이터가 없습니다.")
+                    is APIError.KeyValueError -> {
+                        Log.e(TAG, "checkUserData: KeyValueError" )
+                        _login.postValue(LoginState.NoData)
+                    }
+                    is APIError.NullValueError -> {
+                        Log.e(TAG, "checkUserData: NullValueError" )
+                        showToast("데이터에 오류가 발생했습니다. 문의헤주세요")
+                    }
                     is APIError.Error -> {
-                        Log.e(TAG, "getAPIError: ${(userResult.error as APIError.Error).e}")
+                        Log.e(TAG, "getAPIError: ${(refreshUser.error as APIError.Error).e}")
                         showToast("에러가 발생했습니다.")
                     }
                 }
@@ -70,52 +71,54 @@ class SplashViewModel @Inject constructor(
     }
 
     private suspend fun checkSocialToken() {
-        if(user.social == "naver"){
-            checkNaver()
-        }
-        else if(user.social == "kakao"){
-            checkKakao()
-        }else{
-            Log.e(TAG, "checkSocialToken: noToken", )
-            _login.postValue(LoginState.NoToken)
-        }
-    }
-
-    private suspend fun checkKakao() {
-        socialLoginRepository.refreshKakao()
-        if (socialLoginRepository.checkKakao()) {
-            Log.e(TAG, "searchToken: 카카오접근")
-            SocialInfo.social = "kakao"
-            socialLoginRepository.getKakaoInfo()
-            if (user.company == "null") {
-                _login.postValue(LoginState.NoCompany)
-            } else {
-                val success = getAPIResult(dataRepository.refreshCompanies(user.company))
-                if(success) _login.postValue(LoginState.Success)
-                _login.postValue(LoginState.Success)
-            }
-        }else{
-            _login.postValue(LoginState.NoToken)
+        when (user.social) {
+            "naver" -> checkNaver()
+            "kakao" -> checkKakao()
+            else -> _login.postValue(LoginState.NoToken)
         }
     }
 
     private suspend fun checkNaver() {
         socialLoginRepository.refreshNaver()
         if (socialLoginRepository.checkNaver()) {
-            Log.e(TAG, "searchToken: 네이버접근")
             SocialInfo.social = "naver"
             socialLoginRepository.getNaverInfo()
-            if (user.company == "null") {
-                _login.postValue(LoginState.NoCompany)
-            }
+            if (user.company == "null") _login.postValue(LoginState.NoCompany)
             else {
-                val success = getAPIResult(dataRepository.refreshCompanies(user.company))
-                if(success) _login.postValue(LoginState.Success)
-                _login.postValue(LoginState.Success)
+                val refreshCompanies = getAPIResult(dataRepository.refreshCompanies(user.company), "$TAG : refreshCompanies")
+                dataRepository.setSchedule(mapOf(Pair("id",SocialInfo.id), Pair("month",DateTime().getYearMonth())))
+                if(refreshCompanies) _login.postValue(LoginState.Success)
             }
         } else{
-            _login.postValue(LoginState.NoToken)
+            if (user.company != "null") {
+                getAPIResult(dataRepository.refreshCompanies(user.company), "$TAG : refreshCompanies")
+                _login.postValue(LoginState.NoToken)
+            }
+            else _login.postValue(LoginState.NoToken)
         }
     }
 
+
+    private suspend fun checkKakao() {
+        socialLoginRepository.refreshKakao()
+        if (socialLoginRepository.checkKakao()) {
+            SocialInfo.social = "kakao"
+            socialLoginRepository.getKakaoInfo()
+            if (user.company == "null") {
+                _login.postValue(LoginState.NoCompany)
+            } else {
+                val refreshCompanies = getAPIResult(dataRepository.refreshCompanies(user.company), "$TAG : refreshCompanies")
+                if(refreshCompanies) {
+                    _login.postValue(LoginState.Success)
+                }
+            }
+        }else{
+            if (user.company != "null") {
+                getAPIResult(dataRepository.refreshCompanies(user.company), "$TAG : refreshCompanies")
+                _login.postValue(LoginState.NoToken)
+            }else{
+                _login.postValue(LoginState.NoToken)
+            }
+        }
+    }
 }

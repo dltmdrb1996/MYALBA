@@ -1,6 +1,7 @@
 package com.bottotop.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -36,11 +37,11 @@ class LoginFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeToken()
-        setBtn()
+        observeLogin()
+        initBtn()
     }
 
-    fun setBtn(){
+    fun initBtn(){
         _binding?.apply {
             btnKakaoLogin.setOnSingleClickListener {
                 if(navArg.msg=="noToken") this@LoginFragment.viewModel.getUser()
@@ -48,13 +49,24 @@ class LoginFragment :
             }
             btnNaverLogin.setOnSingleClickListener {
                 if(navArg.msg=="noToken") this@LoginFragment.viewModel.getUser()
-                mOAuthLoginModule.startOauthLoginActivity(requireActivity(),
-                    this@LoginFragment.viewModel.getAuth())
+                Log.e(TAG, "initBtn: ${navArg.msg}", )
+                mOAuthLoginModule.startOauthLoginActivity(requireActivity(), this@LoginFragment.viewModel.getAuth())
             }
         }
     }
 
-//    fun loginKakao() {
+    fun observeLogin(){
+        viewModel.login.observe(viewLifecycleOwner,{
+            when(it){
+                LoginState.Success -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("first"))
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
+                LoginState.NoData -> showToast("로그인시도가 실패했습니다 다시시도해주세요.")
+            }
+        })
+    }
+
+    //    fun loginKakao() {
 //        if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
 //            UserApiClient.instance.loginWithKakaoTalk(
 //                requireContext(),
@@ -68,19 +80,7 @@ class LoginFragment :
 //        }
 //    }
 
-    fun observeToken(){
-        viewModel.login.observe(viewLifecycleOwner,{
-            when(it){
-                LoginState.Success -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
-                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("first"))
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
-                LoginState.NoData -> showToast("로그인시도가 실패했습니다.")
-            }
-        })
-    }
 }
 
-//@BindingAdapter("OAuthHandler")
-//fun setOAuthHandler(oAuthLoginButton: OAuthLoginButton, oAuthLoginHandler: OAuthLoginHandler){
-//    oAuthLoginButton.setOAuthLoginHandler(oAuthLoginHandler)
-//}
+
+

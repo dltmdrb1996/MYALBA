@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.bottotop.core.model.Event
 import com.bottotop.model.APIError
 import com.bottotop.model.wrapper.APIResult
-import com.bottotop.model.wrapper.Result
-import com.bottotop.model.wrapper.data
 
 open class BaseViewModel(private val name : String) : ViewModel() {
 
@@ -34,21 +32,30 @@ private val _isLoading = MutableLiveData<Boolean>()
         _toast.postValue(Event(message))
     }
 
-    fun getAPIResult(result : APIResult) : Boolean{
+    fun getAPIResult(result : APIResult, tag : String) : Boolean{
         return when(result){
             is APIResult.Success -> true
-            is APIResult.Error -> getAPIError(result.error)
+            is APIResult.Error -> getAPIError(result.error,tag)
         }
     }
 
-    fun getAPIError(error : APIError) : Boolean{
+    fun getAPIError(error : APIError , tag : String) : Boolean{
         when(error){
-            is APIError.SeverError -> showToast("서버접속이 원할하지 않습니다.")
-            is APIError.KeyValueError ->showToast("해당하는 데이터가 존재하지 않습니다")
-            is APIError.NullValueError ->showToast("데이터가 없습니다.")
+            is APIError.SeverError -> {
+                Log.e(TAG, "$tag -> SeverError", )
+                showToast("서버접속이 원할하지 않습니다 잠시후 다시 실행해주세요.")
+            }
+            is APIError.KeyValueError ->{
+                Log.e(TAG, "$tag -> KeyValueError", )
+                showToast("해당하는 데이터가 존재하지 않습니다")
+            }
+            is APIError.NullValueError ->{
+                Log.e(TAG, "$tag -> NullValueError", )
+                showToast("데이터가 없습니다.")
+            }
             is APIError.Error -> {
-                Log.e(TAG, "getAPIError: ${error.e}", )
-                showToast("에러가 발생했습니다.")
+                Log.e(TAG, "$tag -> ${error.e}", )
+                showToast("에러가 발생했습니다. 잠시후 다시 실행해주세요")
             }
         }
         return false
