@@ -16,6 +16,7 @@ internal object CommunityMapper : Mapper<CommunityEntity, Community>() {
             name = from.name,
             content = from.content,
             time = from.time,
+            idx =from.idx,
             comment = from.comment.map { CommentMapper.from(it) }
         )
     }
@@ -26,6 +27,7 @@ internal object CommunityMapper : Mapper<CommunityEntity, Community>() {
             name = to.name,
             content = to.content,
             time = to.time,
+            idx = to.idx,
             comment = to.comment.map { CommentMapper.to(it) }
         )
     }

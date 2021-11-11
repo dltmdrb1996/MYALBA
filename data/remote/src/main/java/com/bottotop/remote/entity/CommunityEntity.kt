@@ -16,6 +16,8 @@ data class CommunityEntity(
     val name : String,
     val content : String,
     val time : String,
+    val idx : String,
+    @SerialName("ripple")
     val comment : List<CommentEntity> = emptyList()
 )
 

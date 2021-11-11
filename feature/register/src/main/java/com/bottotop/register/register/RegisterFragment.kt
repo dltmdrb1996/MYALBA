@@ -34,7 +34,7 @@ class RegisterFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLoading()
+//        observeLoading()
         init_Tab_Viewpager()
     }
 

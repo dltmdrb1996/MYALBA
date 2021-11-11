@@ -33,23 +33,26 @@
             android:id="@+id/onboard_Next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"
             android:layout_margin="20dp"
+            android:text="Next"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_big"
-            android:textColor="@color/blue_deep_font"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/onboard_Back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:textSize="@dimen/text_big"
             android:text="Back"
-            android:textColor="@color/blue_deep_font"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_big"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

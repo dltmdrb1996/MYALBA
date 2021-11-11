@@ -1,21 +1,37 @@
 package com.bottotop.member
 
-import android.annotation.SuppressLint
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.ACTION_DIAL
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat.startActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bottotop.core.ext.setOnSingleClickListener
+import com.bottotop.core.navigation.DeepLinkDestination
+import com.bottotop.core.navigation.deepLinkNavigateTo
 import com.bottotop.member.databinding.ViewholderMemberBinding
-import com.bottotop.model.ScheduleItem
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import android.widget.Toast
 
-class MemberAdapter(private val viewModel: MemberViewModel) :
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+
+
+class MemberAdapter (private val viewModel: MemberViewModel , private val context: Context) :
     ListAdapter<MemberModel, MemberAdapter.ViewHolder>(TaskDiffCallback()) {
+
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(viewModel,item , position)
+        holder.bind(viewModel, item , context)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,11 +41,18 @@ class MemberAdapter(private val viewModel: MemberViewModel) :
     class ViewHolder private constructor(val binding: ViewholderMemberBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: MemberViewModel, item: MemberModel , pos : Int) {
-            val pos = pos%4
-            if(item.workOn=="on") binding.tvWorkOn.text = "출근중"
+        fun bind(viewModel: MemberViewModel, item: MemberModel , context: Context) {
+            if (item.workOn == "on") binding.tvWorkOn.text = "출근중"
             binding.item = item
             binding.viewModel = viewModel
+            if (item.position == "A") binding.tvPay.text = ""
+
+            binding.holderLayout.setOnSingleClickListener {
+                it.findNavController().deepLinkNavigateTo(DeepLinkDestination.MemberDetail(item.id))
+            }
+            binding.btnCall.setOnClickListener {
+                context.startActivity(Intent(ACTION_DIAL, Uri.parse("tel:${item.tel}")))
+            }
             binding.executePendingBindings()
         }
 

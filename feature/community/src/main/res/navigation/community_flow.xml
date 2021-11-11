@@ -17,4 +17,21 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/communityDetailFragment"
+        android:label="communityDetail"
+        android:name="com.bottotop.community.detail.CommunityDetailFragment"
+        tools:layout="@layout/fragment_community_detail">
+
+        <argument
+            android:defaultValue=""
+            android:name="msg"
+            app:argType="string" />
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="example://communityDetail/CommunityDetailFragmentArgs?msg={msg}" />
+
+    </fragment>
+
 </navigation>

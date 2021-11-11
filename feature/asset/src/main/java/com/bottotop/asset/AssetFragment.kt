@@ -20,19 +20,17 @@ class AssetFragment :
 
     private val vm by viewModels<AssetViewModel>()
     override val viewModel get() = vm
-
+    private val adapter: AssetAdapter by lazy { AssetAdapter(viewModel) }
 
     override fun setBindings() {
         _binding?.viewModel = viewModel
+        _binding?.adapter = adapter
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        _binding?.loginBtnGoHome?.setOnSingleClickListener {
-            (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("test"))
-        }
+        initAdapter()
         observeLoading()
     }
 
@@ -40,9 +38,20 @@ class AssetFragment :
         super.onDestroyView()
     }
 
-    fun observeLoading(){
+    fun observeLoading() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
+
+    fun initAdapter() {
+        viewModel.schedules.observe(viewLifecycleOwner, {
+            adapter.submitList(it)
+            it.forEach {
+                Log.e(TAG, "initAdapter: $it", )
+            }
+
+        })
+    }
+
 }

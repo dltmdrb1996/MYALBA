@@ -58,6 +58,9 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
     }
 
     fun initObserver(){
+        viewModel.isLoading.observe(viewLifecycleOwner,{
+            showLoading(it)
+        })
         viewModel.startTime.observe(viewLifecycleOwner,{
             if(it.isNullOrEmpty()) {
                 binding.tvStartNotice.isInvisible()
@@ -80,5 +83,12 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
         })
     }
 
+
+    private fun showLoading(isLoading: Boolean) {
+        if(isLoading) binding.nestedScrollView.alpha = 0.5f
+        else binding.nestedScrollView.alpha = 1f
+        binding.nestedScrollView.isClickable = isLoading
+        binding.loadingView.isInProgress = isLoading
+    }
 
 }

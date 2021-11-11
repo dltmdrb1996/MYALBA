@@ -18,6 +18,7 @@ import com.bottotop.core.model.LoginState
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.APIError
 import com.bottotop.model.User
+import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.wrapper.APIResult
 
 
@@ -86,7 +87,7 @@ class SplashViewModel @Inject constructor(
             if (user.company == "null") _login.postValue(LoginState.NoCompany)
             else {
                 val refreshCompanies = getAPIResult(dataRepository.refreshCompanies(user.company), "$TAG : refreshCompanies")
-                dataRepository.setSchedule(mapOf(Pair("id",SocialInfo.id), Pair("month",DateTime().getYearMonth())))
+                dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , user.company))
                 if(refreshCompanies) _login.postValue(LoginState.Success)
             }
         } else{

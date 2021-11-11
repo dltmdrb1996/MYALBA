@@ -9,5 +9,6 @@ data class ScheduleContent(
     val startTime : String,
     val endTime : String,
     val workTime : String,
+    val workPay : String,
 )
 

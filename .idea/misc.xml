@@ -94,8 +94,13 @@
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/app/src/main/res/layout/dialog_network_error.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/app/src/main/res/layout/dialog_netwrok_error.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/app/src/main/res/layout/fragment_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/app/src/main/res/menu/appbar_menu.xml" value="0.37777777777777777" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/app/src/main/res/menu/bottom_nav_menu.xml" value="0.37777777777777777" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/border_2dp.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/border_top_2dp.xml" value="0.41510416666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/bottom_border.xml" value="0.4070480081716037" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/ic_baseline_add_comment_24.xml" value="0.4070480081716037" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/ic_baseline_keyboard_backspace_24.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/ic_baseline_navigate_before_24.xml" value="0.41510416666666666" />
@@ -104,6 +109,7 @@
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/radius_bg_20dp.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/radius_bg_30dp.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/radius_bg_btn_20dp.xml" value="0.41510416666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/radius_edt_20dp.xml" value="0.4070480081716037" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/radius_toggle_30dp.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/radius_toggle_off_30dp.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/radius_toggle_on_30dp.xml" value="0.41510416666666666" />
@@ -111,19 +117,27 @@
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/tab_anim_selector.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/tab_selector.xml" value="0.41510416666666666" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/tabback.xml" value="0.41510416666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/drawable/top_radius_30dp.xml" value="0.4070480081716037" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/layout/clean_ui_simple_toolbar_clean_ui.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/layout/dialog_network.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/layout/dialog_server.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/layout/layout_network_dialog.xml" value="0.39479166666666665" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/core/src/main/res/menu/schedule_menu.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/asset/src/main/res/layout/fragment_asset.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/asset/src/main/res/layout/viewholder_asset.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/drawable/ic_baseline_create_24.xml" value="0.41510416666666666" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/drawable/ic_baseline_send_24.xml" value="0.12571428571428572" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/layout/create_bottom_sheet.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/layout/fragment_community.xml" value="0.21510416666666668" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/layout/fragment_community_detail.xml" value="0.2857142857142857" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/layout/viewholder_asset.xml" value="0.39479166666666665" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/layout/viewholder_comment.xml" value="0.3546195652173913" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/community/src/main/res/layout/viewholder_community.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/home/src/main/res/layout/fragment_home.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/home/src/main/res/layout/today_work_holder.xml" value="0.34148550724637683" />
-        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/login/src/main/res/layout/fragment_login.xml" value="0.8298217179902755" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/login/src/main/res/layout/fragment_login.xml" value="0.47613065326633164" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/member/src/main/res/layout/fragment_member.xml" value="0.23731884057971014" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/member/src/main/res/layout/fragment_member_detail.xml" value="0.3828571428571429" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/member/src/main/res/layout/item.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/member/src/main/res/layout/viewholder_member.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/register/src/main/res/layout/activity_web_view.xml" value="0.39479166666666665" />
@@ -141,6 +155,8 @@
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/schedule/src/main/res/layout/day_schedule_holder.xml" value="0.39479166666666665" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/schedule/src/main/res/layout/fragment_schedule.xml" value="0.23731884057971014" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/schedule/src/main/res/layout/item.xml" value="0.39479166666666665" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/setting/src/main/res/layout/fragment_info.xml" value="0.36730072463768115" />
+        <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/setting/src/main/res/layout/fragment_setting.xml" value="0.37318840579710144" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/PartTimeJob/feature/splash/src/main/res/layout/fragment_splash.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/LSG/AndroidStudioProjects/myjob/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/LSG/AppData/Local/Android/Sdk/platforms/android-30/data/res/layout/auto_complete_list.xml" value="0.5328125" />

@@ -20,6 +20,5 @@ data class UserEntity(
     @SerialName("social")
     val social: String = "",
     @SerialName("workOn")
-    val workOn : String = "off"
-
+    val workOn : String = "off",
 )

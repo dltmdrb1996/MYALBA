@@ -60,7 +60,3 @@ class ContentLoadingProgressBar @JvmOverloads constructor(
             }
         }
 }
-
-//viewModel.isLoading.observe(viewLifecycleOwner) {
-//    loadingView.isInProgress = it
-//}

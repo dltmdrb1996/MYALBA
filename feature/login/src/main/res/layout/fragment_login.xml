@@ -14,6 +14,16 @@
         android:layout_height="match_parent"
         tools:context=".LoginFragment">
 
+        <TextView
+            android:layout_marginBottom="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내알빠"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Kakao_Login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
         <ImageButton
             android:id="@+id/btn_Kakao_Login"
             android:layout_width="250dp"
@@ -36,13 +46,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_Kakao_Login" />
-
-        <Button
-            android:id="@+id/btn_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="go first"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -63,6 +63,9 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
     fun initObserver(){
 
         viewModel.pay.observe(viewLifecycleOwner,{
+            viewModel.isLoading.observe(viewLifecycleOwner,{
+                showLoading(it)
+            })
             if(it.isNullOrEmpty()){
                 binding.tvPayNotice.isInvisible()
                 binding.btnRegCom.isEnabled = true
@@ -88,5 +91,12 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
             if(it) this.dismiss()
             else showToast("등록에 실패했습니다.")
         })
+    }
+
+    fun showLoading(isLoading: Boolean) {
+        if(isLoading) binding.nestedScrollView.alpha = 0.5f
+        else binding.nestedScrollView.alpha = 1f
+        binding.nestedScrollView.isClickable = isLoading
+        binding.loadingView.isInProgress = isLoading
     }
 }

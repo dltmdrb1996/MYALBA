@@ -11,6 +11,7 @@ import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.model.LoginState
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.User
+import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
 import com.kakao.sdk.auth.model.OAuthToken
@@ -66,7 +67,7 @@ class LoginViewModel @Inject constructor(
     fun initInfo(){
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io){
-            dataRepository.setSchedule(mapOf(Pair("id",SocialInfo.id), Pair("month",DateTime().getYearMonth())))
+            dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , user.company))
             val refreshCompanies = getAPIResult(dataRepository.refreshCompanies(user.company),
                 "$TAG : refreshCompanies"
             )

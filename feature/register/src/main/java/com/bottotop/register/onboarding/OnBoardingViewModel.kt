@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
+import com.bottotop.core.util.DateTime
+import com.bottotop.model.query.SetUserQuery
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +29,7 @@ class OnBoardingViewModel @Inject constructor(
     private val _success = MutableLiveData<Boolean>()
     val success : LiveData<Boolean> = _success
 
+    val dateUtil = DateTime()
     private fun getUserInfo(){
         viewModelScope.launch(dispatcherProvider.io) {
             if(SocialInfo.social=="naver"){
@@ -41,22 +44,14 @@ class OnBoardingViewModel @Inject constructor(
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
             val setUser = getAPIResult(dataRepository.setUser(
-                mapOf<String, String>(
-                    Pair("id", SocialInfo.id),
-                    Pair("tel", SocialInfo.tel),
-                    Pair("birth", SocialInfo.birth),
-                    Pair("name", SocialInfo.name),
-                    Pair("email", SocialInfo.email),
-                    Pair("social", SocialInfo.social),
-                    Pair("com_id", "null"),
-                    Pair("workOn","off")
-                )
+                SetUserQuery(SocialInfo.id,SocialInfo.tel,SocialInfo.birth,SocialInfo.name,
+                SocialInfo.email,SocialInfo.social,"null","off")
             ), "$TAG : setUser")
             if(setUser) {
                 val refreshUser = getAPIResult(dataRepository.refreshUser(SocialInfo.id),"$TAG : refreshUser")
+                handleLoading(false)
                 if(refreshUser) _success.postValue(true)
                 else showToast("유저생성에 에러가 발생했습니다 잠시후 다시실행해주세요")
-                handleLoading(false)
             }else{
                 handleLoading(false)
                 _success.postValue(false)

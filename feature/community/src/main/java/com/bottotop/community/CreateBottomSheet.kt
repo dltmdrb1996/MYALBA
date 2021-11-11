@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.bottotop.community.databinding.CreateBottomSheetBinding
+import com.bottotop.core.ext.showToast
+import com.bottotop.core.model.EventObserver
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -47,6 +49,9 @@ class CreateBottomSheet(private val viewModel: CommunityViewModel) : BottomSheet
     }
 
     private fun initObserver(){
+        viewModel.bottomLoading.observe(viewLifecycleOwner,{
+            showLoading(it)
+        })
         viewModel.content.observe(viewLifecycleOwner,{
             if(it.isNullOrEmpty()) {
                 binding.btnCreate.isEnabled =false
@@ -56,7 +61,17 @@ class CreateBottomSheet(private val viewModel: CommunityViewModel) : BottomSheet
                 binding.btnCreate.alpha = 1f
             }
         })
+        viewModel.success.observe(viewLifecycleOwner, EventObserver{
+            if(it) this.dismiss()
+            else showToast("등록에 실패했습니다.")
+        })
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        if(isLoading) binding.bottomSheetDashBoardLayout.alpha = 0.5f
+        else binding.bottomSheetDashBoardLayout.alpha = 1f
+        binding.bottomSheetDashBoardLayout.isClickable = isLoading
+        binding.loadingView.isInProgress = isLoading
+    }
 
 }

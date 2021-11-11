@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.bottotop.register.onboarding.OnBoardingFragment"
-        android:label="register"
+        android:label="onBoarding"
         tools:layout="@layout/fragment_onboarding">
 
 
@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.bottotop.register.register.RegisterFragment"
-        android:label="RegisterFragment"
+        android:label="register"
         tools:layout="@layout/fragment_register"
         app:popUpTo="@id/main_nav_graph"
         app:popUpToInclusive="true"

@@ -23,11 +23,12 @@ class OnBoardingFragment :
     private val navArg : OnBoardingFragmentArgs by navArgs()
 
     private val vm by viewModels<OnBoardingViewModel>()
+    override val viewModel get() = vm
+
     private val adapter: OnBoardingAdapter by lazy {
-        OnBoardingAdapter()
+        OnBoardingAdapter(viewModel)
     }
 
-    override val viewModel get() = vm
     override fun setBindings() {
         _binding?.viewModel = viewModel
         _binding?.adapter = adapter
@@ -42,8 +43,6 @@ class OnBoardingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         initViewpager()
         observeLoading()
         observeSuccess()
@@ -57,11 +56,11 @@ class OnBoardingFragment :
         _binding?.apply {
             val viewpager = this.viewPager
             viewPager.registerOnPageChangeCallback(PageChangeCallback())
-            onboardNext.setOnSingleClickListener {
+            onboardNext.setOnClickListener {
                 if (viewpager.currentItem == 3) this@OnBoardingFragment.viewModel.setUser()
                 else viewPager.currentItem = viewpager.currentItem + 1
             }
-            onboardBack.setOnSingleClickListener {
+            onboardBack.setOnClickListener {
                 viewPager.currentItem = viewpager.currentItem - 1
             }
         }
@@ -74,6 +73,7 @@ class OnBoardingFragment :
                 when (position) {
                     0 -> onboardBack.isInvisible()
                     3 -> onboardNext.text = "등록하러가기"
+
                     else -> {
                         onboardBack.isVisible()
                         onboardNext.text = "Next"

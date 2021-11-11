@@ -39,6 +39,7 @@ class ScheduleViewModel @Inject constructor(
                 member = dataRepository.getMembers()
                 getMemberWorkDay()
             }catch (e : Throwable){
+                showToast("데이터를 불러오는데 실패했습니다.")
                 Log.e(TAG, ": 룸데이터 불러오기 ${e}", )
             }
             handleLoading(false)

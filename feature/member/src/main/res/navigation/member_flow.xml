@@ -15,6 +15,38 @@
             android:id="@+id/deepLink"
             app:uri="example://member/exampleArgs?msg={msg}" />
 
+        <action
+            android:id="@+id/action_memberFragment_to_memberDetailFragment"
+            app:destination="@id/memberDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" >
+
+            <argument
+                android:name="msg"
+                app:argType="string" />
+
+        </action>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/memberDetailFragment"
+        android:label="memberDetail"
+        android:name="com.bottotop.member.detail.MemberDetailFragment"
+        tools:layout="@layout/fragment_member_detail">
+
+        <argument
+            android:defaultValue=""
+            android:name="msg"
+            app:argType="string" />
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="example://memberDetail/MemberDetailFragmentArgs?msg={msg}" />
+
     </fragment>
 
 </navigation>

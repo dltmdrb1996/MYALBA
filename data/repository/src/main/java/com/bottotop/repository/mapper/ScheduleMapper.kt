@@ -52,7 +52,8 @@ internal object ScheduleContentMapper : Mapper<ScheduleContentEntity, ScheduleCo
         return ScheduleContent(
             startTime = from.startTime,
             endTime = from.endTime,
-            workTime = from.workTime
+            workTime = from.workTime,
+            workPay = from.workPay
         )
     }
 
@@ -60,7 +61,8 @@ internal object ScheduleContentMapper : Mapper<ScheduleContentEntity, ScheduleCo
         return ScheduleContentEntity(
             startTime = to.startTime,
             endTime = to.endTime,
-            workTime = to.workTime
+            workTime = to.workTime,
+            workPay = to.workPay
         )
     }
 }

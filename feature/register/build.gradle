@@ -11,6 +11,5 @@ apply from: rootProject.file("feature/feature.gradle")
 
 dependencies {
     implementation(View.VIEWPAGER)
-//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 }

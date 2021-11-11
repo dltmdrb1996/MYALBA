@@ -57,10 +57,6 @@ class ScheduleFragment :
     }
 
     override fun onDestroyView() {
-//        _binding?.apply {
-//            val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
-//            list.forEach { it.adapter = null }
-//        }
         super.onDestroyView()
     }
 

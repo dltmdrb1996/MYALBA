@@ -240,6 +240,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_End" />
 
+            <com.bottotop.core.global.ContentLoadingProgressBar
+                android:id="@+id/loadingView"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_loading_bg"
+                android:elevation="12dp"
+                android:indeterminateDuration="500"
+                android:indeterminateOnly="true"
+                android:translationY="-60dp"
+                android:visibility="gone"
+                android:translationZ="90dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:translationY="50dp"
+                tools:visibility="visible" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

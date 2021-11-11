@@ -15,8 +15,6 @@ class Navigator {
             .navigate(MainNavGraphDirections.actionGlobalLoginFlow(navigationFlow.msg))
         is NavigationFlow.AssetFlow -> navController
             .navigate(MainNavGraphDirections.actionGlobalAssetFlow(navigationFlow.msg))
-        is NavigationFlow.ChatFlow -> navController
-            .navigate(MainNavGraphDirections.actionGlobalChatFlow(navigationFlow.msg))
         is NavigationFlow.MemberFlow -> navController
             .navigate(MainNavGraphDirections.actionGlobalMemberFlow(navigationFlow.msg))
         is NavigationFlow.ScheduleFlow -> navController

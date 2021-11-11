@@ -3,12 +3,16 @@ package com.bottotop.community
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bottotop.community.databinding.ViewholderCommunityBinding
-import com.bottotop.core.util.DateTime
+import com.bottotop.core.navigation.DeepLinkDestination
+import com.bottotop.core.navigation.deepLinkNavigateTo
 import com.bottotop.model.Community
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 
 class CommunityAdapter(private val viewModel: CommunityViewModel) :
@@ -31,6 +35,8 @@ class CommunityAdapter(private val viewModel: CommunityViewModel) :
             binding.item = item
             binding.communityViewHolderTvCommentSize.text = item.comment.size.toString()
             binding.viewModel = viewModel
+            val json = Json.encodeToString(item)
+            binding.viewHolder.setOnClickListener { it.findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(json)) }
             binding.executePendingBindings()
         }
 
@@ -46,17 +52,11 @@ class CommunityAdapter(private val viewModel: CommunityViewModel) :
 
 class TaskDiffCallback : DiffUtil.ItemCallback<Community>() {
     override fun areItemsTheSame(oldItem: Community, newItem: Community): Boolean {
-        return oldItem.content == newItem.content
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: Community, newItem: Community): Boolean {
-        return oldItem == newItem
+        return oldItem.content == newItem.content
     }
 }
 
-@BindingAdapter("app:items")
-fun setItems(listView: RecyclerView, items: List<Community>?) {
-    items?.let {
-        (listView.adapter as CommunityAdapter).submitList(items)
-    }
-}

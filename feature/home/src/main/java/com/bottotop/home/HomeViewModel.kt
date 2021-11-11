@@ -9,6 +9,9 @@ import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.*
+import com.bottotop.model.query.PatchScheduleQuery
+import com.bottotop.model.query.UpdateScheduleQuery
+import com.bottotop.model.query.UpdateUserQuery
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,10 +39,16 @@ class HomeViewModel @Inject constructor(
     val workOn: LiveData<String> = _workOn
 
     private val _scheduleItem = MutableLiveData<List<ScheduleItem>>()
-    val scheduleItem = _scheduleItem
+    val scheduleItem : LiveData<List<ScheduleItem>> = _scheduleItem
 
     private val _master = MutableLiveData<Boolean>()
-    val master = _master
+    val master : LiveData<Boolean> = _master
+
+    private val _community = MutableLiveData<Community>()
+    val community : LiveData<Community> = _community
+
+    private val _working = MutableLiveData<String>()
+    val working: LiveData<String> = _working
 
     private val today = DateTime().getTOdayWeek()
     private lateinit var user: User
@@ -49,52 +58,33 @@ class HomeViewModel @Inject constructor(
     private val dataUtil = DateTime()
 
     init {
+
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
             try{
-                user = dataRepository.getUser(SocialInfo.id)
-                company = dataRepository.getCompany(SocialInfo.id)
-                companise = dataRepository.getCompanies()
-                member = dataRepository.getMembers()
+                initData()
+
+                val getCommunity = dataRepository.getCommunity(user.company)
+                if(getCommunity.isSuccess) _community.postValue(getCommunity.getOrNull()!!.last())
+                else Log.e(TAG, ": 커뮤니티불러오기 실패" )
                 if(company.position=="A") _master.postValue(true)
+
+                if(user.workOn == "off") {
+                    _workOn.postValue("출근하기")
+                } else {
+                    _workOn.postValue("퇴근하기")
+                    val daySchedule = dataRepository.getDaySchedule()
+                    patchSchedule(daySchedule)
+                }
+
+                initWorking()
                 getMemberWorkDay()
             }catch (e : Throwable){
                 showToast("에러가발생했습니다.")
                 Log.e(TAG, "홈뷰모델 room load: $e" )
             }
-
-            if(user.workOn == "off") _workOn.postValue("출근하기")
-            else {
-                _workOn.postValue("퇴근하기")
-                val daySchedule = dataRepository.getDaySchedule()
-                patchSchedule(daySchedule)
-            }
         }
         handleLoading(false)
-    }
-
-    fun logoutKakao() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            socialLoginRepository.loagoutKakao()
-        }
-    }
-
-    fun disconnectKakao() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            socialLoginRepository.disconectKakao()
-        }
-    }
-
-    fun logoutNaver() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            socialLoginRepository.logoutNaver()
-        }
-    }
-
-    fun disconnectNaver() {
-        viewModelScope.launch(dispatcherProvider.io) {
-            socialLoginRepository.disconectNaver()
-        }
     }
 
     fun checkWork(){
@@ -111,18 +101,15 @@ class HomeViewModel @Inject constructor(
             val current = dataUtil.getCurrentDateTimeAsLong()
             val startTime = daySchedule.time
             val workTime = (dataUtil.getCurrentDateTimeAsLong().toLong() - startTime.toLong()).toString()
+            val time = workTime.toDouble()/1000
+            val payOfSecond = (company.pay.toDouble()/60/60)
+            val workPay = "${(time*payOfSecond).toInt()}"
 
             val patchSchedule = getAPIResult(
                 dataRepository.patchSchedule(
-                    mapOf(
-                        Pair("id", SocialInfo.id),
-                        Pair("month", dataUtil.getYearMonth()),
-                        Pair("day", daySchedule.day),
-                        Pair("target", "endTime"),
-                        Pair("change", current),
-                        Pair("target2","workTime"),
-                        Pair("change2",workTime)
-                    )
+                    PatchScheduleQuery(SocialInfo.id,
+                        dataUtil.getYearMonth(),daySchedule.day,"endTime",
+                        current,"workTime",workTime,"workPay",workPay)
                 ), "$TAG : patchSchedule"
             )
 
@@ -131,57 +118,57 @@ class HomeViewModel @Inject constructor(
                 _workOn.postValue("출근하기")
                 getAPIResult(
                     dataRepository.updateUser(
-                        mapOf(
-                            Pair("id", SocialInfo.id),
-                            Pair("target", "workOn"),
-                            Pair("change", "off")
-                        )
+                        UpdateUserQuery(SocialInfo.id , "workOn" , "off")
                     ), "$TAG : updateUser"
                 )
                 dataRepository.deleteDaySchedule()
                 getAPIResult(dataRepository.refreshUser(SocialInfo.id),"$TAG : refreshUser")
-
+                _workOn.postValue("출근하기")
+                initData()
+                initWorking()
             }
             handleLoading(false)
         }
     }
 
-    fun startWork() {
+    private fun startWork() {
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
             val current = dataUtil.getCurrentDateTimeAsLong()
+
             val updateSchedule = getAPIResult(
                 dataRepository.updateSchedule(
-                    mapOf(
-                        Pair("startTime", current),
-                        Pair("id", SocialInfo.id),
-                        Pair("month", dataUtil.getYearMonth()),
-                        Pair("day", dataUtil.getToday()),
-                        Pair("workTime", (dataUtil.getCurrentDateTimeAsLong().toLong() - current.toLong()).toString()
-                        )
-                    )
+                    UpdateScheduleQuery(current, SocialInfo.id, dataUtil.getYearMonth(), dataUtil.getToday(),
+                        (dataUtil.getCurrentDateTimeAsLong().toLong() - current.toLong()).toString())
                 ), "$TAG : updateSchedule"
             )
 
             if (updateSchedule) {
                 val updateUser = getAPIResult(
                     dataRepository.updateUser(
-                        mapOf(
-                            Pair("id", SocialInfo.id),
-                            Pair("target", "workOn"),
-                            Pair("change", "on")
-                        )
+                        UpdateUserQuery(SocialInfo.id,"workOn","on")
                     ), "$TAG : updateUser"
                 )
-
                 if(updateUser){
                     dataRepository.insertDaySchedule(dataUtil.getToday(),current)
                     getAPIResult(dataRepository.refreshUser(SocialInfo.id),"$TAG : refreshUser")
                 }
             }
+
+            _workOn.postValue("퇴근하기")
+            initData()
+            initWorking()
             showTimePay("1000")
             handleLoading(false)
         }
+    }
+
+
+    private suspend fun initData(){
+        user = dataRepository.getUser(SocialInfo.id)
+        company = dataRepository.getCompany(SocialInfo.id)
+        companise = dataRepository.getCompanies()
+        member = dataRepository.getMembers()
     }
 
     private fun patchSchedule(daySchedule: DaySchedule ) {
@@ -202,6 +189,12 @@ class HomeViewModel @Inject constructor(
         val workPay = "${(time*payOfSecond).toInt()}원"
         _workPay.postValue(workPay)
         _workTime.postValue(timeString)
+    }
+
+    private fun initWorking(){
+        var working = ""
+        member.filter { it.workOn=="on" }.forEach { working+="${it.name}\n" }
+        _working.postValue(working)
     }
 
     private fun getMemberWorkDay(){

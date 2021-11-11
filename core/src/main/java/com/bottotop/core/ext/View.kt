@@ -24,7 +24,7 @@ fun View.isVisible() {
     this.visibility = View.VISIBLE
 }
 
-fun View.inGone() {
+fun View.isGone() {
     this.visibility = View.GONE
 }
 

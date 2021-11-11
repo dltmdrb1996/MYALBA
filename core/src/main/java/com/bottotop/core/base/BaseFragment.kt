@@ -50,4 +50,5 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
         })
     }
 
+
 }

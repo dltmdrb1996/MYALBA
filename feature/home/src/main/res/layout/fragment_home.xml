@@ -6,7 +6,11 @@
     <data>
 
         <variable
-            name="adapter"
+            name="todayAdapter"
+            type="com.bottotop.home.TodayWorkAdapter" />
+
+        <variable
+            name="workOnAdapter"
             type="com.bottotop.home.TodayWorkAdapter" />
 
         <variable
@@ -41,15 +45,41 @@
                 app:layout_constraintVertical_weight="0.2">
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textviewTop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_title"
-                    android:text="공지사항"
+                    android:text="최근 글"
                     android:textSize="@dimen/text_title"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.community.time}"
+                    app:layout_constraintBottom_toTopOf="@id/tv_recent_Community"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/tv_recent_Community"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textviewTop"
+                    tools:layout_editor_absoluteX="15dp">
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.community.content}" />
+
+                </androidx.core.widget.NestedScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,6 +97,28 @@
                 app:layout_constraintStart_toEndOf="@id/home_container1"
                 app:layout_constraintTop_toBottomOf="@id/home_container"
                 app:layout_constraintVertical_weight="0.3">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_Work_On"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출근중"
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="always"
+                    android:scrollbars="vertical"
+                    android:text="@{viewModel.working}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_Work_On" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -89,17 +141,16 @@
                     android:id="@+id/home_Today_Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="오늘의 근무자"
+                    android:text="오늘 근무자"
                     android:textSize="@dimen/text_big"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adapter="@{adapter}"
+                    android:adapter="@{todayAdapter}"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="always"
                     android:scrollbars="vertical"
@@ -172,6 +223,7 @@
                     app:strokeColor="@color/colorText"
                     android:text="@{viewModel.workOn}"
                     android:onClick="@{()->viewModel.checkWork()}"
+                    android:textColor="@color/colorText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="0.3"
@@ -192,20 +244,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/home_container2"
                 app:layout_constraintVertical_weight="0.25">
-
-                <Button
-                    android:id="@+id/btn_kakao_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.endWork()}"
-                    android:text="퇴근하기" />
-
-                <Button
-                    android:id="@+id/btn_naver_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="네이버로그아웃"
-                    app:layout_constraintEnd_toEndOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

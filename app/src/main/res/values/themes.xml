@@ -11,9 +11,12 @@
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textViewStyle">@style/textViewFontStyle</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
+        <item name="android:alertDialogTheme">@style/MyDialogTheme</item>
     </style>
 
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Light" />
+
+
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/radius_top</item>
@@ -23,11 +26,26 @@
         <item name="android:windowIsFloating">false</item>
         <item name="bottomSheetStyle">@style/BottomSheet</item>
         <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
-<!--        <item name="android:windowSoftInputMode">adjustResize</item>-->
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
 
+
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:titleTextColor">@color/colorText</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorText</item>
+    </style>
 
 </resources>

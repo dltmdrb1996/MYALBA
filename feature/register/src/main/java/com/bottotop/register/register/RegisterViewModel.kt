@@ -7,6 +7,9 @@ import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.util.DateTime
+import com.bottotop.model.query.SetCompanyQuery
+import com.bottotop.model.query.SetScheduleQuery
+import com.bottotop.model.query.UpdateUserQuery
 import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -50,24 +53,18 @@ class RegisterViewModel @Inject constructor(
                 if(!updateUserCompany(code.value!!)) return@launch
                 company.apply {
                     val setCompany = getAPIResult(dataRepository.setCompany(
-                        mapOf<String, String>(
-                            Pair("id", SocialInfo.id),
-                            Pair("com_id", com_id),
-                            Pair("com_name", com_name),
-                            Pair("com_tel", com_tel),
-                            Pair("pay", pay),
-                            Pair("position", "B"),
-                            Pair("start", startTime.value!!),
-                            Pair("end", endTime.value!!),
-                            Pair("workday", checkWeek()),
-                        )),
+                        SetCompanyQuery(SocialInfo.id,com_id,com_name,com_tel,pay,"B",
+                            startTime.value!!,endTime.value!!,checkWeek())
+                        ),
                         "$TAG : setCompany1"
                     )
 
                     if(setCompany){
+                        dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , com_id))
                         val refreshCompanies1_2 = getAPIResult(dataRepository.refreshCompanies(code.value!!),
                             "$TAG : refreshCompanies1_2"
                         )
+
                         if(refreshCompanies1_2){
                             handleLoading(false)
                             _albaComplete.postValue(true)
@@ -78,9 +75,6 @@ class RegisterViewModel @Inject constructor(
                         _albaComplete.postValue(false)
                     }
                 }
-
-                dataRepository.setSchedule(mapOf(Pair("id",SocialInfo.id), Pair("month", DateTime().getYearMonth())))
-
             }
             handleLoading(false)
         }
@@ -89,11 +83,7 @@ class RegisterViewModel @Inject constructor(
     private suspend fun updateUserCompany(change : String) : Boolean {
         val updateUser = getAPIResult(
             dataRepository.updateUser(
-                mapOf(
-                    Pair("id", SocialInfo.id),
-                    Pair("target", "com_id"),
-                    Pair("change", change)
-                )
+                UpdateUserQuery(SocialInfo.id,"com_id",change)
             ), "$TAG : updateUser")
         return if (updateUser) {
             getAPIResult(dataRepository.refreshUser(SocialInfo.id), "$TAG : refreshUser")
@@ -153,17 +143,8 @@ class RegisterViewModel @Inject constructor(
             handleLoading(true)
             if(!updateUserCompany(SocialInfo.id)) return@launch
             val setCompany2 = getAPIResult(dataRepository.setCompany(
-                mapOf<String, String>(
-                    Pair("id", SocialInfo.id),
-                    Pair("com_id", SocialInfo.id),
-                    Pair("com_name", com_name.value!!),
-                    Pair("com_tel",com_tel.value!!),
-                    Pair("pay", pay.value!!),
-                    Pair("position", "A"),
-                    Pair("start","null"),
-                    Pair("end","null"),
-                    Pair("workday","0000000")
-                )
+                SetCompanyQuery(SocialInfo.id,SocialInfo.id,com_name.value!!,com_tel.value!!,
+                pay.value!!,"A","","","0000000")
             ),"$TAG : setCompany2")
             if(setCompany2) {
                 val refreshCompanies2 = getAPIResult(dataRepository.refreshCompanies(SocialInfo.id),

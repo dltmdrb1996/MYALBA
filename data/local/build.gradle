@@ -19,8 +19,8 @@ dependencies {
     implementation(Android_Libraries.HILT_ANDROID)
     kapt          (Android_Libraries.HILT_ANDROID_COMPILER)
 
-    implementation(Android_Libraries.ROOM_RUNTIME)
-    implementation(Android_Libraries.ROOM_KTX)
+    api(Android_Libraries.ROOM_RUNTIME)
+    api(Android_Libraries.ROOM_KTX)
     kapt(Android_Libraries.ROOM_COMPILER)
 
 

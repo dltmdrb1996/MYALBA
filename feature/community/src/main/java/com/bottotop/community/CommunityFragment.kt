@@ -8,6 +8,8 @@ import com.bottotop.community.databinding.FragmentCommunityBinding
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.setOnSingleClickListener
+import com.bottotop.core.ext.showToast
+import com.bottotop.core.model.EventObserver
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigatable
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +24,7 @@ class CommunityFragment :
     lateinit var bottomSheet : CreateBottomSheet
     override fun setBindings() {
         _binding?.viewModel = viewModel
+        _binding?.adapter = adapter
     }
 
 
@@ -31,8 +34,9 @@ class CommunityFragment :
         bottomSheet = CreateBottomSheet(viewModel)
         initCommunity()
         observeLoading()
-        obersveCreateSuccess()
-        setBtn()
+        focusTop()
+        initClickEvent()
+        viewModel.init()
     }
 
     private fun observeLoading(){
@@ -43,13 +47,17 @@ class CommunityFragment :
     }
 
     private fun initCommunity(){
-        binding.recyclerView.adapter = adapter
         viewModel.communityList.observe(viewLifecycleOwner,{
             adapter.submitList(it)
         })
     }
 
-    fun setBtn(){
+    private fun focusTop(){
+        viewModel.success.observe(viewLifecycleOwner,{
+            binding.recyclerView.smoothScrollToPosition(0)
+        })
+    }
+    private fun initClickEvent(){
         binding.apply {
             communityBtnCreate.setOnClickListener {
                 bottomSheet.show(childFragmentManager, bottomSheet.tag)
@@ -57,9 +65,4 @@ class CommunityFragment :
         }
     }
 
-    fun obersveCreateSuccess(){
-        viewModel.success.observe(viewLifecycleOwner,{
-            if(it){ bottomSheet.dismiss() }
-        })
-    }
 }

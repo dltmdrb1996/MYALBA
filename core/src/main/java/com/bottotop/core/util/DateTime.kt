@@ -96,6 +96,11 @@ class DateTime {
         return hhmmFormat.format(time)
     }
 
+    fun getTimeLongToDD(time : Long) : String {
+        ddFormat.timeZone = TimeZone.getTimeZone("GMT")
+        return hhmmFormat.format(time)
+    }
+
     fun getCurrentDateFromStringFormat(): String {
         return yyyyMMddHHmmssFormat.format(getCurrentDate().time)
     }

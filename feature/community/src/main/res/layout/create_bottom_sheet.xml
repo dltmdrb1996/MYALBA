@@ -12,7 +12,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/colorSecondary"
+        android:background="@color/colorPrimary"
         android:id="@+id/bottomSheetDashBoardLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,9 +87,29 @@
             android:textColorHint="@color/colorText"
             android:hint="내용을 입력해주세요"
             android:text="@={viewModel.content}"
+            android:textColor="@color/colorText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_layout" />
+
+        <com.bottotop.core.global.ContentLoadingProgressBar
+            android:id="@+id/loadingView"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_loading_bg"
+            android:elevation="12dp"
+            android:indeterminateDuration="500"
+            android:indeterminateOnly="true"
+            android:translationY="-60dp"
+            android:visibility="gone"
+            android:translationZ="90dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:translationY="50dp"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

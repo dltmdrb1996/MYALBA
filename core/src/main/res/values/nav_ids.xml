@@ -4,7 +4,6 @@
     <item name="splash_flow" type="id" />
     <item name="login_flow" type="id"/>
     <item name="asset_flow" type="id"/>
-    <item name="chat_flow" type="id"/>
     <item name="community_flow" type="id"/>
     <item name="member_flow" type="id"/>
     <item name="schedule_flow" type="id"/>

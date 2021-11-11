@@ -22,7 +22,7 @@ import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 import android.view.animation.PathInterpolator
-import com.bottotop.core.lazyFast
+import com.bottotop.core.ext.lazyFast
 
 object Interpolators {
 

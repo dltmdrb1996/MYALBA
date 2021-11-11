@@ -8,9 +8,6 @@
             name="viewModel"
             type="com.bottotop.schedule.ScheduleViewModel" />
 
-        <variable
-            name="adapter"
-            type="com.bottotop.schedule.Schedule7DayAdapter" />
     </data>
 
         <androidx.core.widget.NestedScrollView

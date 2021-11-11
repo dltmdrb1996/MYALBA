@@ -23,4 +23,6 @@ interface LocalDataSource {
     suspend fun deleteDaySchedule()
     suspend fun insertDaySchedule(day : String , time : String)
     suspend fun getDaySchedule() : DaySchedule
+
+    suspend fun nukeAll()
 }

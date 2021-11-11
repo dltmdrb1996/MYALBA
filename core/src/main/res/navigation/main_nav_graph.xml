@@ -8,7 +8,6 @@
     <include app:graph="@navigation/home_flow" />
     <include app:graph="@navigation/login_flow" />
     <include app:graph="@navigation/asset_flow" />
-    <include app:graph="@navigation/chat_flow" />
     <include app:graph="@navigation/community_flow" />
     <include app:graph="@navigation/member_flow" />
     <include app:graph="@navigation/schedule_flow" />
@@ -116,16 +115,5 @@
             app:argType="string" />
     </action>
 
-    <action
-        android:id="@+id/action_global_chat_flow"
-        app:destination="@id/chat_flow"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popUpTo="@id/main_nav_graph"
-        app:popUpToInclusive="true">
-        <argument
-            android:name="msg"
-            app:argType="string" />
-    </action>
 
 </navigation>

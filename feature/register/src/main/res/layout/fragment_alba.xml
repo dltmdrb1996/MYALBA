@@ -50,22 +50,5 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_QR"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_layout"
-            android:background="@drawable/radius_bg_20dp"
-            android:text="QR스캔으로 등록"
-            android:textColor="@color/colorText"
-            app:icon="@drawable/ic_baseline_qr_code_24"
-            app:iconGravity="start"
-            app:iconTint="@color/colorText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_code" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -10,6 +10,7 @@ dependencies {
     implementation(AndroidX.MATERIAL)
     implementation(Kotlin.KOTLIN_STDLIB)
     implementation(AndroidX.CONSTRAINT_LAYOUT)
+    implementation(Kotlin.SERIALIZATION)
 
     implementation(Android_Libraries.HILT_ANDROID)
     kapt          (Android_Libraries.HILT_ANDROID_COMPILER)

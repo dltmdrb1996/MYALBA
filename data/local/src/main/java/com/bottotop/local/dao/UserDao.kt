@@ -22,6 +22,9 @@ internal interface UserDao {
     @Query("DELETE FROM user WHERE pk NOT LIKE (:id)")
     fun deleteMember(id : String)
 
+    @Query("DELETE FROM user")
+    fun nukeUser()
+
     @Query("DELETE FROM schedule")
     fun deleteSchedule()
 
@@ -30,5 +33,6 @@ internal interface UserDao {
 
     @Query("SELECT * FROM schedule")
     fun getSchedule() : DayScheduleEntity
+
 
 }

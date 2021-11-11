@@ -1,19 +1,7 @@
 package com.bottotop.core.global
 
-import java.util.*
-
 object NavigationRouter {
-//    private const val SPLASH_DESTINATION : Int = 2131296742
-//    private const val LOGIN_DESTINATION : Int = 2131296548
-//    private const val MEMBER_DESTINATION : Int = 2131296578
-//    private const val COMMUNITY_DESTINATION : Int = 2131296416
-//    private const val HOME_DESTINATION : Int = 2131296507
-//    private const val SCHEDULE_DESTINATION : Int = 2131296689
-//    private const val ASSET_DESTINATION : Int = 2131296352
-//    private const val SCHEDULEDETAIL_DESTINATION = 2131296688
-
     lateinit var currentState : NavigationTable
-
     fun saveState(destination : String){
         when(destination){
             "splash" -> currentState=NavigationTable.Splash
@@ -25,6 +13,11 @@ object NavigationRouter {
             "asset" -> currentState=NavigationTable.Asset
             "scheduleDetail" -> currentState=NavigationTable.ScheduleDetail
             "register" -> currentState=NavigationTable.Register
+            "onBoarding" -> currentState=NavigationTable.OnBoarding
+            "memberDetail" -> currentState=NavigationTable.MemberDetail
+            "info" -> currentState=NavigationTable.Info
+            "setting" -> currentState=NavigationTable.Setting
+            "communityDetail" -> currentState=NavigationTable.CommunityDetail
         }
     }
 }
@@ -39,4 +32,9 @@ sealed class NavigationTable(){
     object Asset : NavigationTable()
     object ScheduleDetail : NavigationTable()
     object Register : NavigationTable()
+    object OnBoarding : NavigationTable()
+    object MemberDetail : NavigationTable()
+    object Info : NavigationTable()
+    object Setting : NavigationTable()
+    object CommunityDetail : NavigationTable()
 }

@@ -11,10 +11,30 @@
         android:name="com.bottotop.setting.SettingFragment"
         tools:layout="@layout/fragment_setting">
 
+        <argument
+            android:name="msg"
+            app:argType="string" />
+
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="example://setting/exampleArgs?msg={msg}" />
-
+            app:uri="example://setting/SettingFragment?msg={msg}" />
     </fragment>
 
+
+    <fragment
+        android:id="@+id/infoFragment"
+        android:label="info"
+        android:name="com.bottotop.setting.InfoFragment"
+        tools:layout="@layout/fragment_info">
+
+        <argument
+            android:defaultValue=""
+            android:name="msg"
+            app:argType="string" />
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="example://Info/InfoFragmentArgs?msg={msg}" />
+
+    </fragment>
 </navigation>

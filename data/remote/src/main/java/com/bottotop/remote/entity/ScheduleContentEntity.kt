@@ -11,4 +11,6 @@ data class ScheduleContentEntity(
     val endTime : String,
     @SerialName("workTime")
     val workTime : String,
+    @SerialName("workPay")
+    val workPay : String = "",
 )
