@@ -5,9 +5,9 @@ import com.bottotop.local.LocalDataSource
 import com.bottotop.model.*
 import com.bottotop.model.query.*
 import com.bottotop.model.repository.DataRepository
+import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
 import com.bottotop.remote.ApiService
-import com.bottotop.repository.mapper.*
 import com.bottotop.repository.mapper.CommunityMapper
 import com.bottotop.repository.mapper.CompanyEntityMapper
 import com.bottotop.repository.mapper.CompanyMapper

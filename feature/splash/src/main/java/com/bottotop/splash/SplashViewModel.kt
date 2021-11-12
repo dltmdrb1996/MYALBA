@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.bottotop.core.model.LoginState
 import com.bottotop.core.util.DateTime
-import com.bottotop.model.APIError
+import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.User
 import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.wrapper.APIResult
@@ -41,7 +41,7 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    suspend fun checkUserData() {
+    private suspend fun checkUserData() {
         val refreshUser = dataRepository.refreshUser(SocialInfo.id)
         when (refreshUser) {
             is APIResult.Success -> {

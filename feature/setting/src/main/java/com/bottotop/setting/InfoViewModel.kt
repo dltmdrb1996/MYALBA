@@ -43,16 +43,20 @@ class InfoViewModel @Inject constructor(
     init {
         viewModelScope.launch(dispatcherProvider.io) {
             try {
-                val user = dataRepository.getUser(userId)
-                _user.postValue(user)
-                val company = dataRepository.getCompany(userId)
-                _company.postValue(company)
-                getMemberWorkDay(company)
+                initFirst()
             } catch (e: Throwable) {
                 showToast("데이터를 불러오는데 실패했습니다.")
                 Log.e(TAG, "룸데이터 불러오기 에러 : $e")
             }
         }
+    }
+
+    private suspend fun initFirst(){
+        val user = dataRepository.getUser(userId)
+        _user.postValue(user)
+        val company = dataRepository.getCompany(userId)
+        _company.postValue(company)
+        getMemberWorkDay(company)
     }
 
     private suspend fun getMemberWorkDay(company: Company) {

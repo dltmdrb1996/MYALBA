@@ -11,7 +11,7 @@ import com.bottotop.core.ext.showSnackbar
 import com.bottotop.core.ext.showToast
 import com.bottotop.core.model.LoginState
 import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
+import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.login.databinding.FragmentLoginBinding
 import com.nhn.android.naverlogin.OAuthLogin
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,10 +38,10 @@ class LoginFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLogin()
-        initBtn()
+        initClickEvent()
     }
 
-    fun initBtn(){
+    private fun initClickEvent(){
         _binding?.apply {
             btnKakaoLogin.setOnSingleClickListener {
                 if(navArg.msg=="noToken") this@LoginFragment.viewModel.getUser()
@@ -55,12 +55,12 @@ class LoginFragment :
         }
     }
 
-    fun observeLogin(){
+    private fun observeLogin(){
         viewModel.login.observe(viewLifecycleOwner,{
             when(it){
-                LoginState.Success -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
-                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("first"))
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
+                LoginState.Success -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                LoginState.Register -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("first"))
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
                 LoginState.NoData -> showToast("로그인시도가 실패했습니다 다시시도해주세요.")
             }
         })

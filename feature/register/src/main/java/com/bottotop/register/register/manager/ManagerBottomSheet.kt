@@ -8,8 +8,6 @@ import androidx.databinding.DataBindingUtil
 import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.ext.isVisible
 import com.bottotop.core.ext.showToast
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.register.R
 import com.bottotop.register.databinding.ManagerBottomSheetBinding
 import com.bottotop.register.register.RegisterViewModel
@@ -60,7 +58,7 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
         _binding = null
     }
 
-    fun initObserver(){
+    private fun initObserver(){
 
         viewModel.pay.observe(viewLifecycleOwner,{
             viewModel.isLoading.observe(viewLifecycleOwner,{
@@ -93,7 +91,7 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
         })
     }
 
-    fun showLoading(isLoading: Boolean) {
+    private fun showLoading(isLoading: Boolean) {
         if(isLoading) binding.nestedScrollView.alpha = 0.5f
         else binding.nestedScrollView.alpha = 1f
         binding.nestedScrollView.isClickable = isLoading

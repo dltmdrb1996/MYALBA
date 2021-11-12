@@ -43,11 +43,6 @@ class HomeFragment :
         initClickEvent()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-
     private fun setTodayWorkAdapter(){
         viewModel.scheduleItem.observe(viewLifecycleOwner,{ list ->
             todayAdapter.submitList(list)

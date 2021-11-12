@@ -14,7 +14,7 @@ internal object RepositoryModule {
 
     @Singleton
     @Provides
-    fun providesSampleRepository(repository: DataRepositoryImpl): DataRepository {
+    fun providesDataRepository(repository: DataRepositoryImpl): DataRepository {
         return repository
     }
 

@@ -8,8 +8,6 @@ import androidx.databinding.DataBindingUtil
 import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.ext.isVisible
 import com.bottotop.core.ext.showToast
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.register.R
 import com.bottotop.register.databinding.AlbaBottomSheetBinding
 import com.bottotop.register.register.RegisterViewModel
@@ -57,7 +55,7 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
         _binding = null
     }
 
-    fun initObserver(){
+    private fun initObserver(){
         viewModel.isLoading.observe(viewLifecycleOwner,{
             showLoading(it)
         })

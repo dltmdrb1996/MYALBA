@@ -1,6 +1,6 @@
 package com.bottotop.core.navigation
 
-interface ToFlowNavigatable {
+interface ToFlowNavigation {
     fun navigateToFlow(flow: NavigationFlow)
 }
 

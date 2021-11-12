@@ -23,7 +23,7 @@ internal interface UserDao {
     fun deleteMember(id : String)
 
     @Query("DELETE FROM user")
-    fun nukeUser()
+    fun deleteUser()
 
     @Query("DELETE FROM schedule")
     fun deleteSchedule()

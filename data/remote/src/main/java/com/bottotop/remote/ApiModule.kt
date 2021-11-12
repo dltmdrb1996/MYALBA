@@ -38,7 +38,7 @@ object ApiModule {
     val url = "https://279qd37w58.execute-api.ap-northeast-2.amazonaws.com/myjob/"
     @Provides
     @Singleton
-    fun provideMoopApiService(
+    fun provideApiService(
         okHttpClient: OkHttpClient ,
     ): ApiService {
         return Retrofit.Builder()

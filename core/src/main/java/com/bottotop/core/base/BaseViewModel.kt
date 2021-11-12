@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bottotop.core.model.Event
-import com.bottotop.model.APIError
+import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
 
 open class BaseViewModel(private val name : String) : ViewModel() {
@@ -39,7 +39,7 @@ open class BaseViewModel(private val name : String) : ViewModel() {
         }
     }
 
-    fun getAPIError(error : APIError , tag : String) : Boolean{
+    private fun getAPIError(error : APIError, tag : String) : Boolean{
         when(error){
             is APIError.SeverError -> {
                 Log.e(TAG, "$tag -> SeverError", )

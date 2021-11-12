@@ -5,9 +5,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
-import com.bottotop.core.ext.showToast
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.register.R
 import com.bottotop.register.databinding.FragmentRegisterBinding
 import com.bottotop.register.register.alba.AlbaFragment
@@ -34,21 +31,10 @@ class RegisterFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        observeLoading()
-        init_Tab_Viewpager()
+        init_TabLayout_Viewpager()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    private fun observeLoading(){
-        viewModel.isLoading.observe(viewLifecycleOwner, {
-            (requireActivity() as ShowLoading).showLoading(it)
-        })
-    }
-
-    private fun init_Tab_Viewpager(){
+    private fun init_TabLayout_Viewpager(){
         adapter.run {
             addItem(AlbaFragment())
             addItem(ManagerFragment())

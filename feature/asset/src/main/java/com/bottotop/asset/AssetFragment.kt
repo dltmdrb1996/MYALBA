@@ -7,12 +7,7 @@ import androidx.fragment.app.viewModels
 import com.bottotop.asset.databinding.FragmentAssetBinding
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
-import com.bottotop.core.ext.setOnSingleClickListener
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
-import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AssetFragment :
@@ -34,23 +29,15 @@ class AssetFragment :
         observeLoading()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    fun observeLoading() {
+    private fun observeLoading() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
 
-    fun initAdapter() {
+    private fun initAdapter() {
         viewModel.schedules.observe(viewLifecycleOwner, {
             adapter.submitList(it)
-            it.forEach {
-                Log.e(TAG, "initAdapter: $it", )
-            }
-
         })
     }
 

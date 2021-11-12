@@ -7,11 +7,9 @@ import androidx.fragment.app.viewModels
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.setting.databinding.FragmentInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
-import android.widget.Toast
 import android.content.DialogInterface
-import com.bottotop.core.model.LoginState
 import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
+import com.bottotop.core.navigation.ToFlowNavigation
 
 @AndroidEntryPoint
 class InfoFragment :
@@ -30,7 +28,7 @@ class InfoFragment :
         observeNav()
     }
 
-    fun unRegister(){
+    private fun unRegister(){
         binding.btnUnRegister.setOnClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
             builder.setTitle("회원탈퇴").setMessage("이 앱에 관련된 모든 데이터가 삭제됩니다.")
@@ -49,9 +47,9 @@ class InfoFragment :
         }
     }
 
-    fun observeNav(){
+    private fun observeNav(){
         viewModel.navLogin.observe(viewLifecycleOwner,{
-            (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("back"))
+            (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.LoginFlow("back"))
         })
     }
 }

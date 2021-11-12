@@ -44,9 +44,7 @@ class RegisterViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcherProvider.io) {
             handleLoading(true)
-            val refreshCompanies1 = getAPIResult(dataRepository.refreshCompanies(code.value!!),
-                "$TAG : refreshCompanies1"
-            )
+            val refreshCompanies1 = getAPIResult(dataRepository.refreshCompanies(code.value!!), "$TAG : refreshCompanies1")
             if (refreshCompanies1) {
                 val companies = dataRepository.getCompanies()
                 val company = companies[0]
@@ -61,20 +59,17 @@ class RegisterViewModel @Inject constructor(
 
                     if(setCompany){
                         dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , com_id))
-                        val refreshCompanies1_2 = getAPIResult(dataRepository.refreshCompanies(code.value!!),
-                            "$TAG : refreshCompanies1_2"
-                        )
-
+                        val refreshCompanies1_2 = getAPIResult(dataRepository.refreshCompanies(code.value!!), "$TAG : refreshCompanies1_2")
                         if(refreshCompanies1_2){
                             handleLoading(false)
                             _albaComplete.postValue(true)
-                        }else{
-                            _albaComplete.postValue(false)
                         }
-                    }else{
-                        _albaComplete.postValue(false)
+                        else _albaComplete.postValue(false)
                     }
+                    else _albaComplete.postValue(false)
                 }
+            } else {
+                _albaComplete.postValue(false)
             }
             handleLoading(false)
         }
@@ -85,20 +80,16 @@ class RegisterViewModel @Inject constructor(
             dataRepository.updateUser(
                 UpdateUserQuery(SocialInfo.id,"com_id",change)
             ), "$TAG : updateUser")
-        return if (updateUser) {
-            getAPIResult(dataRepository.refreshUser(SocialInfo.id), "$TAG : refreshUser")
-        }else{
-            false
-        }
+        return if (updateUser) getAPIResult(dataRepository.refreshUser(SocialInfo.id), "$TAG : refreshUser")
+        else false
+
     }
 
     private fun checkWeek(): String {
-        var workBinary : String =""
-        val list = listOf(
-            checkMon.value, checkTus.value, checkWed.value, checkThu.value,
+        var workBinary = ""
+        listOf(checkMon.value, checkTus.value, checkWed.value, checkThu.value,
             checkFri.value, checkSat.value, checkSun.value
-        )
-        list.forEach { workBinary += if(it==true) "1" else "0" }
+        ).forEach { workBinary += if(it==true) "1" else "0" }
         return workBinary
     }
 
@@ -141,22 +132,25 @@ class RegisterViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcherProvider.io) {
             handleLoading(true)
+
             if(!updateUserCompany(SocialInfo.id)) return@launch
+
             val setCompany2 = getAPIResult(dataRepository.setCompany(
                 SetCompanyQuery(SocialInfo.id,SocialInfo.id,com_name.value!!,com_tel.value!!,
                 pay.value!!,"A","","","0000000")
             ),"$TAG : setCompany2")
             if(setCompany2) {
-                val refreshCompanies2 = getAPIResult(dataRepository.refreshCompanies(SocialInfo.id),
-                    "$TAG : refreshCompanies2"
-                )
+                val refreshCompanies2 = getAPIResult(dataRepository.refreshCompanies(SocialInfo.id), "$TAG : refreshCompanies2")
+
                 if(refreshCompanies2) {
                     handleLoading(false)
                     _managerComplete.postValue(true)
+                }else{
+                    _managerComplete.postValue(false)
                 }
-                else _managerComplete.postValue(false)
+            }else{
+                _managerComplete.postValue(false)
             }
-            else _managerComplete.postValue(false)
             handleLoading(false)
         }
     }

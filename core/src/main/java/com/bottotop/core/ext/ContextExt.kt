@@ -1,9 +1,14 @@
 package com.bottotop.core.ext
 
+import android.app.Activity
 import android.content.Context
 import android.content.Context.*
+import android.graphics.Insets
 import android.location.LocationManager
 import android.net.ConnectivityManager
+import android.os.Build
+import android.util.DisplayMetrics
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -40,3 +45,4 @@ fun Context?.convertDpToPx(dps: Int): Int {
     }
     return pixels
 }
+

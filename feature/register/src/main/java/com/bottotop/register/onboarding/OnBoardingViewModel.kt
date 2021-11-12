@@ -29,14 +29,10 @@ class OnBoardingViewModel @Inject constructor(
     private val _success = MutableLiveData<Boolean>()
     val success : LiveData<Boolean> = _success
 
-    val dateUtil = DateTime()
     private fun getUserInfo(){
         viewModelScope.launch(dispatcherProvider.io) {
-            if(SocialInfo.social=="naver"){
-                socialLoginRepository.getNaverInfo()
-            }else{
-                socialLoginRepository.getKakaoInfo()
-            }
+            if(SocialInfo.social=="naver") socialLoginRepository.getNaverInfo()
+            else socialLoginRepository.getKakaoInfo()
         }
     }
 

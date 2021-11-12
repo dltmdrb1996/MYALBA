@@ -2,7 +2,7 @@ package com.bottotop.core.model
 
 import androidx.lifecycle.Observer
 
-open class Event<out T>(private val content: T) {
+        open class Event<out T>(private val content: T) {
     var hasBeenHandled = false
         private set
 

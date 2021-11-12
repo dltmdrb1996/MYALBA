@@ -37,7 +37,7 @@ class CommunityViewModel @Inject constructor(
     val content = MutableLiveData<String>()
     lateinit var user: User
 
-    fun init() {
+    fun initCommunity() {
         viewModelScope.launch(dispatcherProvider.io){
             try {
                 handleLoading(true)

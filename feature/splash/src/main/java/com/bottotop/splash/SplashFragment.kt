@@ -1,7 +1,6 @@
 package com.bottotop.splash
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -13,7 +12,7 @@ import com.bottotop.core.ext.isVisible
 import com.bottotop.core.ext.withDelayOnMain
 import com.bottotop.core.model.LoginState
 import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
+import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.core.util.addOnAnimationListener
 import com.bottotop.splash.databinding.FragmentSplashBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +45,7 @@ class SplashFragment :
         attachSplashAnimationCompleteListener()
     }
 
-    private fun attachSplashAnimationCompleteListener() {
+        private fun attachSplashAnimationCompleteListener() {
         _binding?.apply {
             splashLogoLottieView.apply {
                 addOnAnimationListener(
@@ -87,14 +86,14 @@ class SplashFragment :
         }
     }
 
-    fun observeLogin(){
+    private fun observeLogin(){
         viewModel.login.observe(viewLifecycleOwner,{
             when(it){
-                LoginState.Success -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
-                LoginState.Register -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("first"))
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
-                LoginState.NoToken -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("noToken"))
-                LoginState.NoData -> (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.LoginFlow("noData"))
+                LoginState.Success -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
+                LoginState.Register -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("first"))
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
+                LoginState.NoToken -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.LoginFlow("noToken"))
+                LoginState.NoData -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.LoginFlow("noData"))
             }
         })
     }

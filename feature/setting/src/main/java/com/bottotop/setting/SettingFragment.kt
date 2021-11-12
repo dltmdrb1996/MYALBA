@@ -1,20 +1,18 @@
 package com.bottotop.setting
 
-import android.annotation.SuppressLint
-import android.app.UiModeManager.MODE_NIGHT_YES
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.bottotop.core.base.BaseFragment
-import com.bottotop.core.ext.setOnSingleClickListener
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
 import com.bottotop.setting.databinding.FragmentSettingBinding
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+
 
 @AndroidEntryPoint
 class SettingFragment :
@@ -29,6 +27,31 @@ class SettingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        restartSetting()
+        setDarkMode()
     }
 
+    private fun restartSetting(){
+        if (AppCompatDelegate.getDefaultNightMode()== MODE_NIGHT_YES){
+            val tab: TabLayout.Tab? = binding.tabLayout.getTabAt(1)
+            tab?.select()
+        }
+    }
+
+    private fun setDarkMode(){
+        binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+
+                if(tab.text=="켜기"){
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+        })
+    }
 }

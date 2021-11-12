@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.bottotop.core.ext.showToast
 import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
+import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.register.databinding.FragmentAlbaBinding
 import com.bottotop.register.register.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,16 +27,14 @@ class AlbaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return FragmentAlbaBinding.inflate(inflater, container, false).also {
-            _binding = it
-        }.root
+        return FragmentAlbaBinding.inflate(inflater, container, false).also { _binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheet=AlbaBottomSheet(parentViewModel)
         completeRegister()
-        setBtn()
+        initClickEvent()
     }
 
     override fun onDestroyView() {
@@ -45,7 +42,7 @@ class AlbaFragment : Fragment() {
         _binding = null
     }
 
-    fun setBtn(){
+    private fun initClickEvent(){
         binding.apply {
             btnCode.setOnClickListener {
                 bottomSheet.show(childFragmentManager, bottomSheet.tag)
@@ -53,10 +50,10 @@ class AlbaFragment : Fragment() {
         }
     }
 
-    fun completeRegister(){
+    private fun completeRegister(){
         parentViewModel.albaComplete.observe(viewLifecycleOwner,{
             bottomSheet.dismiss()
-            if(it) (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+            if(it) (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
         })
     }
 

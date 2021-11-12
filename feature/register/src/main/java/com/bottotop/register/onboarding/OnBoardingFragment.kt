@@ -36,9 +36,7 @@ class OnBoardingFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(navArg.msg == "noCompany"){
-            findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
-        }
+        if(navArg.msg == "noCompany") findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,10 +44,6 @@ class OnBoardingFragment :
         initViewpager()
         observeLoading()
         observeSuccess()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 
     private fun initViewpager() {
@@ -68,12 +62,10 @@ class OnBoardingFragment :
 
     private inner class PageChangeCallback : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-
             _binding?.apply {
                 when (position) {
                     0 -> onboardBack.isInvisible()
                     3 -> onboardNext.text = "등록하러가기"
-
                     else -> {
                         onboardBack.isVisible()
                         onboardNext.text = "Next"
@@ -91,31 +83,9 @@ class OnBoardingFragment :
 
     private fun observeSuccess(){
         viewModel.success.observe(viewLifecycleOwner,{
-            if(it){
-                findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
-            }else{
-                showToast("계정생성에 실패했습니다.")
-            }
+            if(it) findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
+            else showToast("계정생성에 실패했습니다.")
         })
     }
-
-//    private fun updatePagerHeightForChild(view: View, pager: ViewPager2) {
-//        val myFragment = childFragmentManager.findFragmentByTag("f$position")
-//        myFragment?.view?.let { updatePagerHeightForChild(it,binding.viewPager) }
-//        view.post {
-//            val wMeasureSpec =
-//                View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
-//            val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-//            view.measure(wMeasureSpec, hMeasureSpec)
-//
-//            if (pager.layoutParams.height != view.measuredHeight) {
-//                pager.layoutParams = (pager.layoutParams)
-//                    .also { lp ->
-//                        lp.height = view.measuredHeight
-//                    }
-//            }
-//        }
-//    }
-
 
 }

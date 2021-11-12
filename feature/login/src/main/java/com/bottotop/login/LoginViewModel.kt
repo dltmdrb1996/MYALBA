@@ -14,7 +14,6 @@ import com.bottotop.model.User
 import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
-import com.kakao.sdk.auth.model.OAuthToken
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,13 +45,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private val mOAuthLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
+    private val naverLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
                 SocialInfo.social = "naver"
                 if (userFlag) {
                     if (user.company == "null") _login.postValue(LoginState.NoCompany)
-                    else initInfo()
+                    else initSocialInfo()
                 }
                 else _login.postValue(LoginState.Register)
             } else {
@@ -64,7 +63,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun initInfo(){
+    fun initSocialInfo(){
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io){
             dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , user.company))
@@ -76,7 +75,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun getAuth() = mOAuthLoginHandler
+    fun getAuth() = naverLoginHandler
 
 
 //

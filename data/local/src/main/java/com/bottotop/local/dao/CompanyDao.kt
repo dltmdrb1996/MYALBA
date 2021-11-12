@@ -20,7 +20,7 @@ internal interface CompanyDao {
     fun getCompany(id : String): LocalCompanyEntity
 
     @Query("DELETE FROM company")
-    fun nukeCompany()
+    fun deleteCompany()
 
 
 }

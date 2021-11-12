@@ -31,15 +31,7 @@ class MemberViewModel @Inject constructor(
     init {
         viewModelScope.launch(dispatcherProvider.io){
             try {
-                val member = dataRepository.getMembers()
-                val companies = dataRepository.getCompanies()
-                val membersModel = member.mapIndexed { index, user ->
-                    val idx = index%4
-                    MemberModel(user.id ,user.name , user.workOn ,user.birth ,
-                        user.tel , user.email , companies[index].pay , list[idx] ,
-                        companies[index].position)
-                }
-                _members.postValue(membersModel)
+                initData()
             } catch (e : Throwable){
                 showToast("데이터를 불러오는데 실패했습니다.")
                 Log.e(TAG, "룸불러오기 에러 : e", )
@@ -47,5 +39,15 @@ class MemberViewModel @Inject constructor(
         }
     }
 
-
+    private suspend fun initData(){
+        val member = dataRepository.getMembers()
+        val companies = dataRepository.getCompanies()
+        val membersModel = member.mapIndexed { index, user ->
+            val idx = index%4
+            MemberModel(user.id ,user.name , user.workOn ,user.birth ,
+                user.tel , user.email , companies[index].pay , list[idx] ,
+                companies[index].position)
+        }
+        _members.postValue(membersModel)
+    }
 }

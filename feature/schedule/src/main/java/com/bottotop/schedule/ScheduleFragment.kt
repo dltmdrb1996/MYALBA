@@ -1,30 +1,33 @@
 package com.bottotop.schedule
 
-import android.R.attr
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.core.view.isInvisible
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.*
-import com.bottotop.core.navigation.DeepLinkDestination
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
-import com.bottotop.core.navigation.deepLinkNavigateTo
+import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.util.DateTime
-import com.bottotop.model.Schedule
 import com.bottotop.schedule.databinding.FragmentScheduleBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import kotlin.properties.Delegates
-import android.R.attr.button
-import android.widget.TextView
-import org.w3c.dom.Text
+import android.view.WindowInsets
+
+import android.view.WindowMetrics
+
+import android.app.Activity
+import android.graphics.Insets
+import android.os.Build
+import androidx.annotation.NonNull
 
 
 @AndroidEntryPoint
@@ -52,12 +55,8 @@ class ScheduleFragment :
         super.onViewCreated(view, savedInstanceState)
         observeLoading()
         setChangeMonthBtn()
-        setViewPager()
+        initViewPager()
         observeWorkSchedule()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 
     private fun observeWorkSchedule(){
@@ -66,10 +65,9 @@ class ScheduleFragment :
         })
     }
 
-    private fun setViewPager() {
+    private fun initViewPager() {
         viewModel.viewPager.observe(viewLifecycleOwner, { schedule ->
             _binding?.apply {
-                val tvList = listOf<TextView>(tvPager1, tvPager2, tvPager3, tvPager4, tvPager5)
                 val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
                 list.forEachIndexed { index, viewPager ->
                     viewPager.adapter = Schedule7DayAdapter(
@@ -77,22 +75,42 @@ class ScheduleFragment :
                         schedule[index]!!,
                         this@ScheduleFragment.viewModel.scheduleItem.value!!
                         )
-                    viewPager.offscreenPageLimit = 3
-                    viewPager.setPageTransformer { page, position ->
-                        val offset = position * -(2 * 250 + 250)
-                        page.translationX = offset
-                    }
-                    setLocationViewPager(viewPager, schedule[index], tvList[index])
+
+                    val width = getScreenWidth(requireActivity())
+                    val paddingToSet = width / 3
+                    viewPager.setShowSideItems(0,paddingToSet)
+                    setLocationViewPager(viewPager, schedule[index])
+
+
                 }
             }
         })
     }
 
+    private fun ViewPager2.setShowSideItems(pageMarginPx : Int, offsetPx : Int) {
+
+        clipToPadding = false
+        clipChildren = false
+        offscreenPageLimit = 3
+
+        setPageTransformer { page, position ->
+            val offset = position * -(2 * offsetPx + pageMarginPx)
+            if (this.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
+                if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                    page.translationX = -offset
+                } else {
+                    page.translationX = offset
+                }
+            } else {
+                page.translationY = offset
+            }
+        }
+
+    }
     // 현재 날짜에맞게 포커스를 맞춰준다.
     private fun setLocationViewPager(
         viewPager: ViewPager2,
         schedule: List<List<String>>?,
-        textView: TextView
     ) {
         val today = if(dateUtil.getToday().length==1) "0"+dateUtil.getToday() else dateUtil.getToday()
         val currentMonth = if(dateUtil.currentMonth<=9) "0"+dateUtil.currentMonth.toString() else dateUtil.currentMonth.toString()
@@ -112,7 +130,7 @@ class ScheduleFragment :
         }
     }
 
-    fun setChangeMonthBtn() {
+    private fun setChangeMonthBtn() {
         binding.apply {
             schedulePreviousTv.text = (month - 1).toString() + "월"
             scheduleCurrentTv.text = month.toString() + "월"
@@ -164,13 +182,10 @@ class ScheduleFragment :
         }
     }
 
-    fun observeLoading() {
+    private fun observeLoading() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
     }
 
-    fun navigate(flow: NavigationFlow) {
-        (requireActivity() as ToFlowNavigatable).navigateToFlow(flow)
-    }
 }

@@ -27,9 +27,9 @@ class CommunityDetailViewModel @Inject constructor(
 
 ) : BaseViewModel("커뮤니티디테일뷰모델") {
 
-    val dateUtil = DateTime()
+    private val dateUtil = DateTime()
     var userId: String = savedStateHandle.get<String>("msg")!!
-    val arg = Json.decodeFromString<Community>(userId)
+    private val arg = Json.decodeFromString<Community>(userId)
 
     private val _community = MutableLiveData<Community>()
     val community : LiveData<Community> = _community
@@ -39,27 +39,29 @@ class CommunityDetailViewModel @Inject constructor(
 
     val content = MutableLiveData<String>()
     lateinit var user : User
-    lateinit var company : Company
 
     init {
-        handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io){
+            handleLoading(true)
             try {
-                user = dataRepository.getUser(SocialInfo.id)
-                company = dataRepository.getCompany(arg.id)
-                val getCommunityDetail = dataRepository.getCommunityDetail(
-                    mapOf(Pair("com_id", company.com_id), Pair("idx", arg.idx))
-                )
-                if (getCommunityDetail.isSuccess){
-                    val community = getCommunityDetail.getOrNull()!!
-                    _community.postValue(community)
-                    _comment.postValue(community.comment)
-                }
+                initCommunityDetail()
             }catch (e : Throwable){
                 showToast("데이터를 불러오는데 실패했습니다.")
                 Log.e(TAG, ": ${e}", )
             }
             handleLoading(false)
+        }
+    }
+
+    private suspend fun initCommunityDetail(){
+        user = dataRepository.getUser(SocialInfo.id)
+        val getCommunityDetail = dataRepository.getCommunityDetail(
+            mapOf(Pair("com_id", user.company), Pair("idx", arg.idx))
+        )
+        if (getCommunityDetail.isSuccess){
+            val community = getCommunityDetail.getOrNull()!!
+            _community.postValue(community)
+            _comment.postValue(community.comment)
         }
     }
 
@@ -71,7 +73,7 @@ class CommunityDetailViewModel @Inject constructor(
             ),"$TAG : setComment")
             if(setComment){
                 val getCommunityDetail = dataRepository.getCommunityDetail(
-                    mapOf(Pair("com_id", company.com_id), Pair("idx", arg.idx))
+                    mapOf(Pair("com_id", user.company), Pair("idx", arg.idx))
                 )
                 if(getCommunityDetail.isSuccess){
                     val community = getCommunityDetail.getOrNull()!!

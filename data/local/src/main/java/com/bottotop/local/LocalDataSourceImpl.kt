@@ -34,7 +34,7 @@ internal class LocalDataSourceImpl @Inject constructor(
     override suspend fun getCompanies(): List<LocalCompanyEntity> = companyDao.getCompanies()
 
     override suspend fun nukeCompany() {
-        companyDao.nukeCompany()
+        companyDao.deleteCompany()
     }
 
     override suspend fun deleteDaySchedule() {
@@ -51,7 +51,7 @@ internal class LocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun nukeAll() {
-        userDao.nukeUser()
+        userDao.deleteUser()
         userDao.deleteSchedule()
         nukeCompany()
     }

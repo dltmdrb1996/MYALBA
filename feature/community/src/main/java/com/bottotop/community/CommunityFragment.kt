@@ -7,11 +7,6 @@ import androidx.fragment.app.viewModels
 import com.bottotop.community.databinding.FragmentCommunityBinding
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
-import com.bottotop.core.ext.setOnSingleClickListener
-import com.bottotop.core.ext.showToast
-import com.bottotop.core.model.EventObserver
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,11 +27,11 @@ class CommunityFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheet = CreateBottomSheet(viewModel)
-        initCommunity()
+        initCommunityAdapter()
         observeLoading()
         focusTop()
         initClickEvent()
-        viewModel.init()
+        viewModel.initCommunity()
     }
 
     private fun observeLoading(){
@@ -46,7 +41,7 @@ class CommunityFragment :
         })
     }
 
-    private fun initCommunity(){
+    private fun initCommunityAdapter(){
         viewModel.communityList.observe(viewLifecycleOwner,{
             adapter.submitList(it)
         })
@@ -57,6 +52,7 @@ class CommunityFragment :
             binding.recyclerView.smoothScrollToPosition(0)
         })
     }
+
     private fun initClickEvent(){
         binding.apply {
             communityBtnCreate.setOnClickListener {

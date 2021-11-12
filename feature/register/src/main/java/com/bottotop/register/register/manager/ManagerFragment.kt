@@ -1,17 +1,16 @@
 package com.bottotop.register.register.manager
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.bottotop.core.ext.showToast
 import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigatable
+import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.register.databinding.FragmentManagerBinding
 import com.bottotop.register.register.RegisterViewModel
-import com.bottotop.register.register.alba.AlbaBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -39,7 +38,7 @@ class ManagerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bottomSheet = ManagerBottomSheet(parentViewModel)
         completeRegister()
-        setBtn()
+        initClickEvent()
     }
 
     override fun onDestroyView() {
@@ -47,7 +46,7 @@ class ManagerFragment : Fragment() {
         _binding = null
     }
 
-    fun setBtn(){
+    private fun initClickEvent(){
         binding.apply {
             btnReg.setOnClickListener {
                 bottomSheet.show(childFragmentManager, bottomSheet.tag)
@@ -55,10 +54,10 @@ class ManagerFragment : Fragment() {
         }
     }
 
-    fun completeRegister(){
+    private fun completeRegister(){
         parentViewModel.managerComplete.observe(viewLifecycleOwner,{
-            bottomSheet.dismiss()
-            if(it) (requireActivity() as ToFlowNavigatable).navigateToFlow(NavigationFlow.HomeFlow("home"))
+            Log.e("TAG", "completeRegister: $it", )
+            if(it) (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
         })
     }
 

@@ -21,18 +21,5 @@ class SettingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel("셋팅뷰모델") {
 
-    var userId: String = savedStateHandle.get<String>("msg")!!
-
-    init {
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-    }
     
-    fun clickTest(){
-    }
-
-
 }

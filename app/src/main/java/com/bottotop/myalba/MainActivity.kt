@@ -1,6 +1,5 @@
 package com.bottotop.myalba
 
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -16,9 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.myalba.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import android.view.MotionEvent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import com.bottotop.core.global.SharedViewModel
 import com.bottotop.core.global.NavigationRouter
@@ -33,7 +29,7 @@ import com.bottotop.core.navigation.*
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
+class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
 
     private val navigator: Navigator = Navigator()
     private var networkCheck: Boolean = true
@@ -46,10 +42,10 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        firstNetworkCheck()
+        networkCheck()
         initBottomNavigation()
         setSupportActionBar(binding.appToolbar)
-        getDivice()
+        getDeviceId()
     }
 
     override fun onResume() {
@@ -129,10 +125,10 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
                 else -> return@setOnItemSelectedListener true
             }
         }
-        setNavAction(navController)
+        observeNavDirection(navController)
     }
 
-    private fun setNavAction(navController: NavController) {
+    private fun observeNavDirection(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             NavigationRouter.saveState(destination.label as String)
             when (NavigationRouter.currentState) {
@@ -157,11 +153,13 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
                     binding.appToolbar.title = "자산관리"
                 }
                 NavigationTable.Setting -> {
-                    showBar()
+                    binding.appToolbar.isVisible()
+                    binding.navViewFragment.isGone()
                     binding.appToolbar.title = "설정"
                 }
                 NavigationTable.Info -> {
-                    showBar()
+                    binding.appToolbar.isVisible()
+                    binding.navViewFragment.isGone()
                     binding.appToolbar.title = "정보"
                 }
                 else -> hideBar()
@@ -179,7 +177,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
         binding.navViewFragment.isGone()
     }
 
-    private fun firstNetworkCheck() {
+    private fun networkCheck() {
         cm = getSystemService(ConnectivityManager::class.java)
         val check = cm.activeNetworkInfo?.isConnectedOrConnecting
         if (check == false || check == null) {
@@ -211,7 +209,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigatable, ShowLoading {
 
 
     // 사용자 고유id값
-    private fun getDivice() {
+    private fun getDeviceId() {
         val android_id =
             Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
         SocialInfo.id = android_id

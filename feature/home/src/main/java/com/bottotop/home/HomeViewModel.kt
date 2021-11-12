@@ -61,30 +61,36 @@ class HomeViewModel @Inject constructor(
 
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
+            handleLoading(true)
             try{
-                initData()
-
-                val getCommunity = dataRepository.getCommunity(user.company)
-                if(getCommunity.isSuccess) _community.postValue(getCommunity.getOrNull()!!.last())
-                else Log.e(TAG, ": 커뮤니티불러오기 실패" )
-                if(company.position=="A") _master.postValue(true)
-
-                if(user.workOn == "off") {
-                    _workOn.postValue("출근하기")
-                } else {
-                    _workOn.postValue("퇴근하기")
-                    val daySchedule = dataRepository.getDaySchedule()
-                    patchSchedule(daySchedule)
+                if(initData()){
+                    initFirst()
+                    initWorking()
+                    getMemberWorkDay()
                 }
-
-                initWorking()
-                getMemberWorkDay()
             }catch (e : Throwable){
                 showToast("에러가발생했습니다.")
-                Log.e(TAG, "홈뷰모델 room load: $e" )
+                Log.e(TAG, "홈뷰모델 init: $e" )
             }
+            handleLoading(false)
         }
-        handleLoading(false)
+    }
+
+   private suspend fun initFirst(){
+       val getCommunity = dataRepository.getCommunity(user.company)
+
+       if(getCommunity.isSuccess && getCommunity.getOrNull()?.isNotEmpty()!!) {
+           _community.postValue(getCommunity.getOrNull()!!.last())
+       }
+       if(company.position=="A") _master.postValue(true)
+
+       if(user.workOn == "off") {
+           _workOn.postValue("출근하기")
+       } else {
+           _workOn.postValue("퇴근하기")
+           val daySchedule = dataRepository.getDaySchedule()
+           patchSchedule(daySchedule)
+       }
     }
 
     fun checkWork(){
@@ -94,7 +100,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun endWork() {
+    private fun endWork() {
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
             val daySchedule = dataRepository.getDaySchedule()
@@ -156,19 +162,27 @@ class HomeViewModel @Inject constructor(
             }
 
             _workOn.postValue("퇴근하기")
-            initData()
-            initWorking()
-            showTimePay("1000")
+            if(initData()){
+                initWorking()
+                showTimePay("1000")
+            }
             handleLoading(false)
         }
     }
 
 
-    private suspend fun initData(){
-        user = dataRepository.getUser(SocialInfo.id)
-        company = dataRepository.getCompany(SocialInfo.id)
-        companise = dataRepository.getCompanies()
-        member = dataRepository.getMembers()
+    private suspend fun initData() : Boolean {
+        return try {
+            user = dataRepository.getUser(SocialInfo.id)
+            company = dataRepository.getCompany(SocialInfo.id)
+            companise = dataRepository.getCompanies()
+            member = dataRepository.getMembers()
+            true
+        } catch (e : Throwable){
+            Log.e(TAG, "initData: $e", )
+            false
+        }
+
     }
 
     private fun patchSchedule(daySchedule: DaySchedule ) {

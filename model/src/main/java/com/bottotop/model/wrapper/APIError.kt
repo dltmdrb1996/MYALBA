@@ -1,4 +1,4 @@
-package com.bottotop.model
+package com.bottotop.model.wrapper
 
 sealed class APIError {
     object SeverError : APIError()
