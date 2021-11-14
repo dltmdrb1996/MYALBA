@@ -132,6 +132,9 @@ class HomeViewModel @Inject constructor(
                 _workOn.postValue("출근하기")
                 initData()
                 initWorking()
+                _workPay.postValue("")
+                _workTime.postValue("")
+
             }
             handleLoading(false)
         }

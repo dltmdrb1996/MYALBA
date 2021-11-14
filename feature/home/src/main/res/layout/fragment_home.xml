@@ -22,132 +22,138 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/home_Scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/home_container"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:layout_marginLeft="@dimen/margin_layout"
+            android:layout_marginTop="@dimen/margin_layout"
+            android:layout_marginRight="@dimen/margin_layout"
+            android:background="@drawable/radius_bg_20dp"
+            app:layout_constraintBottom_toTopOf="@id/home_container1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="0.2">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textviewTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_title"
+                android:text="최근 글"
+                android:textSize="@dimen/text_title"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@{viewModel.community.time}"
+                app:layout_constraintBottom_toTopOf="@id/tv_recent_Community"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/tv_recent_Community"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/layout_height"
-                android:layout_marginLeft="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                android:layout_marginRight="@dimen/margin_layout"
-                android:background="@drawable/radius_bg_20dp"
-                app:layout_constraintBottom_toTopOf="@id/home_container1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_weight="0.2">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textviewTop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_title"
-                    android:text="최근 글"
-                    android:textSize="@dimen/text_title"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textviewTop"
+                tools:layout_editor_absoluteX="15dp">
 
                 <TextView
-                    android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.community.time}"
-                    app:layout_constraintBottom_toTopOf="@id/tv_recent_Community"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <androidx.core.widget.NestedScrollView
-                    android:id="@+id/tv_recent_Community"
+                    android:id="@+id/tv_content"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textviewTop"
-                    tools:layout_editor_absoluteX="15dp">
-
-                    <TextView
-                        android:id="@+id/tv_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.community.content}" />
-
-                </androidx.core.widget.NestedScrollView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:padding="@dimen/margin_title"
-                android:id="@+id/home_container1_1"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/layout_height"
-                android:layout_marginLeft="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                android:layout_marginRight="@dimen/margin_layout"
-                android:layout_marginBottom="@dimen/margin_layout"
-                android:background="@drawable/radius_bg_20dp"
-                app:layout_constraintBottom_toTopOf="@id/home_container2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/home_container1"
-                app:layout_constraintTop_toBottomOf="@id/home_container"
-                app:layout_constraintVertical_weight="0.3">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_Work_On"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="출근중"
-                    android:textSize="@dimen/text_big"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:text="@{viewModel.community.content}" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:overScrollMode="always"
-                    android:scrollbars="vertical"
-                    android:text="@{viewModel.working}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_Work_On" />
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_container1_1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/layout_height"
+            android:layout_marginLeft="@dimen/margin_layout"
+            android:layout_marginTop="@dimen/margin_layout"
+            android:layout_marginRight="@dimen/margin_layout"
+            android:layout_marginBottom="@dimen/margin_layout"
+            android:background="@drawable/radius_bg_20dp"
+            android:padding="@dimen/margin_title"
+            app:layout_constraintBottom_toTopOf="@id/home_container2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/home_container1"
+            app:layout_constraintTop_toBottomOf="@id/home_container"
+            app:layout_constraintVertical_weight="0.3">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/home_container1"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/layout_height"
-                android:layout_marginLeft="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                android:padding="@dimen/margin_title"
-                app:layout_constraintEnd_toStartOf="@id/home_container1_1"
-                android:background="@drawable/radius_bg_20dp"
-                app:layout_constraintBottom_toTopOf="@id/home_container2"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_Work_On"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="출근중"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_container"
-                app:layout_constraintVertical_weight="0.3">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/home_Today_Tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="오늘 근무자"
-                    android:textSize="@dimen/text_big"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="always"
+                android:scrollbars="vertical"
+                android:text="@{viewModel.working}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Work_On" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_container1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/layout_height"
+            android:layout_marginLeft="@dimen/margin_layout"
+            android:layout_marginTop="@dimen/margin_layout"
+            android:background="@drawable/radius_bg_20dp"
+            android:padding="@dimen/margin_title"
+            app:layout_constraintBottom_toTopOf="@id/home_container2"
+            app:layout_constraintEnd_toStartOf="@id/home_container1_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_container"
+            app:layout_constraintVertical_weight="0.3">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/home_Today_Tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오늘 근무자"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_Today_Tv">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adapter="@{todayAdapter}"
@@ -155,101 +161,103 @@
                     android:overScrollMode="always"
                     android:scrollbars="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/home_Today_Tv" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:padding="@dimen/margin_title"
-                android:id="@+id/home_container2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/layout_height"
-                android:layout_marginLeft="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                android:layout_marginRight="@dimen/margin_layout"
-                android:background="@drawable/radius_bg_20dp"
-                app:layout_constraintBottom_toTopOf="@id/home_container3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_container1"
-                app:layout_constraintVertical_weight="0.25">
-
-                <TextView
-                    android:id="@+id/text3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="일한시간 :"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <TextView
-                    android:id="@+id/tv_work_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:text="@{viewModel.workTime}"
-                    app:layout_constraintStart_toEndOf="@+id/text3"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_item"
-                    android:text="오늘금액 :"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text3" />
-
-                <TextView
-                    android:id="@+id/tv_work_money"
-                    android:layout_marginTop="@dimen/margin_item"
-                    android:layout_marginLeft="7dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.workPay}"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_work_time" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/work_check"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cornerRadius="30dp"
-                    app:strokeWidth="0.5dp"
-                    app:strokeColor="@color/colorText"
-                    android:text="@{viewModel.workOn}"
-                    android:onClick="@{()->viewModel.checkWork()}"
-                    android:textColor="@color/colorText"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_weight="0.3"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/home_container3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/layout_height"
-                android:layout_marginLeft="@dimen/margin_layout"
-                android:layout_marginTop="@dimen/margin_layout"
-                android:layout_marginRight="@dimen/margin_layout"
-                android:background="@drawable/radius_bg_20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_container2"
-                app:layout_constraintVertical_weight="0.25">
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_container2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginLeft="@dimen/margin_layout"
+        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_marginRight="@dimen/margin_layout"
+        android:background="@drawable/radius_bg_20dp"
+        android:padding="@dimen/margin_title"
+        app:layout_constraintBottom_toTopOf="@id/home_container3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_container1"
+        app:layout_constraintVertical_weight="0.25">
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일한시간 :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_work_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:text="@{viewModel.workTime}"
+            app:layout_constraintStart_toEndOf="@+id/text3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_item"
+            android:text="오늘금액 :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text3" />
+
+        <TextView
+            android:id="@+id/tv_work_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="@dimen/margin_item"
+            android:text="@{viewModel.workPay}"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_work_time" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/work_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.checkWork()}"
+            android:text="@{viewModel.workOn}"
+            android:textColor="@color/colorText"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/colorText"
+            app:strokeWidth="0.5dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_container3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginLeft="@dimen/margin_layout"
+        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_marginRight="@dimen/margin_layout"
+        android:background="@drawable/radius_bg_20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_container2"
+        app:layout_constraintVertical_weight="0.25">
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.core.widget.NestedScrollView>
 
-</layout>
+    </layout>
