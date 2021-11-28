@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
         networkCheck()
         initBottomNavigation()
         setSupportActionBar(binding.appToolbar)
-        getDeviceId()
     }
 
     override fun onResume() {
@@ -189,13 +188,6 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
         }
     }
 
-
-    // 사용자 고유id값
-    private fun getDeviceId() {
-        val android_id =
-            Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID)
-        SocialInfo.id = android_id
-    }
 
     override fun onBackPressed() {
         when (NavigationRouter.currentState) {

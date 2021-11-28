@@ -1,9 +1,7 @@
 package com.bottotop.asset
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,14 +11,13 @@ import com.bottotop.core.ext.setOnSingleClickListener
 import com.bottotop.core.navigation.DeepLinkDestination
 import com.bottotop.core.navigation.deepLinkNavigateTo
 import com.bottotop.core.util.DateTime
-import com.bottotop.model.Community
 import com.bottotop.model.Schedule
 
 
 class AssetAdapter(private val viewModel: AssetViewModel) :
     ListAdapter<Pair<String,List<Pair<String,Schedule>>>, AssetAdapter.ViewHolder>(TaskDiffCallback()) {
 
-    val month = DateTime().getYearMonth()
+    private val month = DateTime().getYearMonth()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -32,7 +29,7 @@ class AssetAdapter(private val viewModel: AssetViewModel) :
     }
 
 
-    class ViewHolder private constructor(val binding: ViewholderAssetBinding) :
+    class ViewHolder private constructor(private val binding: ViewholderAssetBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: AssetViewModel, item: Pair<String,List<Pair<String,Schedule>>> , month : String) {
@@ -43,10 +40,10 @@ class AssetAdapter(private val viewModel: AssetViewModel) :
             val userId = item.second[0].second.id
             item.second.forEach {
                 if(it.second.month==month) currentMonth =true
-                it.second.scheduleInfo.forEach {
-                    if(it.content.workPay=="null") return@forEach
-                    if(currentMonth) monthMoney += it.content.workPay.toInt()
-                    money += it.content.workPay.toInt()
+                it.second.scheduleInfo.forEach { scheduleInfo ->
+                    if(scheduleInfo.content.workPay=="null") return@forEach
+                    if(currentMonth) monthMoney += scheduleInfo.content.workPay.toInt()
+                    money += scheduleInfo.content.workPay.toInt()
                 }
 
                 currentMonth=false

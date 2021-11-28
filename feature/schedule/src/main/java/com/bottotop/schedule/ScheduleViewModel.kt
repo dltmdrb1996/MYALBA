@@ -1,22 +1,21 @@
 package com.bottotop.schedule
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
-import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.*
 import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val dispatcherProvider: DispatcherProvider,
+    dispatcherProvider: DispatcherProvider,
     private val dataRepository: DataRepository
 ) : BaseViewModel("일정뷰모델") {
 
@@ -31,6 +30,7 @@ class ScheduleViewModel @Inject constructor(
     private lateinit var member : List<User>
     private lateinit var company : List<Company>
 
+
     init {
         viewModelScope.launch(dispatcherProvider.io){
             handleLoading(true)
@@ -40,7 +40,7 @@ class ScheduleViewModel @Inject constructor(
                 getMemberWorkDay()
             }catch (e : Throwable){
                 showToast("데이터를 불러오는데 실패했습니다.")
-                Log.e(TAG, ": 룸데이터 불러오기 ${e}", )
+                Timber.e(": 룸데이터 불러오기 $e")
             }
             handleLoading(false)
         }
@@ -78,7 +78,7 @@ class ScheduleViewModel @Inject constructor(
 
     private fun getMemberWorkDay(){
         val scheduleItem : List<ScheduleItem> = (member.indices).map { i ->
-            var list = mutableListOf<String>()
+            val list = mutableListOf<String>()
             company[i].workday.mapIndexed { index, c ->
                 if(c=='1'){
                     when(index){

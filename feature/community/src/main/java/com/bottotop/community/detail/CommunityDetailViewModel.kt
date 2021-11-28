@@ -1,7 +1,5 @@
 package com.bottotop.community.detail
 
-
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -17,18 +15,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CommunityDetailViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val dataRepository: DataRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 
 ) : BaseViewModel("커뮤니티디테일뷰모델") {
 
     private val dateUtil = DateTime()
-    var userId: String = savedStateHandle.get<String>("msg")!!
+    private var userId: String = savedStateHandle.get<String>("msg")!!
     private val arg = Json.decodeFromString<Community>(userId)
 
     private val _community = MutableLiveData<Community>()
@@ -38,7 +37,7 @@ class CommunityDetailViewModel @Inject constructor(
     val comment : LiveData<List<Comment>> = _comment
 
     val content = MutableLiveData<String>()
-    lateinit var user : User
+    private lateinit var user : User
 
     init {
         viewModelScope.launch(dispatcherProvider.io){
@@ -47,7 +46,7 @@ class CommunityDetailViewModel @Inject constructor(
                 initCommunityDetail()
             }catch (e : Throwable){
                 showToast("데이터를 불러오는데 실패했습니다.")
-                Log.e(TAG, ": ${e}", )
+                Timber.e(": $e")
             }
             handleLoading(false)
         }
@@ -81,7 +80,7 @@ class CommunityDetailViewModel @Inject constructor(
                     _community.postValue(community)
                     content.postValue("")
                 } else {
-                    Log.e(TAG, "makeComment: 불러오기실패 ${getCommunityDetail.exceptionOrNull()}", )
+                    Timber.e("makeComment: 불러오기실패 ${getCommunityDetail.exceptionOrNull()}")
                 }
             }
             handleLoading(false)

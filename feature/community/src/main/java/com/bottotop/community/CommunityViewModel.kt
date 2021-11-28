@@ -1,6 +1,5 @@
 package com.bottotop.community
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,9 +12,8 @@ import com.bottotop.model.*
 import com.bottotop.model.query.SetCommunityQuery
 import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,7 +33,7 @@ class CommunityViewModel @Inject constructor(
 
     private val dateUtil = DateTime()
     val content = MutableLiveData<String>()
-    lateinit var user: User
+    private lateinit var user: User
 
     fun initCommunity() {
         viewModelScope.launch(dispatcherProvider.io){
@@ -46,7 +44,7 @@ class CommunityViewModel @Inject constructor(
                 if(getCommunity.isSuccess) _communityList.postValue(getCommunity.getOrNull()?.reversed())
             } catch (e: Throwable) {
                 showToast("데이터를 불러오는데 실패했습니다.")
-                Log.e(TAG, "룸데이터 불러오기 오류 : $e ")
+                Timber.e("룸데이터 불러오기 오류 : $e")
             }
             handleLoading(false)
         }
@@ -67,7 +65,7 @@ class CommunityViewModel @Inject constructor(
                     _communityList.postValue(getCommunity.getOrNull()?.reversed())
                     _success.postValue(Event(true))
                 }
-                else Log.e(TAG, "makeCommunity: getCommunity", )
+                else Timber.e("makeCommunity: getCommunity")
             }
             _bottomLoading.postValue(false)
         }

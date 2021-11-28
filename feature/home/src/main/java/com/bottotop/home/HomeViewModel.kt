@@ -1,6 +1,5 @@
 package com.bottotop.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,26 +12,22 @@ import com.bottotop.model.query.PatchScheduleQuery
 import com.bottotop.model.query.UpdateScheduleQuery
 import com.bottotop.model.query.UpdateUserQuery
 import com.bottotop.model.repository.DataRepository
-import com.bottotop.model.repository.SocialLoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val socialLoginRepository: SocialLoginRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val dataRepository: DataRepository
 ) : BaseViewModel("홈뷰모델") {
 
 
-    private val _schedule = MutableLiveData<Schedule>()
-    val schedule: LiveData<Schedule> = _schedule
-
-    private val _workTime = MutableLiveData<String>("")
+    private val _workTime = MutableLiveData("")
     val workTime: LiveData<String> = _workTime
 
-    private val _workPay = MutableLiveData<String>("")
+    private val _workPay = MutableLiveData("")
     val workPay: LiveData<String> = _workPay
 
     private val _workOn = MutableLiveData<String>()
@@ -58,7 +53,7 @@ class HomeViewModel @Inject constructor(
     private val dataUtil = DateTime()
 
     init {
-
+        Timber.e("test ${SocialInfo.id}  ,  ${SocialInfo.social}")
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
             handleLoading(true)
@@ -70,7 +65,7 @@ class HomeViewModel @Inject constructor(
                 }
             }catch (e : Throwable){
                 showToast("에러가발생했습니다.")
-                Log.e(TAG, "홈뷰모델 init: $e" )
+                Timber.e("홈뷰모델 init: $e")
             }
             handleLoading(false)
         }
@@ -172,7 +167,7 @@ class HomeViewModel @Inject constructor(
             member = dataRepository.getMembers()
             true
         } catch (e : Throwable){
-            Log.e(TAG, "initData: $e", )
+            Timber.e("initData: $e")
             false
         }
 

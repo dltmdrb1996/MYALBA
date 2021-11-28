@@ -3,7 +3,6 @@ package com.bottotop.register.register
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.register.R
 import com.bottotop.register.databinding.FragmentRegisterBinding

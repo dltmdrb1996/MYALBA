@@ -24,7 +24,6 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
 //        ownerProducer = { requireParentFragment() }
 //    )
 
-
     override fun onStart() {
         super.onStart()
         val behavior = BottomSheetBehavior.from(requireView().parent as View)
@@ -47,10 +46,6 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onDestroyView() {

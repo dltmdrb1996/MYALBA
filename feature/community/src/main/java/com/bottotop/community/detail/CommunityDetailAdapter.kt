@@ -1,6 +1,5 @@
 package com.bottotop.community.detail
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bottotop.community.databinding.ViewholderCommentBinding
 import com.bottotop.model.Comment
-import com.bottotop.model.ScheduleItem
 
 class CommunityDetailAdapter(private val viewModel: CommunityDetailViewModel) :
     ListAdapter<Comment, CommunityDetailAdapter.ViewHolder>(TaskDiffCallback()) {
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -22,10 +21,10 @@ class CommunityDetailAdapter(private val viewModel: CommunityDetailViewModel) :
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: ViewholderCommentBinding) :
+    class ViewHolder private constructor(private val binding: ViewholderCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: CommunityDetailViewModel, item: Comment ) {
+        fun bind(viewModel : CommunityDetailViewModel, item: Comment ) {
             binding.item = item
             binding.executePendingBindings()
         }

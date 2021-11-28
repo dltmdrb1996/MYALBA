@@ -1,7 +1,6 @@
 package com.bottotop.register.register.manager
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.register.databinding.FragmentManagerBinding
 import com.bottotop.register.register.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -56,7 +56,7 @@ class ManagerFragment : Fragment() {
 
     private fun completeRegister(){
         parentViewModel.managerComplete.observe(viewLifecycleOwner,{
-            Log.e("TAG", "completeRegister: $it", )
+            Timber.e("completeRegister: $it")
             if(it) (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
         })
     }

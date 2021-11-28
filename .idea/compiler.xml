@@ -20,6 +20,7 @@
       <module name="MYALBA.feature.splash" target="11" />
       <module name="MYALBA.navigation" target="11" />
       <module name="MYALBA.test" target="11" />
+      <module name="Myjob.buildSrc" target="11" />
       <module name="MyJob.buildSrc" target="11" />
       <module name="PartTimeJob.buildSrc" target="11" />
     </bytecodeTargetLevel>

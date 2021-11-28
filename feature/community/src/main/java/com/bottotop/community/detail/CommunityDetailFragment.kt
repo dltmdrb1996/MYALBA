@@ -1,12 +1,9 @@
 package com.bottotop.community.detail
 
-import android.app.Service
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bottotop.community.R
@@ -16,8 +13,6 @@ import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.isGone
 import com.bottotop.core.ext.isVisible
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.getSystemService
 import com.bottotop.core.ext.inputMethodManager
 
 

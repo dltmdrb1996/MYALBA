@@ -42,6 +42,4 @@ object PreferenceHelper {
             else -> throw UnsupportedOperationException("Error")
         }
     }
-
-
 }

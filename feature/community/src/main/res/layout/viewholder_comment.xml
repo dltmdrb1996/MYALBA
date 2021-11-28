@@ -6,6 +6,10 @@
         <variable
             name="item"
             type="com.bottotop.model.Comment" />
+
+        <variable
+            name="viewModel"
+            type="com.bottotop.community.CommunityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

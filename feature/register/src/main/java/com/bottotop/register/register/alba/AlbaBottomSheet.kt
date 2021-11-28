@@ -35,7 +35,7 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.alba_bottom_sheet, container, false)
         _binding?.apply {
             lifecycleOwner = this@AlbaBottomSheet

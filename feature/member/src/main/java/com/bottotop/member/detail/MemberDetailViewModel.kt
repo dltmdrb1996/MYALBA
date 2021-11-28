@@ -1,7 +1,5 @@
 package com.bottotop.member.detail
 
-
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -12,13 +10,14 @@ import com.bottotop.model.User
 import com.bottotop.model.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MemberDetailViewModel @Inject constructor(
     private val dataRepository: DataRepository,
-    private val dispatcherProvider: DispatcherProvider,
-    private val savedStateHandle: SavedStateHandle
+    dispatcherProvider: DispatcherProvider,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel("맴버디테일모델") {
 
     var userId: String = savedStateHandle.get<String>("msg")!!
@@ -44,13 +43,13 @@ class MemberDetailViewModel @Inject constructor(
                 getMemberWorkDay(company)
             } catch (e: Throwable) {
                 showToast("데이터를 불러오는데 실패했습니다.")
-                Log.e(TAG, "룸데이터 불러오기 에러 : $e")
+                Timber.e("룸데이터 불러오기 에러 : $e")
             }
             handleLoading(false)
         }
     }
 
-    private suspend fun getMemberWorkDay(company: Company) {
+    private fun getMemberWorkDay(company: Company) {
         var workday = ""
         company.workday.forEachIndexed { index, c ->
             if (c == '1') {

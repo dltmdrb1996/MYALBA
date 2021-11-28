@@ -1,13 +1,11 @@
 package com.bottotop.member
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_DIAL
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -16,13 +14,6 @@ import com.bottotop.core.ext.setOnSingleClickListener
 import com.bottotop.core.navigation.DeepLinkDestination
 import com.bottotop.core.navigation.deepLinkNavigateTo
 import com.bottotop.member.databinding.ViewholderMemberBinding
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
-import android.widget.Toast
-
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
-
 
 class MemberAdapter (private val viewModel: MemberViewModel , private val context: Context) :
     ListAdapter<MemberModel, MemberAdapter.ViewHolder>(TaskDiffCallback()) {
@@ -38,7 +29,7 @@ class MemberAdapter (private val viewModel: MemberViewModel , private val contex
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: ViewholderMemberBinding) :
+    class ViewHolder private constructor(private val binding: ViewholderMemberBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: MemberViewModel, item: MemberModel , context: Context) {

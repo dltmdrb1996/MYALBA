@@ -59,11 +59,8 @@ class SplashViewModel @Inject constructor(
                 is APIResult.Error -> {
                     if(refreshUser.error == APIError.KeyValueError){
                         if(socialLoginRepository.checkNaver()) {
-                            if(socialLoginRepository.getNaverInfo()) {
-                                _login.postValue(LoginState.Register)
-                            } else {
-                                showToast("네이버 정보를 불러오는 데 실패했습니다.")
-                            }
+                            if(socialLoginRepository.getNaverInfo()) _login.postValue(LoginState.Register)
+                            else showToast("네이버 정보를 불러오는 데 실패했습니다.")
                         }
                         else _login.postValue(LoginState.NoToken)
                     } else {

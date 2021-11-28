@@ -2,7 +2,6 @@ package com.bottotop.community
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -28,7 +27,7 @@ class CommunityAdapter(private val viewModel: CommunityViewModel) :
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: ViewholderCommunityBinding) :
+    class ViewHolder private constructor(private val binding: ViewholderCommunityBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: CommunityViewModel, item: Community) {

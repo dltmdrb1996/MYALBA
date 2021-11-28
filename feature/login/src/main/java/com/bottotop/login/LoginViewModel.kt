@@ -1,7 +1,6 @@
 package com.bottotop.login
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -21,6 +20,7 @@ import com.nhn.android.naverlogin.OAuthLoginHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +31,6 @@ class LoginViewModel @Inject constructor(
     @ApplicationContext context: Context
 ) : BaseViewModel("로그인뷰모델") {
 
-    private val context = context
     private val mOAuthLoginModule = OAuthLogin.getInstance()
 
     lateinit var user : User
@@ -63,7 +62,7 @@ class LoginViewModel @Inject constructor(
                 val errorCode = mOAuthLoginModule.getLastErrorCode(context).code
                 val errorDesc = mOAuthLoginModule.getLastErrorDesc(context)
                 _login.postValue(LoginState.NoData)
-                Log.e(TAG, "NaverLoginHandle : ${errorCode} , ${errorDesc}", )
+                Timber.e("NaverLoginHandle : $errorCode , $errorDesc")
             }
         }
     }
