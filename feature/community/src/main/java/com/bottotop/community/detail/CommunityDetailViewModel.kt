@@ -68,9 +68,9 @@ class CommunityDetailViewModel @Inject constructor(
     fun makeComment(){
         viewModelScope.launch(dispatcherProvider.io){
             handleLoading(true)
-            val setComment = getAPIResult(dataRepository.setComment(
+            val setComment = dataRepository.setComment(
                 SetCommentQuery(user.company , arg.idx , user.id , user.name , content.value!! , dateUtil.getCurrentDateFromStringFormat())
-            ),"$TAG : setComment")
+            ).result(Error().stackTrace)
             if(setComment){
                 val getCommunityDetail = dataRepository.getCommunityDetail(
                     mapOf(Pair("com_id", user.company), Pair("idx", arg.idx))

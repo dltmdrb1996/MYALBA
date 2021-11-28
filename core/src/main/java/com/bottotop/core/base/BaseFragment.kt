@@ -1,21 +1,17 @@
 package com.bottotop.core.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.bottotop.core.ext.showToast
 import com.bottotop.core.model.EventObserver
-import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
-import kotlin.reflect.KClass
+import timber.log.Timber
+
 
 abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes private val layoutResId: Int , name : String) : Fragment() {
 
@@ -25,6 +21,8 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
     protected val TAG = name
 
     protected abstract fun setBindings()
+    protected abstract fun initObserver()
+    protected abstract fun initClick()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
@@ -33,9 +31,10 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
         return binding.root
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e(TAG, "onDestroyView: 종료", )
+        Timber.e(TAG, "onDestroyView: 종료")
         _binding = null
     }
 
@@ -46,9 +45,10 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
 
     open fun observeToast(){
         viewModel.toast.observe(viewLifecycleOwner, EventObserver{
-            showToast(it,false)
+            showToast(it,true)
         })
     }
+
 
 
 }

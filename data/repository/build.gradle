@@ -26,6 +26,10 @@ dependencies {
     testImplementation  'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation(Kotlin.COROUTINES_TEST)
+
+    kaptTest(Android_Libraries.HILT_ANDROID_COMPILER)
+    kaptAndroidTest(Android_Libraries.HILT_ANDROID_COMPILER)
 
     implementation(Kotlin.KOTLIN_STDLIB)
     implementation(Kotlin.SERIALIZATION)
@@ -34,4 +38,7 @@ dependencies {
     implementation(Network.RETROFIT)
     implementation(Network.SERIALIZATION)
     implementation(Network.OKHTTP_LOGGING_INTERCEPTOR)
+
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
 }

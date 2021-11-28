@@ -24,21 +24,21 @@ class MemberFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLoading()
-        initAdapter()
+        initObserver()
+        initClick()
     }
 
-    private fun observeLoading() {
+    override fun initObserver() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
-    }
 
-    private fun initAdapter(){
         viewModel.members.observe(viewLifecycleOwner,{
             adapter.submitList(it)
         })
+
     }
 
+    override fun initClick() {}
 
 }

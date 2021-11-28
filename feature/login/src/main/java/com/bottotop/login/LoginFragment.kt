@@ -37,11 +37,15 @@ class LoginFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLogin()
-        initClickEvent()
+        initObserver()
+        initClick()
     }
 
-    private fun initClickEvent(){
+    override fun initObserver() {
+        observeLogin()
+    }
+
+    override fun initClick() {
         _binding?.apply {
             btnKakaoLogin.setOnSingleClickListener {
                 if(navArg.msg=="noToken") this@LoginFragment.viewModel.getUser()
@@ -49,7 +53,6 @@ class LoginFragment :
             }
             btnNaverLogin.setOnSingleClickListener {
                 if(navArg.msg=="noToken") this@LoginFragment.viewModel.getUser()
-                Log.e(TAG, "initBtn: ${navArg.msg}", )
                 mOAuthLoginModule.startOauthLoginActivity(requireActivity(), this@LoginFragment.viewModel.getAuth())
             }
         }
@@ -62,6 +65,7 @@ class LoginFragment :
                 LoginState.Register -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("first"))
                 LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
                 LoginState.NoData -> showToast("로그인시도가 실패했습니다 다시시도해주세요.")
+                else -> showToast("에러가 발생했습니다.")
             }
         })
     }

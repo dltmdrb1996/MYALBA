@@ -31,38 +31,13 @@ class HomeFragment :
         _binding?.todayAdapter = this.todayAdapter
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTodayWorkAdapter()
-        observeLoading()
-        initMasterPage()
-        initClickEvent()
+        initObserver()
+        initClick()
     }
 
-    private fun setTodayWorkAdapter(){
-        viewModel.scheduleItem.observe(viewLifecycleOwner,{ list ->
-            todayAdapter.submitList(list)
-        })
-    }
-
-    private fun observeLoading(){
-        viewModel.isLoading.observe(viewLifecycleOwner, {
-            (requireActivity() as ShowLoading).showLoading(it)
-        })
-    }
-
-    private fun initClickEvent(){
-        binding.tvContent.setOnClickListener {
-            val json = Json.encodeToString(viewModel.community.value)
-            findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(json))
-        }
-    }
-
-    private fun initMasterPage(){
+    override fun initObserver() {
         viewModel.master.observe(viewLifecycleOwner,{
             if(it){
                 binding.workCheck.isInvisible()
@@ -70,5 +45,21 @@ class HomeFragment :
                 binding.textView2.isInvisible()
             }
         })
+
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+            (requireActivity() as ShowLoading).showLoading(it)
+        })
+
+        viewModel.scheduleItem.observe(viewLifecycleOwner,{ list ->
+            todayAdapter.submitList(list)
+        })
+
+    }
+
+    override fun initClick() {
+        binding.tvContent.setOnClickListener {
+            val json = Json.encodeToString(viewModel.community.value)
+            findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(json))
+        }
     }
 }

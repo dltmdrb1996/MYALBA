@@ -23,7 +23,7 @@ class OnBoardingViewModel @Inject constructor(
 ) : BaseViewModel("온보딩모델") {
 
     init {
-        getUserInfo()
+//        getUserInfo()
     }
 
     private val _success = MutableLiveData<Boolean>()
@@ -39,12 +39,12 @@ class OnBoardingViewModel @Inject constructor(
     fun setUser() {
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
-            val setUser = getAPIResult(dataRepository.setUser(
+            val setUser = dataRepository.setUser(
                 SetUserQuery(SocialInfo.id,SocialInfo.tel,SocialInfo.birth,SocialInfo.name,
                 SocialInfo.email,SocialInfo.social,"null","off")
-            ), "$TAG : setUser")
+            ).result(Error().stackTrace)
             if(setUser) {
-                val refreshUser = getAPIResult(dataRepository.refreshUser(SocialInfo.id),"$TAG : refreshUser")
+                val refreshUser = dataRepository.refreshUser(SocialInfo.id).result(Error().stackTrace)
                 handleLoading(false)
                 if(refreshUser) _success.postValue(true)
                 else showToast("유저생성에 에러가 발생했습니다 잠시후 다시실행해주세요")

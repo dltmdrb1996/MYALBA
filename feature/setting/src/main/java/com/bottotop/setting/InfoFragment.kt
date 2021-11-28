@@ -24,8 +24,18 @@ class InfoFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObserver()
+        initClick()
+    }
+
+    override fun initObserver() {
+        viewModel.navLogin.observe(viewLifecycleOwner,{
+            (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.LoginFlow("back"))
+        })
+    }
+
+    override fun initClick() {
         unRegister()
-        observeNav()
     }
 
     private fun unRegister(){
@@ -47,9 +57,5 @@ class InfoFragment :
         }
     }
 
-    private fun observeNav(){
-        viewModel.navLogin.observe(viewLifecycleOwner,{
-            (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.LoginFlow("back"))
-        })
-    }
+
 }

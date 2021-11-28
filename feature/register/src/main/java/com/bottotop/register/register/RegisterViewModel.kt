@@ -28,13 +28,13 @@ class RegisterViewModel @Inject constructor(
     val managerComplete : LiveData<Boolean> = _managerComplete
 
     val code = MutableLiveData<String>()
-    val checkMon = MutableLiveData<Boolean>(false)
-    val checkTus = MutableLiveData<Boolean>(false)
-    val checkWed = MutableLiveData<Boolean>(false)
-    val checkThu = MutableLiveData<Boolean>(false)
-    val checkFri = MutableLiveData<Boolean>(false)
-    val checkSat = MutableLiveData<Boolean>(false)
-    val checkSun = MutableLiveData<Boolean>(false)
+    val checkMon = MutableLiveData(false)
+    val checkTus = MutableLiveData(false)
+    val checkWed = MutableLiveData(false)
+    val checkThu = MutableLiveData(false)
+    val checkFri = MutableLiveData(false)
+    val checkSat = MutableLiveData(false)
+    val checkSun = MutableLiveData(false)
     val startTime = MutableLiveData<String>()
     val endTime = MutableLiveData<String>()
 
@@ -44,22 +44,20 @@ class RegisterViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcherProvider.io) {
             handleLoading(true)
-            val refreshCompanies1 = getAPIResult(dataRepository.refreshCompanies(code.value!!), "$TAG : refreshCompanies1")
+            val refreshCompanies1 = dataRepository.refreshCompanies(code.value!!).result(Throwable().stackTrace)
             if (refreshCompanies1) {
                 val companies = dataRepository.getCompanies()
                 val company = companies[0]
                 if(!updateUserCompany(code.value!!)) return@launch
                 company.apply {
-                    val setCompany = getAPIResult(dataRepository.setCompany(
+                    val setCompany = dataRepository.setCompany(
                         SetCompanyQuery(SocialInfo.id,com_id,com_name,com_tel,pay,"B",
                             startTime.value!!,endTime.value!!,checkWeek())
-                        ),
-                        "$TAG : setCompany1"
-                    )
+                        ).result(Throwable().stackTrace)
 
                     if(setCompany){
                         dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , com_id))
-                        val refreshCompanies1_2 = getAPIResult(dataRepository.refreshCompanies(code.value!!), "$TAG : refreshCompanies1_2")
+                        val refreshCompanies1_2 = dataRepository.refreshCompanies(code.value!!).result(Throwable().stackTrace)
                         if(refreshCompanies1_2){
                             handleLoading(false)
                             _albaComplete.postValue(true)
@@ -76,11 +74,11 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun updateUserCompany(change : String) : Boolean {
-        val updateUser = getAPIResult(
+        val updateUser =
             dataRepository.updateUser(
                 UpdateUserQuery(SocialInfo.id,"com_id",change)
-            ), "$TAG : updateUser")
-        return if (updateUser) getAPIResult(dataRepository.refreshUser(SocialInfo.id), "$TAG : refreshUser")
+            ).result(Error().stackTrace)
+        return if (updateUser) dataRepository.refreshUser(SocialInfo.id).result(Error().stackTrace)
         else false
 
     }
@@ -135,12 +133,12 @@ class RegisterViewModel @Inject constructor(
 
             if(!updateUserCompany(SocialInfo.id)) return@launch
 
-            val setCompany2 = getAPIResult(dataRepository.setCompany(
+            val setCompany2 = dataRepository.setCompany(
                 SetCompanyQuery(SocialInfo.id,SocialInfo.id,com_name.value!!,com_tel.value!!,
                 pay.value!!,"A","","","0000000")
-            ),"$TAG : setCompany2")
+            ).result(Error().stackTrace)
             if(setCompany2) {
-                val refreshCompanies2 = getAPIResult(dataRepository.refreshCompanies(SocialInfo.id), "$TAG : refreshCompanies2")
+                val refreshCompanies2 = dataRepository.refreshCompanies(SocialInfo.id).result(Error().stackTrace)
 
                 if(refreshCompanies2) {
                     handleLoading(false)

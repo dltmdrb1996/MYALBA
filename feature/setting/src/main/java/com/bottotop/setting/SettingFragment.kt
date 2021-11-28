@@ -28,6 +28,13 @@ class SettingFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         restartSetting()
+        initClick()
+        initObserver()
+    }
+
+    override fun initObserver() {}
+
+    override fun initClick() {
         setDarkMode()
     }
 
@@ -41,7 +48,6 @@ class SettingFragment :
     private fun setDarkMode(){
         binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-
                 if(tab.text=="켜기"){
                     AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
                 }else{
@@ -54,4 +60,6 @@ class SettingFragment :
             }
         })
     }
+
+
 }

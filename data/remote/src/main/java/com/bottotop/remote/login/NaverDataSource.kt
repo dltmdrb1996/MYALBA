@@ -2,6 +2,9 @@ package com.bottotop.remote.login
 
 import android.content.Context
 import android.util.Log
+import com.bottotop.core.ext.Logg
+import com.bottotop.core.global.PreferenceHelper
+import com.bottotop.core.global.PreferenceHelper.set
 import com.bottotop.core.global.SocialInfo
 import com.nhn.android.naverlogin.OAuthLogin
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,6 +21,7 @@ class NaverDataSource @Inject constructor(@ApplicationContext context: Context) 
     private val mOAuthLoginInstance = OAuthLogin.getInstance()
     private val context = context
     val userInfo = SocialInfo
+    private val mPref = PreferenceHelper.defaultPrefs(context)
 
     suspend fun checkToken(): Boolean {
         return mOAuthLoginInstance.getAccessToken(context) != null
@@ -46,15 +50,17 @@ class NaverDataSource @Inject constructor(@ApplicationContext context: Context) 
                 val mobile = response.getString("mobile")
                 val birth = response.getString("birthyear")
                 val name = response.getString("name")
+                mPref["id"] = id
                 SocialInfo.name = name
                 SocialInfo.tel = mobile
                 SocialInfo.birth = birth
                 SocialInfo.email = email
+                SocialInfo.id = id
+                SocialInfo.social="naver"
                 it.resume(true)
             }
         } catch (e: JSONException) {
-            Log.e(TAG, "네이버 정보 불러오기 부분에서 오류가남")
-            Log.e(TAG, "${e.message}")
+            Log.e(TAG,"${e.message}")
             it.resume(false)
         }
     }

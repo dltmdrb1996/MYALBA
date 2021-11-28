@@ -32,7 +32,12 @@ class RegisterFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init_TabLayout_Viewpager()
+        initObserver()
+        initClick()
     }
+
+    override fun initObserver() {}
+    override fun initClick() {}
 
     private fun init_TabLayout_Viewpager(){
         adapter.run {
@@ -49,6 +54,7 @@ class RegisterFragment :
             }.attach()
         }
     }
+
 
 
 

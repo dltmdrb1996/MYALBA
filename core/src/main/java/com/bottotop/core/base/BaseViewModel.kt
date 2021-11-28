@@ -1,14 +1,14 @@
 package com.bottotop.core.base
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bottotop.core.model.Event
 import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
+import timber.log.Timber
 
-open class BaseViewModel(private val name : String) : ViewModel() {
+open class BaseViewModel(name : String) : ViewModel() {
 
     protected val TAG = name
 
@@ -18,7 +18,7 @@ open class BaseViewModel(private val name : String) : ViewModel() {
     val isLoading : LiveData<Boolean> = _isLoading
 
     init {
-        Log.e(TAG, ":뷰모델생성 ", )
+        Timber.e(":뷰모델생성 ")
     }
 
     private val _toast by lazy { MutableLiveData<Event<String>>() }
@@ -32,37 +32,40 @@ open class BaseViewModel(private val name : String) : ViewModel() {
         _toast.postValue(Event(message))
     }
 
-    fun getAPIResult(result : APIResult, tag : String) : Boolean{
-        return when(result){
+    fun APIResult.result(stack : Array<out StackTraceElement>) : Boolean{
+        return when(this){
             is APIResult.Success -> true
-            is APIResult.Error -> getAPIError(result.error,tag)
+            is APIResult.Error -> {
+                getAPIError(stack[0] , this.error)
+            }
+            else -> false
         }
     }
 
-    private fun getAPIError(error : APIError, tag : String) : Boolean{
+    private fun getAPIError(stack : StackTraceElement ,error : APIError) : Boolean{
         when(error){
             is APIError.SeverError -> {
-                Log.e(TAG, "$tag -> SeverError", )
-                showToast("서버접속이 원할하지 않습니다 잠시후 다시 실행해주세요.")
+                Timber.tag(stack.fileName).e("[${stack.lineNumber}]  [${stack.className.split("$")[1]}]  :  서버에러발생")
+                showToast("서버에러가 발생하였습니다.")
             }
-            is APIError.KeyValueError ->{
-                Log.e(TAG, "$tag -> KeyValueError", )
-                showToast("해당하는 데이터가 존재하지 않습니다")
+            is APIError.KeyValueError -> {
+                Timber.tag(stack.fileName).e("[${stack.lineNumber}]  [${stack.className.split("$")[1]}]  :  KeyValueError")
+                showToast("데이터가 존재하지 않습니다.")
             }
-            is APIError.NullValueError ->{
-                Log.e(TAG, "$tag -> NullValueError", )
-                showToast("데이터가 없습니다.")
+            is APIError.NullValueError -> {
+                Timber.tag(stack.fileName).e("[${stack.lineNumber}]  [${stack.className.split("$")[1]}]  :  NullValueError")
+                showToast("데이터가 존재하지 않습니다.")
             }
-            is APIError.Error -> {
-                Log.e(TAG, "$tag -> ${error.e}", )
-                showToast("에러가 발생했습니다. 잠시후 다시 실행해주세요")
+            is APIError.Error ->  {
+                Timber.tag(stack.fileName).e("[${stack.lineNumber}]  [${stack.className.split("$")[1]}]  : ${error.e}")
+                showToast("에러가 발생하였습니다.")
             }
         }
         return false
     }
 
     override fun onCleared() {
-        Log.e(TAG, "onCleared: 종료", )
+        Timber.e("onCleared: 종료")
         super.onCleared()
     }
 

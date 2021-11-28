@@ -74,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/radius_bg_btn_20dp"
+                android:textColor="@color/colorText"
                 android:text="등록하러가기"
                 android:onClick="@{()->viewModel.setUser()}"
                 android:visibility="gone"

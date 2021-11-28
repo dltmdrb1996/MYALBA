@@ -30,4 +30,6 @@ dependencies {
     implementation(View.insetter)
     implementation(Android_Libraries.GSON)
 
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
 }

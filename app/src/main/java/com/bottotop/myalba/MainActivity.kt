@@ -74,8 +74,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
             R.id.menu_right1 -> super.onOptionsItemSelected(item)
             R.id.setting -> {
                 navigator.navController.deepLinkNavigateTo(DeepLinkDestination.Setting(SocialInfo.id))
@@ -87,11 +86,9 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
 
     private fun initBottomNavigation() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         navigator.navController = navController
         binding.navViewFragment.setupWithNavController(navController)
@@ -102,28 +99,13 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
         binding.navViewFragment.setOnItemSelectedListener {
             binding.ToolbarLayout.setExpanded(true)
             when (it.itemId) {
-                R.id.member_flow -> {
-                    if (NavigationRouter.currentState != NavigationTable.Member) navigateToFlow(NavigationFlow.MemberFlow("test"))
-                    return@setOnItemSelectedListener true
-                }
-                R.id.community_flow -> {
-                    if (NavigationRouter.currentState != NavigationTable.Community) navigateToFlow(NavigationFlow.CommunityFlow("test"))
-                    return@setOnItemSelectedListener true
-                }
-                R.id.home_flow -> {
-                    if (NavigationRouter.currentState != NavigationTable.Home) navigateToFlow(NavigationFlow.HomeFlow("test"))
-                    return@setOnItemSelectedListener true
-                }
-                R.id.schedule_flow -> {
-                    if (NavigationRouter.currentState != NavigationTable.Schedule) navigateToFlow(NavigationFlow.ScheduleFlow("test"))
-                    return@setOnItemSelectedListener true
-                }
-                R.id.asset_flow -> {
-                    if (NavigationRouter.currentState != NavigationTable.Asset) navigateToFlow(NavigationFlow.AssetFlow("test"))
-                    return@setOnItemSelectedListener true
-                }
-                else -> return@setOnItemSelectedListener true
+                R.id.member_flow -> if (NavigationRouter.currentState != NavigationTable.Member) navigateToFlow(NavigationFlow.MemberFlow("test"))
+                R.id.community_flow -> if (NavigationRouter.currentState != NavigationTable.Community) navigateToFlow(NavigationFlow.CommunityFlow("test"))
+                R.id.home_flow -> if (NavigationRouter.currentState != NavigationTable.Home) navigateToFlow(NavigationFlow.HomeFlow("test"))
+                R.id.schedule_flow -> if (NavigationRouter.currentState != NavigationTable.Schedule) navigateToFlow(NavigationFlow.ScheduleFlow("test"))
+                R.id.asset_flow -> if (NavigationRouter.currentState != NavigationTable.Asset) navigateToFlow(NavigationFlow.AssetFlow("test"))
             }
+            return@setOnItemSelectedListener true
         }
         observeNavDirection(navController)
     }

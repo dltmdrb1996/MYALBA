@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
+import com.bottotop.core.global.PreferenceHelper
+import com.bottotop.core.global.PreferenceHelper.set
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.model.LoginState
 import com.bottotop.core.util.DateTime
@@ -33,6 +35,7 @@ class LoginViewModel @Inject constructor(
     private val mOAuthLoginModule = OAuthLogin.getInstance()
 
     lateinit var user : User
+    private val mPref = PreferenceHelper.defaultPrefs(context)
 
     private val _login = MutableLiveData<LoginState>()
     val login : LiveData<LoginState> = _login
@@ -48,12 +51,14 @@ class LoginViewModel @Inject constructor(
     private val naverLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
-                SocialInfo.social = "naver"
+                mPref["social"]="naver"
                 if (userFlag) {
                     if (user.company == "null") _login.postValue(LoginState.NoCompany)
                     else initSocialInfo()
                 }
-                else _login.postValue(LoginState.Register)
+                else {
+                    loadNaver()
+                }
             } else {
                 val errorCode = mOAuthLoginModule.getLastErrorCode(context).code
                 val errorDesc = mOAuthLoginModule.getLastErrorDesc(context)
@@ -63,18 +68,23 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+
     fun initSocialInfo(){
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io){
             dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , user.company))
-            val refreshCompanies = getAPIResult(dataRepository.refreshCompanies(user.company),
-                "$TAG : refreshCompanies"
-            )
+            val refreshCompanies = dataRepository.refreshCompanies(user.company).result(Error().stackTrace)
             handleLoading(false)
-            if(refreshCompanies) _login.postValue(LoginState.Success)
+            if(refreshCompanies) loadNaver()
         }
     }
 
+    fun loadNaver(){
+        viewModelScope.launch(dispatcherProvider.io){
+            socialLoginRepository.getNaverInfo()
+            _login.postValue(LoginState.Register)
+        }
+    }
     fun getAuth() = naverLoginHandler
 
 
@@ -99,11 +109,6 @@ class LoginViewModel @Inject constructor(
 //
 
 //    fun getKakaoCallBack() = callback
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.e(TAG, "onCleared: 종료", )
-    }
 
 }
 

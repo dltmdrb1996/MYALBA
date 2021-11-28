@@ -1,6 +1,5 @@
 package com.bottotop.repository
 
-import android.util.Log
 import com.bottotop.local.LocalDataSource
 import com.bottotop.model.*
 import com.bottotop.model.query.*
@@ -16,6 +15,7 @@ import com.bottotop.repository.mapper.UserEntityMapper
 import com.bottotop.repository.mapper.UserMapper
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class DataRepositoryImpl @Inject constructor(
@@ -38,7 +38,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "refreshUser")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "refreshUser : ${e}")
+            Timber.e("refreshUser : $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -65,7 +65,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "refreshCompanies")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "refreshCompanies : ${e}")
+            Timber.e("refreshCompanies : $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -74,25 +74,21 @@ internal class DataRepositoryImpl @Inject constructor(
     // GET //
     ////////////////////////////////////////////////////////////////
     override suspend fun getUser(id: String): User {
-        try {
-            val user = UserMapper.from(localDataSource.getUser(id))
-            return user
+        return try {
+            UserMapper.from(localDataSource.getUser(id))
         } catch (e: Exception) {
-            Log.e(TAG, "getUser: Room에서 유저불러오기 에러")
-            return error(e)
+            Timber.e("getUser: Room에서 유저불러오기 에러")
+            error(e)
         }
     }
 
     override suspend fun getMembers(): List<User> {
-        try {
+        return try {
             val memberEntity = localDataSource.getMember()
-            val member = memberEntity.map {
-                UserMapper.from(it)
-            }
-            return member
+            memberEntity.map { UserMapper.from(it) }
         } catch (e: Exception) {
-            Log.e(TAG, "getMembers: Room에서 유저불러오기 에러")
-            return error(e)
+            Timber.e("getMembers: Room에서 유저불러오기 에러")
+            error(e)
         }
     }
 
@@ -102,7 +98,7 @@ internal class DataRepositoryImpl @Inject constructor(
             val member = CompanyMapper.from(memberEntity)
             member
         } catch (e: Exception) {
-            Log.e(TAG, "getCompany: Room에서 유저불러오기 에러")
+            Timber.e("getCompany: Room에서 유저불러오기 에러")
             error(e)
         }
     }
@@ -117,16 +113,16 @@ internal class DataRepositoryImpl @Inject constructor(
                     Result.success(schedule)
                 }
                 404 -> {
-                    Log.e(TAG, "getSchedule: 404에러", )
+                    Timber.e("getSchedule: 404에러")
                     Result.failure(Throwable("찾는 데이터가 없습니다."))
                 }
                 else -> {
-                    Log.e(TAG, "getSchedule: 서버에러", )
+                    Timber.e("getSchedule: 서버에러")
                     Result.failure(Throwable("서버에러"))
                 }
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "getSchedule: 에러발생 ${e.message}", )
+            Timber.e("getSchedule: 에러발생 ${e.message}")
             return Result.failure(e)
         }
     }
@@ -141,16 +137,16 @@ internal class DataRepositoryImpl @Inject constructor(
                     Result.success(schedule)
                 }
                 404 -> {
-                    Log.e(TAG, "getSchedule: 404에러", )
+                    Timber.e("getSchedule: 404에러")
                     Result.failure(Throwable("찾는 데이터가 없습니다."))
                 }
                 else -> {
-                    Log.e(TAG, "getSchedule: 서버에러", )
+                    Timber.e("getSchedule: 서버에러")
                     Result.failure(Throwable("서버에러"))
                 }
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "getSchedule: 에러발생 ${e.message}", )
+            Timber.e("getSchedule: 에러발생 ${e.message}")
             return Result.failure(e)
         }
     }
@@ -166,16 +162,16 @@ internal class DataRepositoryImpl @Inject constructor(
                     Result.success(schedule)
                 }
                 404 -> {
-                    Log.e(TAG, "getScheduleAll: 404에러", )
+                    Timber.e("getScheduleAll: 404에러" )
                     Result.failure(Throwable("찾는 데이터가 없습니다."))
                 }
                 else -> {
-                    Log.e(TAG, "getScheduleAll: 서버에러", )
+                    Timber.e("getScheduleAll: 서버에러" )
                     Result.failure(Throwable("서버에러"))
                 }
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "getScheduleAll: 에러발생 ${e.message}", )
+            Timber.e("getScheduleAll: 에러발생 ${e.message}" )
             return Result.failure(e)
         }
     }
@@ -191,16 +187,16 @@ internal class DataRepositoryImpl @Inject constructor(
                     return Result.success(schedule)
                 }
                 404 -> {
-                    Log.e(TAG, "getCommunityDetail: 404에러", )
+                    Timber.e("getCommunityDetail: 404에러")
                     Result.failure(Throwable("찾는 데이터가 없습니다."))
                 }
                 else -> {
-                    Log.e(TAG, "getCommunityDetail: 서버에러", )
+                    Timber.e("getCommunityDetail: 서버에러")
                     Result.failure(Throwable("서버에러"))
                 }
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "getCommunityDetail: 에러발생 ${e.message}", )
+            Timber.e("getCommunityDetail: $e")
             return Result.failure(e)
         }
     }
@@ -213,7 +209,7 @@ internal class DataRepositoryImpl @Inject constructor(
             }
             company
         } catch (e: Exception) {
-            Log.e(TAG, "getCompanies: Room에서 유저불러오기 에러")
+            Timber.e("getCompanies: $e")
             error(e)
         }
     }
@@ -232,7 +228,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "setUser")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "setUser : ${e}")
+            Timber.e("setUser: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -246,7 +242,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "setCompany")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "setCompany: ${e}")
+            Timber.e("setCompany: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -260,7 +256,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> APIResult.Error(APIError.Error(Throwable("이미만들어진상태")))
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "setSchedule: ${e}")
+            Timber.e("setSchedule: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -274,7 +270,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "setCommunity")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "setCommunity: ${e}")
+            Timber.e("setCommunity: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -288,7 +284,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "setComment")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "setComment: ${e}")
+            Timber.e("setComment: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -305,7 +301,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "updateUser")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "updateUser: ${e}")
+            Timber.e("updateUser: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -330,21 +326,21 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "updateSchedule")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "updateSchedule: ${e}")
+            Timber.e("updateSchedule: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
 
-    override suspend fun patchSchedule(query: PatchScheduleQuery): APIResult {
+    override suspend fun patchSchedule(patchScheduleQuery: PatchScheduleQuery): APIResult {
         return try {
-            val json = Json.encodeToString(query)
+            val json = Json.encodeToString(patchScheduleQuery)
             val response = apiService.updateDetailSchedule(json)
             when {
                 response.code() == 200 -> APIResult.Success
                 else -> handleError(response.code(), "patchSchedule")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "patchSchedule: ${e}")
+            Timber.e("patchSchedule: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -358,7 +354,7 @@ internal class DataRepositoryImpl @Inject constructor(
                 else -> handleError(response.code(), "deleteALL")
             }
         } catch (e: Throwable) {
-            Log.e(TAG, "deleteALL: ${e}")
+            Timber.e("deleteALL: $e")
             APIResult.Error(APIError.Error(e))
         }
     }
@@ -383,21 +379,18 @@ internal class DataRepositoryImpl @Inject constructor(
     override suspend fun handleError(code: Int, tag: String): APIResult.Error {
         return when (code) {
             404 -> {
-                Log.e(TAG, "$tag : 찾는 key정보가 없음")
+                Timber.e("$tag : 찾는 key정보가 없음")
                 APIResult.Error(APIError.KeyValueError)
             }
             500 , 502 -> {
-                Log.e(TAG, "$tag : 서버에러")
+                Timber.e("$tag : 서버에러")
                 APIResult.Error(APIError.SeverError)
             }
             else -> {
-                Log.e(TAG, "$tag : 알수없는 statusCode , 코드 : ${code}")
+                Timber.e("$tag : 알수없는 statusCode , 코드 : $code")
                 APIResult.Error(APIError.Error(Throwable("설정하지 않은 http code가 날라옴 ")))
             }
         }
     }
 
-    companion object {
-        val TAG = "DataRepositoryImpl"
-    }
 }

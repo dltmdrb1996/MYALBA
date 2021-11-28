@@ -31,7 +31,12 @@ class MemberDetailFragment() :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObserver()
+        initClick()
     }
+    override fun initObserver() {}
+
+    override fun initClick() {}
 
 
 }

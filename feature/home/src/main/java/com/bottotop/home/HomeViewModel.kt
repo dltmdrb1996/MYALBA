@@ -111,24 +111,17 @@ class HomeViewModel @Inject constructor(
             val payOfSecond = (company.pay.toDouble()/60/60)
             val workPay = "${(time*payOfSecond).toInt()}"
 
-            val patchSchedule = getAPIResult(
-                dataRepository.patchSchedule(
-                    PatchScheduleQuery(SocialInfo.id,
-                        dataUtil.getYearMonth(),daySchedule.day,"endTime",
-                        current,"workTime",workTime,"workPay",workPay)
-                ), "$TAG : patchSchedule"
-            )
+
+            val patchSchedule = dataRepository.patchSchedule(
+                    PatchScheduleQuery(SocialInfo.id, dataUtil.getYearMonth(),daySchedule.day,"endTime", current,"workTime",workTime,"workPay",workPay)
+                ).result(Error().stackTrace)
 
             if (patchSchedule) {
                 showTimePay(workTime)
                 _workOn.postValue("출근하기")
-                getAPIResult(
-                    dataRepository.updateUser(
-                        UpdateUserQuery(SocialInfo.id , "workOn" , "off")
-                    ), "$TAG : updateUser"
-                )
+                dataRepository.updateUser(UpdateUserQuery(SocialInfo.id , "workOn" , "off")).result(Error().stackTrace)
                 dataRepository.deleteDaySchedule()
-                getAPIResult(dataRepository.refreshUser(SocialInfo.id),"$TAG : refreshUser")
+                dataRepository.refreshUser(SocialInfo.id).result(Error().stackTrace)
                 _workOn.postValue("출근하기")
                 initData()
                 initWorking()
@@ -145,22 +138,19 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(dispatcherProvider.io) {
             val current = dataUtil.getCurrentDateTimeAsLong()
 
-            val updateSchedule = getAPIResult(
-                dataRepository.updateSchedule(
-                    UpdateScheduleQuery(current, SocialInfo.id, dataUtil.getYearMonth(), dataUtil.getToday(),
-                        (dataUtil.getCurrentDateTimeAsLong().toLong() - current.toLong()).toString())
-                ), "$TAG : updateSchedule"
-            )
+            val updateSchedule = dataRepository.updateSchedule(
+                    UpdateScheduleQuery(current, SocialInfo.id, dataUtil.getYearMonth(), dataUtil.getToday(), (dataUtil.getCurrentDateTimeAsLong().toLong() - current.toLong()).toString())
+                ).result(Error().stackTrace)
 
             if (updateSchedule) {
-                val updateUser = getAPIResult(
+                val updateUser =
                     dataRepository.updateUser(
                         UpdateUserQuery(SocialInfo.id,"workOn","on")
-                    ), "$TAG : updateUser"
-                )
+                    ).result(Error().stackTrace)
+
                 if(updateUser){
                     dataRepository.insertDaySchedule(dataUtil.getToday(),current)
-                    getAPIResult(dataRepository.refreshUser(SocialInfo.id),"$TAG : refreshUser")
+                    dataRepository.refreshUser(SocialInfo.id).result(Error().stackTrace)
                 }
             }
 

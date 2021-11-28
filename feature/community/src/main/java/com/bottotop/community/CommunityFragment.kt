@@ -22,38 +22,31 @@ class CommunityFragment :
         _binding?.adapter = adapter
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheet = CreateBottomSheet(viewModel)
-        initCommunityAdapter()
-        observeLoading()
-        focusTop()
-        initClickEvent()
         viewModel.initCommunity()
+        initObserver()
+        initClick()
     }
 
-    private fun observeLoading(){
+
+    override fun initObserver() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             Log.e(TAG, "observeLoading: ${it}", )
             (requireActivity() as ShowLoading).showLoading(it)
         })
-    }
 
-    private fun initCommunityAdapter(){
+        viewModel.success.observe(viewLifecycleOwner,{
+            binding.recyclerView.smoothScrollToPosition(0)
+        })
+
         viewModel.communityList.observe(viewLifecycleOwner,{
             adapter.submitList(it)
         })
     }
 
-    private fun focusTop(){
-        viewModel.success.observe(viewLifecycleOwner,{
-            binding.recyclerView.smoothScrollToPosition(0)
-        })
-    }
-
-    private fun initClickEvent(){
+    override fun initClick() {
         binding.apply {
             communityBtnCreate.setOnClickListener {
                 bottomSheet.show(childFragmentManager, bottomSheet.tag)

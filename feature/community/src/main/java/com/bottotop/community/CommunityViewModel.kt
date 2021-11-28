@@ -56,9 +56,9 @@ class CommunityViewModel @Inject constructor(
     fun makeCommunity() {
         viewModelScope.launch(dispatcherProvider.io) {
             _bottomLoading.postValue(true)
-            val setCommunity = getAPIResult(dataRepository.setCommunity(
+            val setCommunity = dataRepository.setCommunity(
                 SetCommunityQuery(user.company , SocialInfo.id , user.name , content.value!! , dateUtil.getCurrentDateFromStringFormat())
-            ),"$TAG : setCommunity")
+            ).result(Error().stackTrace)
 
             if(setCommunity){
                 content.postValue("")

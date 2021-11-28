@@ -53,10 +53,27 @@ class ScheduleFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLoading()
-        setChangeMonthBtn()
+
+        initClick()
+        initObserver()
+
+    }
+
+    override fun initObserver() {
+
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+            (requireActivity() as ShowLoading).showLoading(it)
+        })
+
         initViewPager()
         observeWorkSchedule()
+
+    }
+
+    override fun initClick() {
+
+        setChangeMonthBtn()
+
     }
 
     private fun observeWorkSchedule(){
@@ -182,10 +199,6 @@ class ScheduleFragment :
         }
     }
 
-    private fun observeLoading() {
-        viewModel.isLoading.observe(viewLifecycleOwner, {
-            (requireActivity() as ShowLoading).showLoading(it)
-        })
-    }
+
 
 }

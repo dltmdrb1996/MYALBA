@@ -38,23 +38,22 @@ class CommunityDetailFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLoading()
-        initComment()
-        observeComment()
+        initObserver()
+        initClick()
     }
 
-    private fun observeLoading(){
+    override fun initObserver() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
-    }
 
-    private fun initComment(){
-        binding.tvRipple.setOnClickListener {
-            binding.edtComment.requestFocus()
-            val imm = context?.inputMethodManager
-            imm!!.showSoftInput(binding.edtComment, InputMethodManager.SHOW_IMPLICIT)
-        }
+        viewModel.content.observe(viewLifecycleOwner,{
+            if(it.isNullOrEmpty()) {
+                binding.communityBtnCreate.isGone()
+            } else {
+                binding.communityBtnCreate.isVisible()
+            }
+        })
 
         viewModel.comment.observe(viewLifecycleOwner,{
             if(it.isEmpty()){
@@ -65,15 +64,14 @@ class CommunityDetailFragment :
                 adapter.submitList(it)
             }
         })
+
     }
 
-    private fun observeComment(){
-        viewModel.content.observe(viewLifecycleOwner,{
-            if(it.isNullOrEmpty()) {
-                binding.communityBtnCreate.isGone()
-            } else {
-                binding.communityBtnCreate.isVisible()
-            }
-        })
+    override fun initClick() {
+        binding.tvRipple.setOnClickListener {
+            binding.edtComment.requestFocus()
+            val imm = context?.inputMethodManager
+            imm!!.showSoftInput(binding.edtComment, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 }

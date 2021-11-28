@@ -1,10 +1,8 @@
 package com.bottotop.splash
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.isInvisible
@@ -24,18 +22,6 @@ class SplashFragment :
 
     override val viewModel: SplashViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun setBindings() {
         _binding?.viewModel = viewModel
     }
@@ -43,9 +29,15 @@ class SplashFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachSplashAnimationCompleteListener()
+        initObserver()
+        initClick()
+
     }
 
-        private fun attachSplashAnimationCompleteListener() {
+    override fun initObserver() {}
+    override fun initClick() {}
+
+    private fun attachSplashAnimationCompleteListener() {
         _binding?.apply {
             splashLogoLottieView.apply {
                 addOnAnimationListener(
@@ -58,7 +50,6 @@ class SplashFragment :
             }
         }
     }
-
 
     private fun showBackgroundAnimation(onAnimationEnd: () -> Unit) {
         _binding?.apply {
@@ -86,15 +77,27 @@ class SplashFragment :
         }
     }
 
-    private fun observeLogin(){
-        viewModel.login.observe(viewLifecycleOwner,{
-            when(it){
-                LoginState.Success -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
-                LoginState.Register -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("first"))
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
-                LoginState.NoToken -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.LoginFlow("noToken"))
-                LoginState.NoData -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.LoginFlow("noData"))
+    private fun observeLogin() {
+        viewModel.login.observe(viewLifecycleOwner, {
+            when (it) {
+                LoginState.Success -> (requireActivity() as ToFlowNavigation).navigateToFlow(
+                    NavigationFlow.HomeFlow("home")
+                )
+                LoginState.Register -> (requireActivity() as ToFlowNavigation).navigateToFlow(
+                    NavigationFlow.RegisterFlow("first")
+                )
+                LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(
+                    NavigationFlow.RegisterFlow("noCompany")
+                )
+                LoginState.NoToken -> (requireActivity() as ToFlowNavigation).navigateToFlow(
+                    NavigationFlow.LoginFlow("noToken")
+                )
+                LoginState.NoData -> (requireActivity() as ToFlowNavigation).navigateToFlow(
+                    NavigationFlow.LoginFlow("noData")
+                )
             }
         })
     }
+
+
 }

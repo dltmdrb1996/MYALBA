@@ -42,9 +42,24 @@ class OnBoardingFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewpager()
-        observeLoading()
-        observeSuccess()
+        initObserver()
+        initClick()
     }
+
+    override fun initObserver() {
+
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+            (requireActivity() as ShowLoading).showLoading(it)
+        })
+
+        viewModel.success.observe(viewLifecycleOwner,{
+            if(it) findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
+            else showToast("계정생성에 실패했습니다.")
+        })
+
+    }
+
+    override fun initClick() {}
 
     private fun initViewpager() {
         _binding?.apply {
@@ -73,19 +88,6 @@ class OnBoardingFragment :
                 }
             }
         }
-    }
-
-    private fun observeLoading() {
-        viewModel.isLoading.observe(viewLifecycleOwner, {
-            (requireActivity() as ShowLoading).showLoading(it)
-        })
-    }
-
-    private fun observeSuccess(){
-        viewModel.success.observe(viewLifecycleOwner,{
-            if(it) findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
-            else showToast("계정생성에 실패했습니다.")
-        })
     }
 
 }
