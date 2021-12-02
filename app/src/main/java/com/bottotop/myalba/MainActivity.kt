@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
     lateinit var cm: ConnectivityManager
     lateinit var mNetworkCallback: NetworkCallback
 
+    // 소트트리 테스트
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
