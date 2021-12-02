@@ -1,5 +1,6 @@
 package com.bottotop.myalba
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -24,6 +25,8 @@ import java.util.*
 import android.net.*
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.NetworkCallback
+import android.util.AttributeSet
+import android.view.View
 import com.bottotop.core.ext.*
 import com.bottotop.core.navigation.*
 
@@ -39,7 +42,6 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
     lateinit var cm: ConnectivityManager
     lateinit var mNetworkCallback: NetworkCallback
 
-    // 소트트리 테스트
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -51,6 +53,11 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
     override fun onResume() {
         observeNetwork()
         super.onResume()
+    }
+    
+    // 커밋테스트
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        return super.onCreateView(name, context, attrs)
     }
 
     override fun onPause() {
