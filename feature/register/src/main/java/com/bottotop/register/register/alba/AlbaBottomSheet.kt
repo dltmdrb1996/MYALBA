@@ -75,10 +75,6 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
             if(it.toInt()>=25) binding.tvEndNotice.isVisible()
             else binding.tvEndNotice.isInvisible()
         })
-        viewModel.albaComplete.observe(viewLifecycleOwner,{
-            if(it) this.dismiss()
-            else showToast("등록에 실패했습니다.")
-        })
     }
 
 

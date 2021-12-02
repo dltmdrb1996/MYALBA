@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "599516850216",
+    "project_id": "myjob-1628419811030",
+    "storage_bucket": "myjob-1628419811030.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599516850216:android:2d4b745e5e3294db68ad1d",
+        "android_client_info": {
+          "package_name": "com.bottotop.myalba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599516850216-lslgf57u4cvhf0traeq2li1njhu1pta8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bottotop.myalba",
+            "certificate_hash": "3c5e19b1d835acbcbe255b3d0e3853a3e927306b"
+          }
+        },
+        {
+          "client_id": "599516850216-5kdm8luokupnmg83brk155buclec3c30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzxWXLnF8aX_WjzPELcLF8h2mgcdYaOiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599516850216-5kdm8luokupnmg83brk155buclec3c30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

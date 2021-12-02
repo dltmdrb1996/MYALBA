@@ -57,15 +57,8 @@ class SplashViewModel @Inject constructor(
                     checkSocialToken(social)
                 }
                 is APIResult.Error -> {
-                    if(refreshUser.error == APIError.KeyValueError){
-                        if(socialLoginRepository.checkNaver()) {
-                            if(socialLoginRepository.getNaverInfo()) _login.postValue(LoginState.Register)
-                            else showToast("네이버 정보를 불러오는 데 실패했습니다.")
-                        }
-                        else _login.postValue(LoginState.NoToken)
-                    } else {
-                        showToast("에러가 발생하였습니다 잠시후 다시시도해주세요")
-                    }
+                    if(refreshUser.error == APIError.KeyValueError) _login.postValue(LoginState.NoData)
+                    else showToast("에러가 발생하였습니다 잠시후 다시시도해주세요")
                 }
             }
         }
@@ -75,7 +68,7 @@ class SplashViewModel @Inject constructor(
         when (socialFlag) {
             "naver" -> checkNaver()
             "kakao" -> checkKakao()
-            else -> _login.postValue(LoginState.NoToken)
+            else -> _login.postValue(LoginState.NoData)
         }
     }
 
@@ -90,7 +83,7 @@ class SplashViewModel @Inject constructor(
                 if (refreshCompanies) _login.postValue(LoginState.Success)
             }
         } else {
-            _login.postValue(LoginState.NoToken)
+            _login.postValue(LoginState.NoData)
         }
     }
 
@@ -112,7 +105,7 @@ class SplashViewModel @Inject constructor(
                 if (refreshCompanies) _login.postValue(LoginState.Success)
             }
         } else {
-            _login.postValue(LoginState.NoToken)
+            _login.postValue(LoginState.NoData)
         }
     }
 }

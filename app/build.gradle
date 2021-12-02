@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 
 apply from: rootProject.file("android.gradle")
@@ -46,5 +47,7 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:2.5.2"
     implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
     implementation "com.jakewharton.timber:timber:4.7.1"
-
+    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.bottotop.core.ext.showToast
+import com.bottotop.core.model.EventObserver
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.register.databinding.FragmentAlbaBinding
@@ -51,9 +53,10 @@ class AlbaFragment : Fragment() {
     }
 
     private fun completeRegister(){
-        parentViewModel.albaComplete.observe(viewLifecycleOwner,{
+        parentViewModel.albaComplete.observe(viewLifecycleOwner,EventObserver{
             bottomSheet.dismiss()
             if(it) (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
+            else showToast("코드가 올바르지 않습니다.")
         })
     }
 

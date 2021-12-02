@@ -89,9 +89,6 @@ class SplashFragment :
                 LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(
                     NavigationFlow.RegisterFlow("noCompany")
                 )
-                LoginState.NoToken -> (requireActivity() as ToFlowNavigation).navigateToFlow(
-                    NavigationFlow.LoginFlow("noToken")
-                )
                 LoginState.NoData -> (requireActivity() as ToFlowNavigation).navigateToFlow(
                     NavigationFlow.LoginFlow("noData")
                 )

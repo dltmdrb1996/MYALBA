@@ -241,7 +241,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_End" />
 
-            <com.bottotop.core.global.ContentLoadingProgressBar
+            <com.bottotop.register.register.RegisteLodingBar
                 android:id="@+id/loadingView"
                 style="@style/Widget.AppCompat.ProgressBar"
                 android:layout_width="48dp"
@@ -257,7 +257,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:translationY="50dp"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

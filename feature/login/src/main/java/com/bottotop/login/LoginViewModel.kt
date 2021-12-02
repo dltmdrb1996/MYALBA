@@ -15,6 +15,9 @@ import com.bottotop.model.User
 import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
+import com.bottotop.model.wrapper.APIError
+import com.bottotop.model.wrapper.APIResult
+import com.kakao.sdk.common.model.ApiError
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,25 +42,11 @@ class LoginViewModel @Inject constructor(
     private val _login = MutableLiveData<LoginState>()
     val login : LiveData<LoginState> = _login
 
-    var userFlag = false
-
-    fun getUser(){
-        viewModelScope.launch(dispatcherProvider.io) {
-            user = dataRepository.getUser(SocialInfo.id)
-        }
-    }
-
     private val naverLoginHandler: OAuthLoginHandler = object : OAuthLoginHandler() {
         override fun run(success: Boolean) {
             if (success) {
                 mPref["social"]="naver"
-                if (userFlag) {
-                    if (user.company == "null") _login.postValue(LoginState.NoCompany)
-                    else initSocialInfo()
-                }
-                else {
-                    loadNaver()
-                }
+                initSocialInfo()
             } else {
                 val errorCode = mOAuthLoginModule.getLastErrorCode(context).code
                 val errorDesc = mOAuthLoginModule.getLastErrorDesc(context)
@@ -67,23 +56,38 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-
     fun initSocialInfo(){
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io){
-            dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , user.company))
-            val refreshCompanies = dataRepository.refreshCompanies(user.company).result(Error().stackTrace)
+            val infoSuccess = socialLoginRepository.getNaverInfo()
+            if(infoSuccess){
+                mPref["id"] = SocialInfo.id
+                val getUserSuccess = dataRepository.refreshUser(SocialInfo.id)
+                when(getUserSuccess){
+
+                    APIResult.Success -> {
+                        user = dataRepository.getUser(SocialInfo.id)
+                        if(user.company != "null") dataRepository.refreshCompanies(user.company).result(Throwable().stackTrace).let {
+                            if(it) _login.postValue(LoginState.Success)
+                        }
+                        else _login.postValue(LoginState.NoCompany)
+                    }
+
+                    is APIResult.Error -> {
+                        when(getUserSuccess.error){
+                            APIError.KeyValueError -> _login.postValue(LoginState.Register)
+                            else -> showToast("에러가 발생했습니다.")
+                        }
+                    }
+
+                }
+            } else {
+                showToast("네이버 정보를 불러오는데 실패했습니다. \n 잠시 후 다시 시도해주세요")
+            }
             handleLoading(false)
-            if(refreshCompanies) loadNaver()
         }
     }
 
-    fun loadNaver(){
-        viewModelScope.launch(dispatcherProvider.io){
-            socialLoginRepository.getNaverInfo()
-            _login.postValue(LoginState.Register)
-        }
-    }
     fun getAuth() = naverLoginHandler
 
 

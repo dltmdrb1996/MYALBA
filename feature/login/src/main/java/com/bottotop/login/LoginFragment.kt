@@ -30,7 +30,6 @@ class LoginFragment :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if(navArg.msg=="noToken") viewModel.userFlag = true
         super.onCreate(savedInstanceState)
     }
 
@@ -47,11 +46,9 @@ class LoginFragment :
     override fun initClick() {
         _binding?.apply {
             btnKakaoLogin.setOnSingleClickListener {
-                if(navArg.msg=="noToken") this@LoginFragment.viewModel.getUser()
                 showSnackbar("사업자등록을 해야 정보를제공해주어 막아두었습니다.",3000)
             }
             btnNaverLogin.setOnSingleClickListener {
-                if(navArg.msg=="noToken") this@LoginFragment.viewModel.getUser()
                 mOAuthLoginModule.startOauthLoginActivity(requireActivity(), this@LoginFragment.viewModel.getAuth())
             }
         }

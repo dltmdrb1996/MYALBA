@@ -50,7 +50,6 @@ open class BaseViewModel(name : String) : ViewModel() {
             }
             is APIError.KeyValueError -> {
                 Timber.tag(stack.fileName).e("[${stack.lineNumber}]  [${stack.className.split("$")[1]}]  :  KeyValueError")
-                showToast("데이터가 존재하지 않습니다.")
             }
             is APIError.NullValueError -> {
                 Timber.tag(stack.fileName).e("[${stack.lineNumber}]  [${stack.className.split("$")[1]}]  :  NullValueError")

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
+import com.bottotop.core.model.Event
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.query.SetCompanyQuery
 import com.bottotop.model.query.SetScheduleQuery
@@ -21,11 +22,11 @@ class RegisterViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel("가입뷰모델") {
 
-    private val _albaComplete = MutableLiveData<Boolean>()
-    val albaComplete : LiveData<Boolean> = _albaComplete
+    private val _albaComplete by lazy { MutableLiveData<Event<Boolean>>() }
+    val albaComplete : LiveData<Event<Boolean>> by lazy { _albaComplete }
 
-    private val _managerComplete = MutableLiveData<Boolean>()
-    val managerComplete : LiveData<Boolean> = _managerComplete
+    private val _managerComplete by lazy { MutableLiveData<Event<Boolean>>() }
+    val managerComplete : LiveData<Event<Boolean>> by lazy { _managerComplete }
 
     val code = MutableLiveData<String>()
     val checkMon = MutableLiveData(false)
@@ -60,14 +61,14 @@ class RegisterViewModel @Inject constructor(
                         val refreshCompanies1_2 = dataRepository.refreshCompanies(code.value!!).result(Throwable().stackTrace)
                         if(refreshCompanies1_2){
                             handleLoading(false)
-                            _albaComplete.postValue(true)
+                            _albaComplete.postValue(Event(true))
                         }
-                        else _albaComplete.postValue(false)
+                        else _albaComplete.postValue(Event(false))
                     }
-                    else _albaComplete.postValue(false)
+                    else _albaComplete.postValue(Event(false))
                 }
             } else {
-                _albaComplete.postValue(false)
+                _albaComplete.postValue(Event(false))
             }
             handleLoading(false)
         }
@@ -142,12 +143,12 @@ class RegisterViewModel @Inject constructor(
 
                 if(refreshCompanies2) {
                     handleLoading(false)
-                    _managerComplete.postValue(true)
+                    _managerComplete.postValue(Event(true))
                 }else{
-                    _managerComplete.postValue(false)
+                    _managerComplete.postValue(Event(false))
                 }
             }else{
-                _managerComplete.postValue(false)
+                _managerComplete.postValue(Event(false))
             }
             handleLoading(false)
         }

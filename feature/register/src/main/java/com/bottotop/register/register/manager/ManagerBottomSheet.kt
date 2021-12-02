@@ -79,11 +79,6 @@ class ManagerBottomSheet(private val viewModel: RegisterViewModel) : BottomSheet
             if(it.length>=12) binding.tvTelNotice.isVisible()
             else binding.tvTelNotice.isInvisible()
         })
-
-        viewModel.managerComplete.observe(viewLifecycleOwner,{
-            if(it) this.dismiss()
-            else showToast("등록에 실패했습니다.")
-        })
     }
 
     private fun showLoading(isLoading: Boolean) {
