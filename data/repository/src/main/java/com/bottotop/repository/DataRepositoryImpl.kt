@@ -1,15 +1,18 @@
 package com.bottotop.repository
 
 import com.bottotop.local.LocalDataSource
+import com.bottotop.local.entity.NotificationEntity
 import com.bottotop.model.*
 import com.bottotop.model.query.*
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
 import com.bottotop.remote.ApiService
+import com.bottotop.repository.mapper.*
 import com.bottotop.repository.mapper.CommunityMapper
 import com.bottotop.repository.mapper.CompanyEntityMapper
 import com.bottotop.repository.mapper.CompanyMapper
+import com.bottotop.repository.mapper.NotificationMapper
 import com.bottotop.repository.mapper.ScheduleMapper
 import com.bottotop.repository.mapper.UserEntityMapper
 import com.bottotop.repository.mapper.UserMapper
@@ -375,22 +378,35 @@ internal class DataRepositoryImpl @Inject constructor(
         localDataSource.nukeAll()
     }
 
+    override suspend fun getNotification(): Result<List<Notification>> = Result.success(localDataSource.getNotification().map { NotificationMapper.from(it) })
 
-    override suspend fun handleError(code: Int, tag: String): APIResult.Error {
-        return when (code) {
-            404 -> {
-                Timber.e("$tag : 찾는 key정보가 없음")
-                APIResult.Error(APIError.KeyValueError)
-            }
-            500 , 502 -> {
-                Timber.e("$tag : 서버에러")
-                APIResult.Error(APIError.SeverError)
-            }
-            else -> {
-                Timber.e("$tag : 알수없는 statusCode , 코드 : $code")
-                APIResult.Error(APIError.Error(Throwable("설정하지 않은 http code가 날라옴 ")))
+
+    override suspend fun insertNotification(notification: Notification) {
+        val noti = NotificationEntity(notification.title,notification.content,notification.time)
+        localDataSource.insertNotification(noti)
+    }
+
+        override suspend fun nukeNotification() {
+            localDataSource.nukeNotification()
+        }
+
+
+        override suspend fun handleError(code: Int, tag: String): APIResult.Error {
+            return when (code) {
+                404 -> {
+                    Timber.e("$tag : 찾는 key정보가 없음")
+                    APIResult.Error(APIError.KeyValueError)
+                }
+                500 , 502 -> {
+                    Timber.e("$tag : 서버에러")
+                    APIResult.Error(APIError.SeverError)
+                }
+                else -> {
+                    Timber.e("$tag : 알수없는 statusCode , 코드 : $code")
+                    APIResult.Error(APIError.Error(Throwable("설정하지 않은 http code가 날라옴 ")))
+                }
             }
         }
     }
 
-}
+

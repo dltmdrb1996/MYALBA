@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{item.content}"
+                android:textSize="@dimen/text_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,12 +45,13 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:padding="10dp"
             android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout1">
 
@@ -57,7 +59,9 @@
                 android:id="@+id/community_viewHolder_Tv_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="@{item.name}"
+                android:textSize="@dimen/text_normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,15 +71,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.time}"
+                android:textSize="@dimen/text_normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:padding="10dp"
-
             android:id="@+id/layout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,13 +89,15 @@
             app:layout_constraintTop_toBottomOf="@id/layout2">
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="5dp"
                 android:id="@+id/community_viewHolder_tv_Comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_baseline_chat_24"
                 android:drawableTint="@color/colorOnPrimary"
+                android:drawablePadding="3dp"
                 android:text="댓글 "
+                android:textSize="@dimen/text_normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +106,8 @@
                 android:id="@+id/community_viewHolder_tv_Comment_Size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/text_normal"
+                android:layout_marginLeft="2dp"
                 app:layout_constraintStart_toEndOf="@id/community_viewHolder_tv_Comment" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

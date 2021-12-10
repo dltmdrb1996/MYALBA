@@ -40,6 +40,9 @@ interface DataRepository {
     suspend fun insertDaySchedule(day : String , time :String)
     suspend fun deleteDaySchedule()
     suspend fun deleteAllTable()
+    suspend fun getNotification() : Result<List<Notification>>
+    suspend fun insertNotification(notification: Notification)
+    suspend fun nukeNotification()
 
     suspend fun handleError(code : Int , tag : String) : APIResult.Error
 

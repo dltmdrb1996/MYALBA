@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.bottotop.local.entity.DayScheduleEntity
 import com.bottotop.local.entity.LocalUserEntity
+import com.bottotop.local.entity.NotificationEntity
 
 @Dao
 internal interface UserDao {
@@ -27,6 +28,15 @@ internal interface UserDao {
 
     @Query("DELETE FROM schedule")
     fun deleteSchedule()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNotification(obj: NotificationEntity)
+
+    @Query("DELETE FROM notification")
+    fun nukeNotification()
+
+    @Query("SELECT * FROM notification")
+    fun getNotification(): List<NotificationEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSchedule(obj : DayScheduleEntity)

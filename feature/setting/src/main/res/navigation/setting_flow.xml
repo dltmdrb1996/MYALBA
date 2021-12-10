@@ -12,6 +12,7 @@
         tools:layout="@layout/fragment_setting">
 
         <argument
+            android:defaultValue="none"
             android:name="msg"
             app:argType="string" />
 
@@ -28,13 +29,30 @@
         tools:layout="@layout/fragment_info">
 
         <argument
-            android:defaultValue=""
+            android:defaultValue="none"
             android:name="msg"
             app:argType="string" />
 
         <deepLink
             android:id="@+id/deepLink"
             app:uri="example://Info/InfoFragmentArgs?msg={msg}" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:label="notification"
+        android:name="com.bottotop.setting.NotificationFragment"
+        tools:layout="@layout/fragment_notification">
+
+        <argument
+            android:defaultValue="none"
+            android:name="msg"
+            app:argType="string" />
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="example://Notification/NotificationFragmentArgs?msg={msg}" />
 
     </fragment>
 </navigation>

@@ -33,7 +33,6 @@ class CommunityFragment :
 
     override fun initObserver() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
-            Timber.e("observeLoading: $it")
             (requireActivity() as ShowLoading).showLoading(it)
         })
 

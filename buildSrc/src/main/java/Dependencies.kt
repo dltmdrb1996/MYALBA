@@ -2,11 +2,11 @@
 object Apps {
     const val APP_ID = "com.bottotop.myalba"
     const val COMPILE_SDK = 30
-    const val BUILD_TOOLS_VERSION = "30.0.2"
-    const val MIN_SDK = 23
+    const val BUILD_TOOLS_VERSION = "30.0.3"
+    const val MIN_SDK = 26
     const val TARGET_SDK = 30
-    const val VERSION_CODE = 2
-    const val VERSION_NAME = "1.0.1"
+    const val VERSION_CODE = 3
+    const val VERSION_NAME = "1.0.2"
 }
 
 object Versions {

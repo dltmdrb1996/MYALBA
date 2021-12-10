@@ -32,6 +32,7 @@ class DateTime {
     var ddFormat: DateFormat = SimpleDateFormat("dd", Locale.KOREA)
     var wFormat: DateFormat = SimpleDateFormat("E요일", Locale.KOREA)
     var MMddEFormat : DateFormat = SimpleDateFormat("MM dd E요일", Locale.KOREA)
+    var MMddFormat : DateFormat = SimpleDateFormat("MM월 dd일", Locale.KOREA)
 
     private val yyyyMMFormat: String = "YYYYMM"
     private val TIME_PATTERN : String = "HH:mm"
@@ -96,9 +97,9 @@ class DateTime {
         return hhmmFormat.format(time)
     }
 
-    fun getTimeLongToDD(time : Long) : String {
+    fun getTimeLongToMMDD(time : Long) : String {
         ddFormat.timeZone = TimeZone.getTimeZone("GMT")
-        return hhmmFormat.format(time)
+        return MMddFormat.format(time)
     }
 
     fun getCurrentDateFromStringFormat(): String {

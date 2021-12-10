@@ -15,6 +15,11 @@
             android:id="@+id/deepLink"
             app:uri="example://asset/exampleArgs?msg={msg}" />
 
+        <argument
+            android:defaultValue="none"
+            android:name="msg"
+            app:argType="string" />
+
     </fragment>
 
 </navigation>

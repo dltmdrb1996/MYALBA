@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_login">
 
         <argument
-            android:defaultValue=""
+            android:defaultValue="none"
             android:name="msg"
             app:argType="string" />
 
@@ -21,15 +21,5 @@
             app:uri="example://login/exampleArgs?msg={msg}" />
 
     </fragment>
-
-<!--    <activity-->
-<!--        android:id="@+id/loginActivity"-->
-<!--        android:name="com.bottotop.login.LoginActivity"-->
-<!--        tools:layout="@layout/activity_login">-->
-
-<!--        <deepLink-->
-<!--        android:id="@+id/deepLink"-->
-<!--        app:uri="example://login/exampleArgs?msg={msg}" />-->
-<!--    </activity>-->
 
 </navigation>

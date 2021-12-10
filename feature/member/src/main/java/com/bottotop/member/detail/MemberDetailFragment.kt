@@ -26,7 +26,6 @@ class MemberDetailFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.e("onCreate: $args.msg")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

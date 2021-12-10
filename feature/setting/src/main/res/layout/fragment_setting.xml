@@ -28,6 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_darkMode"
             android:layout_margin="20dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
@@ -38,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_Login" >
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/darkMode_Tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -53,7 +54,7 @@
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:id="@+id/tabLayout"
+                android:id="@+id/darkMode_Tab"
                 android:background="@drawable/radius_toggle_off_30dp"
                 app:tabMode="scrollable"
                 app:tabBackground="@drawable/tab_selector"
@@ -64,21 +65,74 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="끄기" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/on"
+                    android:id="@+id/darkMode_off"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="켜기" />
 
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/darkMode_On"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="끄기" />
+
             </com.google.android.material.tabs.TabLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_margin="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/radius_bg_20dp"
+            android:textSize="@dimen/text_onboard"
+            app:layout_constraintTop_toBottomOf="@+id/layout_darkMode" >
+
+            <TextView
+                android:id="@+id/fcm_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="알림설정"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/fcm_tab"
+                android:background="@drawable/radius_toggle_off_30dp"
+                app:tabMode="scrollable"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabIndicatorHeight="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/fcm_Off"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="켜기" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/fcm_On"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="끄기" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

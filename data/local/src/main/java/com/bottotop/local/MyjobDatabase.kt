@@ -7,12 +7,14 @@ import com.bottotop.local.dao.UserDao
 import com.bottotop.local.entity.DayScheduleEntity
 import com.bottotop.local.entity.LocalCompanyEntity
 import com.bottotop.local.entity.LocalUserEntity
+import com.bottotop.local.entity.NotificationEntity
 
 @Database(
     entities = [
         LocalUserEntity::class,
         LocalCompanyEntity::class,
-        DayScheduleEntity::class
+        DayScheduleEntity::class,
+        NotificationEntity::class
     ],
     version = 1,
     exportSchema = false

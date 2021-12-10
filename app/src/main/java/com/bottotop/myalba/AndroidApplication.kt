@@ -2,10 +2,13 @@ package com.bottotop.myalba
 
 import android.app.Application
 import android.content.Context
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import com.kakao.sdk.common.KakaoSdk
 import com.nhn.android.naverlogin.OAuthLogin
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import javax.inject.Inject
 
 
 @HiltAndroidApp
@@ -24,5 +27,6 @@ class AndroidApplication : Application() {
             Timber.plant(Timber.DebugTree())
         }
     }
+
 
 }

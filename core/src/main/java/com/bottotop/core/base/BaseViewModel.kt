@@ -7,6 +7,7 @@ import com.bottotop.core.model.Event
 import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
 import timber.log.Timber
+import java.sql.Time
 
 open class BaseViewModel(name : String) : ViewModel() {
 
@@ -16,10 +17,6 @@ open class BaseViewModel(name : String) : ViewModel() {
 //    val isLoading: LiveData<Boolean> by lazy { _isLoading }
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading : LiveData<Boolean> = _isLoading
-
-    init {
-        Timber.e(":뷰모델생성 ")
-    }
 
     private val _toast by lazy { MutableLiveData<Event<String>>() }
     val toast: LiveData<Event<String>> by lazy { _toast }
@@ -64,8 +61,7 @@ open class BaseViewModel(name : String) : ViewModel() {
     }
 
     override fun onCleared() {
-        Timber.e("onCleared: 종료")
         super.onCleared()
+        Timber.e("$TAG 종료")
     }
-
 }

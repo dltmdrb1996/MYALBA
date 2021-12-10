@@ -12,8 +12,11 @@ import com.bottotop.model.query.SetCompanyQuery
 import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.query.UpdateUserQuery
 import com.bottotop.model.repository.DataRepository
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,6 +61,7 @@ class RegisterViewModel @Inject constructor(
 
                     if(setCompany){
                         dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , com_id))
+                        firebaseMessaging(com_id)
                         val refreshCompanies1_2 = dataRepository.refreshCompanies(code.value!!).result(Throwable().stackTrace)
                         if(refreshCompanies1_2){
                             handleLoading(false)
@@ -140,7 +144,7 @@ class RegisterViewModel @Inject constructor(
             ).result(Error().stackTrace)
             if(setCompany2) {
                 val refreshCompanies2 = dataRepository.refreshCompanies(SocialInfo.id).result(Error().stackTrace)
-
+                firebaseMessaging(com_name.value!!)
                 if(refreshCompanies2) {
                     handleLoading(false)
                     _managerComplete.postValue(Event(true))
@@ -172,5 +176,15 @@ class RegisterViewModel @Inject constructor(
             return true
         }
         return false
+    }
+
+    private fun firebaseMessaging(company : String){
+        Firebase.messaging.subscribeToTopic(company)
+            .addOnCompleteListener { task ->
+                Timber.e("success")
+                if (!task.isSuccessful) {
+                    Timber.e("success")
+                }
+            }
     }
 }

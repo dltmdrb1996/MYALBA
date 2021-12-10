@@ -5,6 +5,7 @@ import com.bottotop.local.dao.UserDao
 import com.bottotop.local.entity.DayScheduleEntity
 import com.bottotop.local.entity.LocalCompanyEntity
 import com.bottotop.local.entity.LocalUserEntity
+import com.bottotop.local.entity.NotificationEntity
 import com.bottotop.model.DaySchedule
 import javax.inject.Inject
 
@@ -37,9 +38,19 @@ internal class LocalDataSourceImpl @Inject constructor(
         companyDao.deleteCompany()
     }
 
+    override suspend fun insertNotification(notificationEntity: NotificationEntity) {
+        userDao.insertNotification(notificationEntity)
+    }
+
+    override suspend fun nukeNotification() {
+        userDao.nukeNotification()
+    }
+
     override suspend fun deleteDaySchedule() {
         userDao.deleteSchedule()
     }
+
+    override suspend fun getNotification(): List<NotificationEntity> = userDao.getNotification()
 
     override suspend fun insertDaySchedule(day : String , time : String) {
         userDao.insertSchedule(DayScheduleEntity(day, time))
@@ -50,10 +61,14 @@ internal class LocalDataSourceImpl @Inject constructor(
         return DaySchedule(entity.day,entity.time)
     }
 
+
+
+
     override suspend fun nukeAll() {
         userDao.deleteUser()
         userDao.deleteSchedule()
         nukeCompany()
     }
+
 
 }

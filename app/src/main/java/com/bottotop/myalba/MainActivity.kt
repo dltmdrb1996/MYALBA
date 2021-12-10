@@ -1,34 +1,49 @@
 package com.bottotop.myalba
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Color
+import android.net.*
+import android.net.ConnectivityManager.NetworkCallback
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
+import android.util.AttributeSet
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.bottotop.core.global.ShowLoading
-import com.bottotop.myalba.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
-import androidx.activity.viewModels
-import com.bottotop.core.global.SharedViewModel
-import com.bottotop.core.global.NavigationRouter
-import com.bottotop.core.global.NavigationTable
-import com.bottotop.core.global.SocialInfo
-import java.util.*
-import android.net.*
-import android.net.ConnectivityManager
-import android.net.ConnectivityManager.NetworkCallback
-import android.util.AttributeSet
-import android.view.View
 import com.bottotop.core.ext.*
+import com.bottotop.core.global.*
+import com.bottotop.core.global.PreferenceHelper.get
 import com.bottotop.core.navigation.*
+import com.bottotop.model.repository.DataRepository
+import com.bottotop.myalba.databinding.ActivityMainBinding
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.badge.BadgeUtils.attachBadgeDrawable
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.util.*
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -41,23 +56,34 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
     private var backPressedTime: Long = 0
     lateinit var cm: ConnectivityManager
     lateinit var mNetworkCallback: NetworkCallback
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    @Inject lateinit var dataRepository: DataRepository
+    lateinit var mPref: SharedPreferences
+    lateinit var badgeDrawable : BadgeDrawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
+        mPref = PreferenceHelper.defaultPrefs(applicationContext)
+        if(mPref["dark", false]) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        badgeDrawable = BadgeDrawable.create(binding.appToolbar.context)
         networkCheck()
         initBottomNavigation()
         setSupportActionBar(binding.appToolbar)
+        recodeStartApp()
     }
 
+    private fun recodeStartApp() {
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN) {
+            param(FirebaseAnalytics.Param.ITEM_ID, "앱시작")
+            param(FirebaseAnalytics.Param.ITEM_NAME, "앱시작")
+            param(FirebaseAnalytics.Param.CONTENT_TYPE, "앱시작")
+        }
+    }
     override fun onResume() {
         observeNetwork()
         super.onResume()
-    }
-    
-    // 커밋테스트
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        return super.onCreateView(name, context, attrs)
     }
 
     override fun onPause() {
@@ -82,13 +108,23 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-            R.id.menu_right1 -> super.onOptionsItemSelected(item)
+            R.id.menu_expend -> super.onOptionsItemSelected(item)
             R.id.setting -> {
-                navigator.navController.deepLinkNavigateTo(DeepLinkDestination.Setting(SocialInfo.id))
+                if(NavigationRouter.currentState != NavigationTable.Setting ) {
+                    navigator.navController.deepLinkNavigateTo(DeepLinkDestination.Setting(SocialInfo.id))
+                }
                 super.onOptionsItemSelected(item)
             }
             R.id.mypage -> {
-                navigator.navController.deepLinkNavigateTo(DeepLinkDestination.Info(SocialInfo.id))
+                if(NavigationRouter.currentState != NavigationTable.Info ) {
+                    navigator.navController.deepLinkNavigateTo(DeepLinkDestination.Info(SocialInfo.id))
+                }
+                super.onOptionsItemSelected(item)
+            }
+            R.id.menu_notification -> {
+                if(NavigationRouter.currentState != NavigationTable.Notification ) {
+                    navigator.navController.deepLinkNavigateTo(DeepLinkDestination.Notification(SocialInfo.id))
+                }
                 super.onOptionsItemSelected(item)
             }
             else -> super.onOptionsItemSelected(item)
@@ -104,13 +140,13 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
 
     private fun setBottomNavAction(navController: NavController) {
         binding.navViewFragment.setOnItemSelectedListener {
-            binding.ToolbarLayout.setExpanded(true)
             when (it.itemId) {
-                R.id.member_flow -> if (NavigationRouter.currentState != NavigationTable.Member) navigateToFlow(NavigationFlow.MemberFlow("test"))
-                R.id.community_flow -> if (NavigationRouter.currentState != NavigationTable.Community) navigateToFlow(NavigationFlow.CommunityFlow("test"))
-                R.id.home_flow -> if (NavigationRouter.currentState != NavigationTable.Home) navigateToFlow(NavigationFlow.HomeFlow("test"))
-                R.id.schedule_flow -> if (NavigationRouter.currentState != NavigationTable.Schedule) navigateToFlow(NavigationFlow.ScheduleFlow("test"))
-                R.id.asset_flow -> if (NavigationRouter.currentState != NavigationTable.Asset) navigateToFlow(NavigationFlow.AssetFlow("test"))
+                R.id.member_flow -> if (NavigationRouter.currentState != NavigationTable.Member) navigateToFlow(NavigationFlow.MemberFlow("member"))
+                R.id.community_flow -> if (NavigationRouter.currentState != NavigationTable.Community) navigateToFlow(NavigationFlow.CommunityFlow("community"))
+                R.id.home_flow -> if (NavigationRouter.currentState != NavigationTable.Home) navigateToFlow(NavigationFlow.HomeFlow("home"))
+                R.id.schedule_flow -> if (NavigationRouter.currentState != NavigationTable.Schedule) navigateToFlow(NavigationFlow.ScheduleFlow("schedule"))
+                R.id.asset_flow -> if (NavigationRouter.currentState != NavigationTable.Asset) navigateToFlow(NavigationFlow.AssetFlow("asset"))
+
             }
             return@setOnItemSelectedListener true
         }
@@ -118,8 +154,9 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
     }
 
     private fun observeNavDirection(navController: NavController) {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, arguments ->
             NavigationRouter.saveState(destination.label as String)
+            if(arguments?.get("msg") != null) NavigationRouter.arg = arguments["msg"]?.toString()!!
             when (NavigationRouter.currentState) {
                 NavigationTable.Member ->{
                     showBar()
@@ -151,14 +188,23 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
                     binding.navViewFragment.isGone()
                     binding.appToolbar.title = "정보"
                 }
+                NavigationTable.Notification -> {
+                    binding.appToolbar.isVisible()
+                    binding.navViewFragment.isGone()
+                    binding.appToolbar.title = "알림"
+                }
                 else -> hideBar()
             }
+
         }
     }
 
     private fun showBar(){
         binding.appToolbar.isVisible()
         binding.navViewFragment.isVisible()
+        CoroutineScope(Dispatchers.IO).launch {
+            makeBadge()
+        }
     }
 
     private fun hideBar(){
@@ -198,6 +244,11 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
 
 
     override fun onBackPressed() {
+        if(NavigationRouter.arg == "back") {
+            super.onBackPressed()
+            return
+        }
+
         when (NavigationRouter.currentState) {
             is NavigationTable.Asset, NavigationTable.Community ,
                 NavigationTable.Member, NavigationTable.Schedule -> navigateToFlow(NavigationFlow.HomeFlow("back"))
@@ -210,6 +261,20 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
                 }
             }
             else -> super.onBackPressed()
+        }
+
+    }
+
+
+    @SuppressLint("UnsafeOptInUsageError")
+    private suspend fun makeBadge(){
+        val count = mPref["badge", 0]
+        if(count!=0){
+            badgeDrawable.number = count
+            badgeDrawable.backgroundColor = Color.RED
+            BadgeUtils.attachBadgeDrawable(badgeDrawable, binding.appToolbar, R.id.menu_notification)
+        } else {
+            BadgeUtils.detachBadgeDrawable(badgeDrawable , binding.appToolbar , R.id.menu_notification)
         }
     }
 

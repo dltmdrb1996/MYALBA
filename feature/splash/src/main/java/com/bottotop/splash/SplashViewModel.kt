@@ -20,6 +20,7 @@ import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.User
 import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.wrapper.APIResult
+import timber.log.Timber
 
 
 @HiltViewModel

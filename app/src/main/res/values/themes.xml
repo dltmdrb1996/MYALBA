@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.MYALBA" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MYALBA" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
@@ -12,11 +12,15 @@
         <item name="android:textViewStyle">@style/textViewFontStyle</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
         <item name="android:alertDialogTheme">@style/MyDialogTheme</item>
+        <item name="android:itemBackground">@color/colorBg</item>
+        <item name="popupMenuBackground">@color/colorBg</item>
     </style>
 
-    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Light" />
-
-
+    <style name="ThemeOverlay.MyTheme" parent="Theme.MYALBA">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="popupMenuBackground">@color/colorBg</item>
+        <item name="android:padding">0dp</item>
+    </style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/radius_top</item>

@@ -11,7 +11,10 @@ import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.*
 import com.bottotop.register.R
 import com.bottotop.register.databinding.FragmentOnboardingBinding
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class OnBoardingFragment :
@@ -89,5 +92,7 @@ class OnBoardingFragment :
             }
         }
     }
+
+
 
 }

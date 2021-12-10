@@ -2,6 +2,7 @@ package com.bottotop.local
 
 import com.bottotop.local.entity.LocalCompanyEntity
 import com.bottotop.local.entity.LocalUserEntity
+import com.bottotop.local.entity.NotificationEntity
 import com.bottotop.model.DaySchedule
 
 interface LocalDataSource {
@@ -14,6 +15,10 @@ interface LocalDataSource {
     suspend fun getCompany(id: String): LocalCompanyEntity
     suspend fun getCompanies(): List<LocalCompanyEntity>
     suspend fun nukeCompany()
+
+    suspend fun insertNotification(notificationEntity: NotificationEntity)
+    suspend fun nukeNotification()
+    suspend fun getNotification() : List<NotificationEntity>
 
     suspend fun deleteDaySchedule()
     suspend fun insertDaySchedule(day : String , time : String)

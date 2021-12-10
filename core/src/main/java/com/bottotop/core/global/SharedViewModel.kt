@@ -14,11 +14,7 @@ class SharedViewModel @Inject constructor(
     private val _network = MutableLiveData<Boolean>()
     val network : LiveData<Boolean> = _network
 
-    private val _user = MutableLiveData<User>()
-    val user = _user
-
-    fun changeNetworkState(state : Boolean){
-        _network.value = state
-    }
+    private val _homeInit = MutableLiveData<Boolean>()
+    val homeInit : LiveData<Boolean> = _homeInit
 
 }

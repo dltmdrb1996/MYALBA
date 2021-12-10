@@ -31,6 +31,8 @@ dependencies {
     implementation(AndroidX.MATERIAL)
     implementation(AndroidX.CONSTRAINT_LAYOUT)
     implementation(Kotlin.KOTLIN_STDLIB)
+    implementation(Kotlin.COROUTINES_ANDROID)
+    implementation(Kotlin.COROUTINES_CORE)
 
     implementation(Android_Libraries.HILT_ANDROID)
     kapt          (Android_Libraries.HILT_ANDROID_COMPILER)
@@ -47,7 +49,16 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:2.5.2"
     implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
     implementation "com.jakewharton.timber:timber:4.7.1"
+
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
-    implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'androidx.work:work-runtime-ktx:2.6.0'
+
+
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 }

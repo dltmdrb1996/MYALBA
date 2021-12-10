@@ -5,7 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlinx-serialization'
-
+    id 'com.google.gms.google-services'
 }
 
 apply from: rootProject.file("feature/feature.gradle")

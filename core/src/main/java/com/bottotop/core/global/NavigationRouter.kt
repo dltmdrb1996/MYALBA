@@ -1,6 +1,7 @@
 package com.bottotop.core.global
 
 object NavigationRouter {
+    var arg = "none"
     lateinit var currentState : NavigationTable
     fun saveState(destination : String){
         when(destination){
@@ -18,6 +19,7 @@ object NavigationRouter {
             "info" -> currentState=NavigationTable.Info
             "setting" -> currentState=NavigationTable.Setting
             "communityDetail" -> currentState=NavigationTable.CommunityDetail
+            "notification" -> currentState=NavigationTable.Notification
         }
     }
 }
@@ -36,5 +38,6 @@ sealed class NavigationTable(){
     object MemberDetail : NavigationTable()
     object Info : NavigationTable()
     object Setting : NavigationTable()
+    object Notification : NavigationTable()
     object CommunityDetail : NavigationTable()
 }

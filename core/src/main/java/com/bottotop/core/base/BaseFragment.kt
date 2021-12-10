@@ -34,7 +34,6 @@ abstract class BaseFragment<B : ViewDataBinding , VM : BaseViewModel>(@LayoutRes
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Timber.e(TAG, "onDestroyView: 종료")
         _binding = null
     }
 

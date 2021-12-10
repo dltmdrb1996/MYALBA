@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 
 apply from: rootProject.file("feature/feature.gradle")
@@ -11,5 +12,8 @@ apply from: rootProject.file("feature/feature.gradle")
 
 dependencies {
     implementation(View.VIEWPAGER)
+    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
 }

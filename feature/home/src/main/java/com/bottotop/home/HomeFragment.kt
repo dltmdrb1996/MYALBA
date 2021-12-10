@@ -2,6 +2,7 @@ package com.bottotop.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
@@ -9,6 +10,7 @@ import com.bottotop.home.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.navigation.fragment.findNavController
 import com.bottotop.core.ext.isInvisible
+import com.bottotop.core.global.SharedViewModel
 import com.bottotop.core.navigation.DeepLinkDestination
 import com.bottotop.core.navigation.deepLinkNavigateTo
 import kotlinx.serialization.encodeToString
@@ -22,7 +24,7 @@ class HomeFragment :
     private val vm by viewModels<HomeViewModel>()
     override val viewModel get() = vm
     private val todayAdapter : TodayWorkAdapter by lazy { TodayWorkAdapter(viewModel) }
-//    private val mainViewModel : SharedViewModel by activityViewModels()
+    private val mainViewModel : SharedViewModel by activityViewModels()
 
     override fun setBindings() {
         _binding?.viewModel = viewModel
@@ -60,4 +62,6 @@ class HomeFragment :
             findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(json))
         }
     }
+
+
 }

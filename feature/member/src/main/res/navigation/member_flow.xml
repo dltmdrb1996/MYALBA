@@ -24,6 +24,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" >
 
             <argument
+                android:defaultValue="none"
                 android:name="msg"
                 app:argType="string" />
 
@@ -39,7 +40,7 @@
         tools:layout="@layout/fragment_member_detail">
 
         <argument
-            android:defaultValue=""
+            android:defaultValue="none"
             android:name="msg"
             app:argType="string" />
 

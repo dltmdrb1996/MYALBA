@@ -11,9 +11,8 @@
         android:label="onBoarding"
         tools:layout="@layout/fragment_onboarding">
 
-
         <argument
-            android:defaultValue=""
+            android:defaultValue="none"
             android:name="msg"
             app:argType="string" />
 
@@ -36,6 +35,11 @@
         <deepLink
             android:id="@+id/deepLink2"
             app:uri="example:/register/exampleArgs?msg={msg}" />
+
+        <argument
+            android:defaultValue="none"
+            android:name="msg"
+            app:argType="string" />
 
     </fragment>
 

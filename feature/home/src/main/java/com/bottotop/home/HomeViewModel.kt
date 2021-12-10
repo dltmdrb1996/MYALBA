@@ -1,10 +1,14 @@
 package com.bottotop.home
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
+import com.bottotop.core.global.PreferenceHelper
+import com.bottotop.core.global.PreferenceHelper.get
+import com.bottotop.core.global.PreferenceHelper.set
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.*
@@ -12,7 +16,10 @@ import com.bottotop.model.query.PatchScheduleQuery
 import com.bottotop.model.query.UpdateScheduleQuery
 import com.bottotop.model.query.UpdateUserQuery
 import com.bottotop.model.repository.DataRepository
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,7 +27,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
-    private val dataRepository: DataRepository
+    private val dataRepository: DataRepository,
+    @ApplicationContext context: Context,
 ) : BaseViewModel("홈뷰모델") {
 
 
@@ -52,8 +60,9 @@ class HomeViewModel @Inject constructor(
     private lateinit var member: List<User>
     private val dataUtil = DateTime()
 
+    private val mPref = PreferenceHelper.defaultPrefs(context)
+
     init {
-        Timber.e("test ${SocialInfo.id}  ,  ${SocialInfo.social}")
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
             handleLoading(true)
@@ -62,6 +71,7 @@ class HomeViewModel @Inject constructor(
                     initFirst()
                     initWorking()
                     getMemberWorkDay()
+                    checkFCM()
                 }
             }catch (e : Throwable){
                 showToast("에러가발생했습니다.")
@@ -219,5 +229,17 @@ class HomeViewModel @Inject constructor(
             }
         }
         _scheduleItem.postValue(list)
+    }
+
+    fun checkFCM(){
+        val fcm = mPref["fcm", true]
+        if(fcm){
+            Firebase.messaging.subscribeToTopic(company.com_id)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        mPref["fcm"] = true
+                    }
+                }
+        }
     }
 }

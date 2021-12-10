@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.bottotop.model.Notification" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewHolder"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:padding="15dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_Tag"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_baseline_notifications_24" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="@dimen/text_normal"
+            android:gravity="center"
+            android:text="@{item.title}"
+            app:layout_constraintStart_toEndOf="@id/iv_Tag"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_Time"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="@dimen/text_normal"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/tv_Content"
+            android:textSize="@dimen/text_medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toEndOf="@id/iv_Tag"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{item.content}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
