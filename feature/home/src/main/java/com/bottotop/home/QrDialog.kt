@@ -12,11 +12,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 
-class QrDialog : BottomSheetDialogFragment(){
+class QrDialog(viewModel: HomeViewModel) : BottomSheetDialogFragment(){
 
     private var _binding: QrBottomSheetBinding? = null
     private val binding get() = _binding!!
-
+    private val viewModel =viewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,13 +31,15 @@ class QrDialog : BottomSheetDialogFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        createQRCode()
+        viewModel.companyName.observe(viewLifecycleOwner,{
+            createQRCode(it)
+        })
     }
 
-    fun createQRCode(){
+    fun createQRCode(name : String){
         val qrCode = QRCodeWriter()
         val bitMtx = qrCode.encode(
-            "test",
+            name ,
             BarcodeFormat.QR_CODE,
             350,
             350

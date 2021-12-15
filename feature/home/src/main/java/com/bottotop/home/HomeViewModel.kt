@@ -61,6 +61,9 @@ class HomeViewModel @Inject constructor(
     private val _working = MutableLiveData<String>()
     val working: LiveData<String> = _working
 
+    private val _companyName = MutableLiveData<String>()
+    val companyName: LiveData<String> = _companyName
+
     private val today = DateTime().getTOdayWeek()
     private lateinit var user: User
     private lateinit var company: Company
@@ -87,16 +90,18 @@ class HomeViewModel @Inject constructor(
             }
             handleLoading(false)
         }
+        Timber.e("뷰모델생성")
     }
 
+    override fun onCleared() {
+        Timber.e("뷰모델제거")
+        super.onCleared()
+    }
     private suspend fun initFirst() {
         val getCommunity = dataRepository.getCommunity(user.company)
-
-        if (getCommunity.isSuccess && getCommunity.getOrNull()?.isNotEmpty()!!) {
-            _community.postValue(getCommunity.getOrNull()!!.last())
-        }
+        _companyName.postValue(company.com_id)
+        if (getCommunity.isSuccess && getCommunity.getOrNull()?.isNotEmpty()!!) { _community.postValue(getCommunity.getOrNull()!!.last()) }
         if (company.position == "A") _master.postValue(true)
-
         if (user.workOn == "off") {
             _workOn.postValue("출근하기")
         } else {
@@ -201,6 +206,7 @@ class HomeViewModel @Inject constructor(
             company = dataRepository.getCompany(SocialInfo.id)
             companise = dataRepository.getCompanies()
             member = dataRepository.getMembers()
+
             true
         } catch (e: Throwable) {
             Timber.e("initData: $e")
