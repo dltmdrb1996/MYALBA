@@ -10,14 +10,11 @@ import com.bottotop.core.global.PreferenceHelper
 import com.bottotop.core.global.PreferenceHelper.set
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.model.LoginState
-import com.bottotop.core.util.DateTime
 import com.bottotop.model.User
-import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
 import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
-import com.kakao.sdk.common.model.ApiError
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,7 +43,7 @@ class LoginViewModel @Inject constructor(
         override fun run(success: Boolean) {
             if (success) {
                 mPref["social"]="naver"
-                initSocialInfo()
+                getSocialInfo()
             } else {
                 val errorCode = mOAuthLoginModule.getLastErrorCode(context).code
                 val errorDesc = mOAuthLoginModule.getLastErrorDesc(context)
@@ -56,14 +53,14 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun initSocialInfo(){
+    fun getSocialInfo(){
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io){
             val infoSuccess = socialLoginRepository.getNaverInfo()
             if(infoSuccess){
                 mPref["id"] = SocialInfo.id
-                val getUserSuccess = dataRepository.refreshUser(SocialInfo.id)
-                when(getUserSuccess){
+                val refreshUser = dataRepository.refreshUser(SocialInfo.id)
+                when(refreshUser){
 
                     APIResult.Success -> {
                         user = dataRepository.getUser(SocialInfo.id)
@@ -74,12 +71,11 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is APIResult.Error -> {
-                        when(getUserSuccess.error){
+                        when(refreshUser.error){
                             APIError.KeyValueError -> _login.postValue(LoginState.Register)
                             else -> showToast("에러가 발생했습니다.")
                         }
                     }
-
                 }
             } else {
                 showToast("네이버 정보를 불러오는데 실패했습니다. \n 잠시 후 다시 시도해주세요")

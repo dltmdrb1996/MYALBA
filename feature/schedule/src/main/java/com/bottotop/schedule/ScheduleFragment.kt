@@ -87,13 +87,10 @@ class ScheduleFragment :
                         schedule[index]!!,
                         this@ScheduleFragment.viewModel.scheduleItem.value!!
                         )
-
                     val width = getScreenWidth(requireActivity())
                     val paddingToSet = width / 3
                     viewPager.setShowSideItems(0,paddingToSet)
                     setLocationViewPager(viewPager, schedule[index])
-
-
                 }
             }
         })
@@ -104,7 +101,6 @@ class ScheduleFragment :
         clipToPadding = false
         clipChildren = false
         offscreenPageLimit = 3
-
         setPageTransformer { page, position ->
             val offset = position * -(2 * offsetPx + pageMarginPx)
             if (this.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
@@ -117,8 +113,8 @@ class ScheduleFragment :
                 page.translationY = offset
             }
         }
-
     }
+
     // 현재 날짜에맞게 포커스를 맞춰준다.
     private fun setLocationViewPager(
         viewPager: ViewPager2,
@@ -144,9 +140,10 @@ class ScheduleFragment :
 
     private fun setChangeMonthBtn() {
         binding.apply {
-            schedulePreviousTv.text = (month - 1).toString() + "월"
+            if(month!=1) schedulePreviousTv.text = (month - 1).toString() + "월"
             scheduleCurrentTv.text = month.toString() + "월"
-            scheduleNextTv.text = (month + 1).toString() + "월"
+            if(month!=12) scheduleNextTv.text = (month + 1).toString() + "월"
+
             scheduleBackBtn.setOnSingleClickListener {
                 if (month <= 1) return@setOnSingleClickListener
                 changeMonthBack()

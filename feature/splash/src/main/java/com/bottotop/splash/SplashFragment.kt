@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.isInvisible
 import com.bottotop.core.ext.isVisible
 import com.bottotop.core.ext.withDelayOnMain
+import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.model.LoginState
+import com.bottotop.core.navigation.DeepLinkDestination
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigation
+import com.bottotop.core.navigation.deepLinkNavigateTo
 import com.bottotop.core.util.addOnAnimationListener
 import com.bottotop.splash.databinding.FragmentSplashBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,9 +90,7 @@ class SplashFragment :
                 LoginState.Register -> (requireActivity() as ToFlowNavigation).navigateToFlow(
                     NavigationFlow.RegisterFlow("first")
                 )
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(
-                    NavigationFlow.RegisterFlow("noCompany")
-                )
+                LoginState.NoCompany -> findNavController().deepLinkNavigateTo(DeepLinkDestination.Register("none"))
                 LoginState.NoData -> (requireActivity() as ToFlowNavigation).navigateToFlow(
                     NavigationFlow.LoginFlow("noData")
                 )

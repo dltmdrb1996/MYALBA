@@ -37,11 +37,6 @@ class OnBoardingFragment :
         _binding?.adapter = adapter
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if(navArg.msg == "noCompany") findNavController().navigate(OnBoardingFragmentDirections.actionToRegister())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewpager()

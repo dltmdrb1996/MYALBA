@@ -24,6 +24,8 @@ class AlbaFragment : Fragment() {
     private var _binding: FragmentAlbaBinding? = null
     private val binding: FragmentAlbaBinding get() = _binding!!
     private lateinit var bottomSheet : AlbaBottomSheet
+    private lateinit var qrBottomSheet : AlbaQRBottomSheet
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +37,8 @@ class AlbaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheet=AlbaBottomSheet(parentViewModel)
-        completeRegister()
+        qrBottomSheet=AlbaQRBottomSheet(parentViewModel)
+//        completeRegister()
         initClickEvent()
     }
 
@@ -48,6 +51,10 @@ class AlbaFragment : Fragment() {
         binding.apply {
             btnCode.setOnClickListener {
                 bottomSheet.show(childFragmentManager, bottomSheet.tag)
+            }
+
+            btnQr.setOnClickListener {
+                qrBottomSheet.show(childFragmentManager, qrBottomSheet.tag)
             }
         }
     }

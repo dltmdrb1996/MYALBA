@@ -68,7 +68,6 @@ internal class LocalDataSourceImpl @Inject constructor(
         userDao.deleteUser()
         userDao.deleteSchedule()
         nukeCompany()
+        userDao.nukeNotification()
     }
-
-
 }

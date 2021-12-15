@@ -33,7 +33,7 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp"
-                        android:text="8월"
+                        android:text="  "
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -42,9 +42,9 @@
                         android:id="@+id/schedule_Current_Tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="9월"
                         android:textSize="15sp"
                         android:textStyle="bold"
+                        android:text="  "
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/schedule_Previous_Tv"
                         app:layout_constraintRight_toLeftOf="@id/schedule_Next_Tv"
@@ -56,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp"
-                        android:text="10월"
+                        android:text="  "
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/schedule_Current_Tv"
                         app:layout_constraintTop_toTopOf="parent" />

@@ -34,7 +34,7 @@
 
         <deepLink
             android:id="@+id/deepLink2"
-            app:uri="example:/register/exampleArgs?msg={msg}" />
+            app:uri="example://Register/RegisterFragmentArgs?msg={msg}" />
 
         <argument
             android:defaultValue="none"

@@ -15,16 +15,18 @@ import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.register.R
 import com.bottotop.register.databinding.AlbaBottomSheetBinding
+import com.bottotop.register.databinding.AlbaQrBottomSheetBinding
 import com.bottotop.register.register.RegisterViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import timber.log.Timber
 
 
-class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDialogFragment() {
+class AlbaQRBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDialogFragment() {
 
-    private var _binding: AlbaBottomSheetBinding? = null
+    private var _binding: AlbaQrBottomSheetBinding? = null
     private val binding get() = _binding!!
 
 //    private val viewModel : RegisterViewModel by viewModels(
@@ -43,10 +45,10 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.alba_bottom_sheet, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.alba_qr_bottom_sheet, container, false)
         _binding?.apply {
-            lifecycleOwner = this@AlbaBottomSheet
-            viewModel = this@AlbaBottomSheet.viewModel
+            lifecycleOwner = this@AlbaQRBottomSheet
+            viewModel = this@AlbaQRBottomSheet.viewModel
         }
         return binding.root
     }
@@ -54,6 +56,9 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
+        binding.btnScan.setOnClickListener {
+            scanQRCode()
+        }
         completeRegister()
     }
 
@@ -93,6 +98,30 @@ class AlbaBottomSheet(private val viewModel: RegisterViewModel) : BottomSheetDia
         binding.loadingView.isInProgress = isLoading
     }
 
+    fun scanQRCode(){
+        val integrator = IntentIntegrator.forSupportFragment(this) // use this instead
+        integrator.setBeepEnabled(false)
+        integrator.setOrientationLocked(true)
+        integrator.setPrompt("QR코드를 찍어주세요.")
+        integrator.initiateScan()
+        integrator.setRequestCode(100)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if(result != null) {
+            if (result.contents == null) {
+                showToast("에러가 발생했습니다.")
+            } else {
+               viewModel.code.value = result.contents
+                viewModel.code.value
+            }
+        }
+        else{
+            showToast("에러가 발생했습니다.")
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
     private fun completeRegister(){
         viewModel.albaComplete.observe(viewLifecycleOwner, EventObserver{
             if(it) (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))

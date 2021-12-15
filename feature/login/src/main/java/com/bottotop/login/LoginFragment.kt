@@ -3,14 +3,17 @@ package com.bottotop.login
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bottotop.core.base.BaseFragment
 import com.bottotop.core.ext.setOnSingleClickListener
 import com.bottotop.core.ext.showSnackbar
 import com.bottotop.core.ext.showToast
 import com.bottotop.core.model.LoginState
+import com.bottotop.core.navigation.DeepLinkDestination
 import com.bottotop.core.navigation.NavigationFlow
 import com.bottotop.core.navigation.ToFlowNavigation
+import com.bottotop.core.navigation.deepLinkNavigateTo
 import com.bottotop.login.databinding.FragmentLoginBinding
 import com.nhn.android.naverlogin.OAuthLogin
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +62,7 @@ class LoginFragment :
             when(it){
                 LoginState.Success -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.HomeFlow("home"))
                 LoginState.Register -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("first"))
-                LoginState.NoCompany -> (requireActivity() as ToFlowNavigation).navigateToFlow(NavigationFlow.RegisterFlow("noCompany"))
+                LoginState.NoCompany -> findNavController().deepLinkNavigateTo(DeepLinkDestination.Register("none"))
                 LoginState.NoData -> showToast("로그인시도가 실패했습니다 다시시도해주세요.")
                 else -> showToast("에러가 발생했습니다.")
             }

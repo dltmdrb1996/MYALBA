@@ -33,6 +33,8 @@ class CommunityViewModel @Inject constructor(
 
     private val dateUtil = DateTime()
     val content = MutableLiveData<String>()
+
+
     private lateinit var user: User
 
     fun initCommunity() {

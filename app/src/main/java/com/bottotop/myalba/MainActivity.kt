@@ -2,6 +2,7 @@ package com.bottotop.myalba
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.*
@@ -15,6 +16,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -36,6 +38,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -235,6 +239,23 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
                         showToast("네트워크 연결이 끊어졌습니다.")
                     }
                 }
+            }
+            override fun onCapabilitiesChanged(network : Network, networkCapabilities : NetworkCapabilities) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                    Timber.e("1 = ${networkCapabilities.ownerUid}")
+//                    Timber.e("2 = ${networkCapabilities.transportInfo}")
+//                    Timber.e("3 = ${networkCapabilities.networkSpecifier}")
+//                    Timber.e("4 = ${networkCapabilities.signalStrength}")
+                }
+            }
+
+            @RequiresApi(Build.VERSION_CODES.R)
+            override fun onLinkPropertiesChanged(network : Network, linkProperties : LinkProperties) {
+//                Timber.e("5 = ${linkProperties.linkAddresses}")
+//                Timber.e("6 = ${linkProperties.dhcpServerAddress}")
+//                Timber.e("7 = ${linkProperties.dnsServers}")
+//                Timber.e("8 = ${linkProperties.domains}")
+//                Timber.e("9 = ${linkProperties.interfaceName}")
             }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

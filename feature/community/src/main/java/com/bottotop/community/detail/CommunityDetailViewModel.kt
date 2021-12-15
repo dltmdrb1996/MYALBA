@@ -1,9 +1,6 @@
 package com.bottotop.community.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
@@ -37,6 +34,11 @@ class CommunityDetailViewModel @Inject constructor(
     val comment : LiveData<List<Comment>> = _comment
 
     val content = MutableLiveData<String>()
+
+    val contentEmpty : LiveData<Boolean> = Transformations.map(content) {
+        it.isNullOrEmpty()
+    }
+
     private lateinit var user : User
 
     init {

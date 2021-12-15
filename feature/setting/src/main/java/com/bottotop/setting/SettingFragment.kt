@@ -44,15 +44,14 @@ class SettingFragment :
         mPref = PreferenceHelper.defaultPrefs(requireActivity().applicationContext)
         initDarkMod()
         initFCM()
-        restartSetting()
         initClick()
         initObserver()
-        setFCM()
     }
 
     override fun initObserver() {}
 
     override fun initClick() {
+        setFCM()
         setDarkMode()
     }
 
@@ -74,11 +73,7 @@ class SettingFragment :
         else fcmOff?.select()
     }
 
-    private fun restartSetting() {
-        if (AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES) {
 
-        }
-    }
 
     private fun setDarkMode() {
         binding.darkModeTab.addOnTabSelectedListener(object : OnTabSelectedListener {

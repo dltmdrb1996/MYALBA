@@ -41,25 +41,9 @@ class CommunityDetailFragment :
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
-
-        viewModel.content.observe(viewLifecycleOwner,{
-            if(it.isNullOrEmpty()) {
-                binding.communityBtnCreate.isGone()
-            } else {
-                binding.communityBtnCreate.isVisible()
-            }
-        })
-
         viewModel.comment.observe(viewLifecycleOwner,{
-            if(it.isEmpty()){
-                binding.emptyImg.isVisible()
-            }else{
-                binding.emptyImg.isGone()
-                Log.e(TAG, "initComment: $it")
-                adapter.submitList(it)
-            }
+            if(it.isNotEmpty()){ adapter.submitList(it) }
         })
-
     }
 
     override fun initClick() {

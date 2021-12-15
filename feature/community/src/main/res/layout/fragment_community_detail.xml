@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.bottotop.community.detail.CommunityDetailViewModel" />
@@ -143,7 +145,7 @@
                     android:text="댓글이 없습니다."
                     android:textSize="@dimen/text_onboard"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="@{viewModel.comment.empty ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -191,7 +193,7 @@
                 android:onClick="@{()->viewModel.makeComment()}"
                 android:text="작성"
                 android:textColor="@color/colorText"
-                android:visibility="invisible"
+                android:visibility="@{viewModel.content.length() != 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/edt_comment"
                 app:layout_constraintStart_toStartOf="parent"

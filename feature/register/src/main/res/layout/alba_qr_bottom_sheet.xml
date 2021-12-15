@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bottotop.register.register.RegisterViewModel" />
+
+    </data>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="bottomSheet Dialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheetDashBoardLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:behavior_draggable="true"
+            app:behavior_hideable="true"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <Button
+                android:id="@+id/btn_Scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/radius_bg_btn_20dp"
+                android:text="QR스캔"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/edt_Code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="qr을 스캔해주세요"
+                android:text="@={viewModel.code}"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_Scan" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="근무요일선택"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_Code" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(근무시작날짜가 기준)"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                app:layout_constraintStart_toEndOf="@+id/textView3" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.checkMon}"
+                android:text="월요일"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView3" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.checkTus}"
+                android:text="화요일"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_1" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.checkWed}"
+                android:text="수요일"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_2" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.checkThu}"
+                android:text="목요일"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_3" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.checkFri}"
+                android:text="금요일"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_4" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.checkSat}"
+                android:text="토요일"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="@id/check_5"
+                app:layout_constraintTop_toBottomOf="@id/check_5" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.checkSun}"
+                android:text="일요일"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_6" />
+
+            <TextView
+                android:id="@+id/tv_Work_Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="근무 시작 시간을 입력해주세요"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_7" />
+
+            <TextView
+                android:id="@+id/tv_Work_Start2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(날짜가 바뀌는 근무도 그대로 입력해주세요)"
+                android:textColor="@color/colorText"
+                app:layout_constraintTop_toBottomOf="@id/tv_Work_Start" />
+
+            <EditText
+                android:id="@+id/edt_Start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="시작시간입력"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="@={viewModel.startTime}"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_Work_Start2" />
+
+            <TextView
+                android:id="@+id/tv_start_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="숫자가 정확하지 않습니다"
+                android:textColor="@color/red_deep_font"
+                android:textSize="@dimen/text_normal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_Start" />
+
+            <TextView
+                android:id="@+id/tv_Work_End"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_layout"
+                android:text="근무가 끝나는 시간을 입력해주세요"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_Start" />
+
+            <EditText
+                android:id="@+id/edt_End"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="종료시간입력"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="@={viewModel.endTime}"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_Work_End" />
+
+            <TextView
+                android:id="@+id/tv_end_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="숫자가 정확하지 않습니다"
+                android:textColor="@color/red_deep_font"
+                android:textSize="@dimen/text_normal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_End" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_layout"
+                android:background="@drawable/radius_bg_20dp"
+                android:onClick="@{()->viewModel.setCompany()}"
+                android:enabled="@{!viewModel.isLoading()}"
+                android:text="입력완료"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_End" />
+
+            <com.bottotop.register.register.RegisteLodingBar
+                android:id="@+id/loadingView"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_loading_bg"
+                android:elevation="12dp"
+                android:indeterminateDuration="500"
+                android:indeterminateOnly="true"
+                android:translationY="-60dp"
+                android:visibility="gone"
+                android:translationZ="90dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
