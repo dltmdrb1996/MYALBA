@@ -34,16 +34,10 @@ class SettingFragment :
         _binding?.viewModel = viewModel
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Timber.e("셋팅프래그먼트 이닛테스트")
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mPref = PreferenceHelper.defaultPrefs(requireActivity().applicationContext)
-        initDarkMod()
-        initFCM()
+        init()
         initClick()
         initObserver()
     }
@@ -51,71 +45,39 @@ class SettingFragment :
     override fun initObserver() {}
 
     override fun initClick() {
-        setFCM()
+//        setFCM()
         setDarkMode()
     }
 
-    private fun initDarkMod() {
+    private fun init() {
         val dark = mPref["dark", false]
-        val darkModeTab = binding.darkModeTab
-        val darkOn = darkModeTab.getTabAt(0)
-        val darkOff = darkModeTab.getTabAt(1)
-        if (dark) darkOn?.select()
-        else darkOff?.select()
-    }
-
-    private fun initFCM() {
         val fcm = mPref["fcm", true]
-        val fcmTab = binding.fcmTab
-        val fcmOn = fcmTab.getTabAt(0)
-        val fcmOff = fcmTab.getTabAt(1)
-        if (fcm) fcmOn?.select()
-        else fcmOff?.select()
+        binding.toggleDarkMode.isChecked = dark
+        binding.toggleFcm.isChecked = fcm
     }
 
 
-
-    private fun setDarkMode() {
-        binding.darkModeTab.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.text == "켜기") {
-                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-                    mPref["dark"] = true
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-                    mPref["dark"] = false
-                }
-                initDarkMod()
+    fun setDarkMode(){
+        binding.toggleDarkMode.setOnCheckedChangeListener { compoundButton, ischecked ->
+            if(ischecked){
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+                mPref["dark"] = true
+            } else {
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+                mPref["dark"] = false
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
+        }
     }
 
-    private fun setFCM() {
-        binding.fcmTab.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.text == "켜기") {
-                    viewModel.fcmOn()
-                    mPref["fcm"] = true
-                } else {
-                    viewModel.fcmOff()
-                    mPref["fcm"] = false
-                }
-                initFCM()
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
-        })
-    }
-
+//    private fun setFCM() {
+//        binding.toggleFcm.setOnCheckedChangeListener { compoundButton, ischecked ->
+//            if(ischecked){
+//                viewModel.fcmOn()
+//                mPref["fcm"] = true
+//            } else {
+//                viewModel.fcmOff()
+//                mPref["fcm"] = false
+//            }
+//        }
+//    }
 }

@@ -1,17 +1,11 @@
 package com.bottotop.setting
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bottotop.core.base.BaseFragment
-import com.bottotop.setting.databinding.FragmentInfoBinding
 import dagger.hilt.android.AndroidEntryPoint
-import android.content.DialogInterface
-import com.bottotop.core.navigation.NavigationFlow
-import com.bottotop.core.navigation.ToFlowNavigation
 import com.bottotop.setting.databinding.FragmentNotificationBinding
-import timber.log.Timber
 
 @AndroidEntryPoint
 class NotificationFragment :
@@ -40,12 +34,5 @@ class NotificationFragment :
 
     override fun initClick() {
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
-
 
 }

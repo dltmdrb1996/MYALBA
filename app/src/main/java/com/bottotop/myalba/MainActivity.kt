@@ -69,7 +69,11 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
         super.onCreate(savedInstanceState)
         firebaseAnalytics = Firebase.analytics
         mPref = PreferenceHelper.defaultPrefs(applicationContext)
-        if(mPref["dark", false]) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        if(mPref["dark", false]) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         badgeDrawable = BadgeDrawable.create(binding.appToolbar.context)
         networkCheck()

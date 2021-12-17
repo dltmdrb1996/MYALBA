@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_app"
+    >
+
+    <dialog
+        android:id="@+id/albaBottomSheet"
+        android:name="com.bottotop.register.register.alba.AlbaBottomSheet"
+        tools:layout="@layout/alba_bottom_sheet"
+        android:label="AlbaBottomSheet" />
+    <dialog
+        android:id="@+id/albaQRBottomSheet"
+        android:name="com.bottotop.register.register.alba.AlbaQRBottomSheet"
+        tools:layout="@layout/alba_qr_bottom_sheet"
+        android:label="AlbaQRBottomSheet" >
+        <action
+            android:id="@+id/action_albaQRBottomSheet_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
+    </dialog>
+    <fragment
+        android:id="@+id/assetFragment2"
+        android:name="com.bottotop.asset.AssetFragment"
+        tools:layout="@layout/fragment_asset"
+        android:label="AssetFragment" >
+        <action
+            android:id="@+id/action_assetFragment2_to_memberDetailFragment2"
+            app:destination="@id/memberDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/albaFragment2"
+        android:name="com.bottotop.register.register.alba.AlbaFragment"
+        tools:layout="@layout/fragment_alba"
+        android:label="AlbaFragment" >
+        <action
+            android:id="@+id/action_albaFragment2_to_albaQRBottomSheet"
+            app:destination="@id/albaQRBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/communityDetailFragment2"
+        android:name="com.bottotop.community.detail.CommunityDetailFragment"
+        tools:layout="@layout/fragment_community_detail"
+        android:label="CommunityDetailFragment" />
+    <fragment
+        android:id="@+id/communityFragment2"
+        android:name="com.bottotop.community.CommunityFragment"
+        tools:layout="@layout/fragment_community"
+        android:label="CommunityFragment" >
+        <action
+            android:id="@+id/action_communityFragment2_to_communityDetailFragment2"
+            app:destination="@id/communityDetailFragment2" />
+        <action
+            android:id="@+id/action_communityFragment2_to_createBottomSheet"
+            app:destination="@id/createBottomSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/createBottomSheet"
+        android:name="com.bottotop.community.CreateBottomSheet"
+        tools:layout="@layout/create_bottom_sheet"
+        android:label="CreateBottomSheet" />
+    <fragment
+        android:id="@+id/homeFragment2"
+        android:name="com.bottotop.home.HomeFragment"
+        tools:layout="@layout/fragment_home"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment2_to_qrDialog"
+            app:destination="@id/qrDialog" />
+        <action
+            android:id="@+id/action_homeFragment2_to_assetFragment2"
+            app:destination="@id/assetFragment2" />
+        <action
+            android:id="@+id/action_homeFragment2_to_scheduleFragment2"
+            app:destination="@id/scheduleFragment2" />
+        <action
+            android:id="@+id/action_homeFragment2_to_scheduleFragment22"
+            app:destination="@id/scheduleFragment2" />
+        <action
+            android:id="@+id/action_homeFragment2_to_memberFragment2"
+            app:destination="@id/memberFragment2" />
+        <action
+            android:id="@+id/action_homeFragment2_to_communityFragment2"
+            app:destination="@id/communityFragment2" />
+        <action
+            android:id="@+id/action_homeFragment2_to_communityDetailFragment2"
+            app:destination="@id/communityDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment2"
+        android:name="com.bottotop.setting.InfoFragment"
+        tools:layout="@layout/fragment_info"
+        android:label="InfoFragment" >
+        <action
+            android:id="@+id/action_infoFragment2_to_unRegisterDialog"
+            app:destination="@id/unRegisterDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.bottotop.login.LoginFragment"
+        tools:layout="@layout/fragment_login"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment2_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
+        <action
+            android:id="@+id/action_loginFragment2_to_onBoardingFragment2"
+            app:destination="@id/onBoardingFragment2" />
+    </fragment>
+    <dialog
+        android:id="@+id/managerBottomSheet"
+        tools:layout="@layout/manager_bottom_sheet"
+        android:name="com.bottotop.register.register.manager.ManagerBottomSheet"
+        android:label="ManagerBottomSheet" >
+        <action
+            android:id="@+id/action_managerBottomSheet_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
+    </dialog>
+    <fragment
+        android:id="@+id/managerFragment"
+        tools:layout="@layout/fragment_manager"
+        android:name="com.bottotop.register.register.manager.ManagerFragment"
+        android:label="ManagerFragment" >
+        <action
+            android:id="@+id/action_managerFragment_to_managerBottomSheet"
+            app:destination="@id/managerBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/memberDetailFragment2"
+        tools:layout="@layout/fragment_member_detail"
+        android:name="com.bottotop.member.detail.MemberDetailFragment"
+        android:label="MemberDetailFragment" />
+    <fragment
+        android:id="@+id/memberFragment2"
+        android:name="com.bottotop.member.MemberFragment"
+        tools:layout="@layout/fragment_member"
+        android:label="MemberFragment" >
+        <action
+            android:id="@+id/action_memberFragment2_to_memberDetailFragment2"
+            app:destination="@id/memberDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment2"
+        android:name="com.bottotop.setting.NotificationFragment"
+        tools:layout="@layout/fragment_notification"
+        android:label="NotificationFragment" />
+    <fragment
+        android:id="@+id/onBoardingFragment2"
+        android:name="com.bottotop.register.onboarding.OnBoardingFragment"
+        tools:layout="@layout/fragment_onboarding"
+        android:label="OnBoardingFragment" >
+        <action
+            android:id="@+id/action_onBoardingFragment2_to_registerFragment2"
+            app:destination="@id/registerFragment2" />
+    </fragment>
+    <dialog
+        android:id="@+id/qrDialog"
+        android:name="com.bottotop.home.QrDialog"
+        tools:layout="@layout/qr_bottom_sheet"
+        android:label="QrDialog" />
+    <dialog
+        android:id="@+id/unRegisterDialog"
+        android:name="com.bottotop.setting.UnRegisterDialog"
+        tools:layout="@layout/dialog_unregister"
+        android:label="UnRegisterDialog" />
+    <fragment
+        android:id="@+id/splashFragment2"
+        android:name="com.bottotop.splash.SplashFragment"
+        tools:layout="@layout/fragment_splash"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment2_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
+        <action
+            android:id="@+id/action_splashFragment2_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment2"
+        tools:layout="@layout/fragment_setting"
+        android:name="com.bottotop.setting.SettingFragment"
+        android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/scheduleFragment2"
+        tools:layout="@layout/fragment_schedule"
+        android:name="com.bottotop.schedule.ScheduleFragment"
+        android:label="ScheduleFragment" />
+    <fragment
+        android:id="@+id/registerFragment2"
+        tools:layout="@layout/fragment_register"
+        android:name="com.bottotop.register.register.RegisterFragment"
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment2_to_managerFragment"
+            app:destination="@id/managerFragment" />
+        <action
+            android:id="@+id/action_registerFragment2_to_albaFragment2"
+            app:destination="@id/albaFragment2" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.bottotop.myalba.MainActivity"
+        android:label="MainActivity" />
+</navigation>

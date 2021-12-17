@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
+import com.bottotop.core.global.PreferenceHelper
+import com.bottotop.core.global.PreferenceHelper.get
+import com.bottotop.core.global.PreferenceHelper.set
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.model.Company
 import com.bottotop.model.repository.DataRepository
@@ -22,8 +25,7 @@ class SettingViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     @ApplicationContext context: Context,
 ) : BaseViewModel("셋팅뷰모델") {
-
-
+    private val mPref = PreferenceHelper.defaultPrefs(context)
     lateinit var company : Company
 
     init {
@@ -32,19 +34,27 @@ class SettingViewModel @Inject constructor(
         }
     }
 
+    fun clickFcm(){
+        val fcm = mPref["fcm", true]
+        Timber.e("$fcm")
+        if(fcm) fcmOff()
+        else fcmOn()
+    }
+
     fun fcmOn(){
-        Timber.e("fmcOn")
         Firebase.messaging.subscribeToTopic(company.com_id)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Timber.e("success")
                 }
             }
+        mPref["fcm"] = true
     }
 
     fun fcmOff(){
-        Timber.e("fmcOff")
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(company.com_id);
+        Timber.e("해제")
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(company.com_id)
+        mPref["fcm"] = false
     }
 
 }

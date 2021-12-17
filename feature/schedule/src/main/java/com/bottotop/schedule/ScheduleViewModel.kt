@@ -1,8 +1,6 @@
 package com.bottotop.schedule
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bottotop.core.base.BaseViewModel
 import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.util.DateTime
@@ -27,6 +25,11 @@ class ScheduleViewModel @Inject constructor(
     private val _viewPager = MutableLiveData<Map<Int, List<List<String>>>>()
     val viewPager : LiveData<Map<Int, List<List<String>>>> = _viewPager
 
+    val month : MutableLiveData<Int> = MutableLiveData(dataUtil.currentMonth)
+    val nextMonth : LiveData<String> = Transformations.map(month) { if(it<12) "${it+1}월" else " " }
+    val currentMonth : LiveData<String> = Transformations.map(month) { "${it}월" }
+    val preMonth : LiveData<String> = Transformations.map(month) { if(it>1) "${it-1}월" else " " }
+
     private lateinit var member : List<User>
     private lateinit var company : List<Company>
 
@@ -38,6 +41,7 @@ class ScheduleViewModel @Inject constructor(
                 company = dataRepository.getCompanies()
                 member = dataRepository.getMembers()
                 getMemberWorkDay()
+                setViewPagerData(month.value!!)
             }catch (e : Throwable){
                 showToast("데이터를 불러오는데 실패했습니다.")
                 Timber.e(": 룸데이터 불러오기 $e")
@@ -73,7 +77,7 @@ class ScheduleViewModel @Inject constructor(
             val list = week.map { it.split(" ") }
             result[i] = list
         }
-        _viewPager.value = result
+        _viewPager.postValue(result)
     }
 
     private fun getMemberWorkDay(){
@@ -96,4 +100,19 @@ class ScheduleViewModel @Inject constructor(
         }
         _scheduleItem.postValue(scheduleItem)
     }
+
+    fun nextMonth(month : Int){
+        if(month<12) {
+            setViewPagerData(month+1)
+            this.month.value = month+1
+        }
+    }
+
+    fun preMonth(month: Int){
+        if(month>1) {
+            setViewPagerData(month-1)
+            this.month.value = month-1
+        }
+    }
+
 }

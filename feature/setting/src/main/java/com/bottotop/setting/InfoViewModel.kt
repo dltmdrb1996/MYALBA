@@ -87,6 +87,7 @@ class InfoViewModel @Inject constructor(
 
     fun unRegister(){
         viewModelScope.launch(dispatcherProvider.io){
+            handleLoading(true)
             if(user.value!!.social == "naver") socialLoginRepository.disconectNaver()
             else socialLoginRepository.disconectKakao()
             dataRepository.deleteAllTable()
@@ -95,6 +96,7 @@ class InfoViewModel @Inject constructor(
             if(deleteUser){
                 _navLogin.postValue(true)
             }
+            handleLoading(false)
         }
     }
 }

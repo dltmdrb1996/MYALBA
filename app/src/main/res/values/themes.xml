@@ -14,7 +14,8 @@
         <item name="android:alertDialogTheme">@style/MyDialogTheme</item>
         <item name="android:itemBackground">@color/colorBg</item>
         <item name="popupMenuBackground">@color/colorBg</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q"> false </item>
+
 
     </style>
 

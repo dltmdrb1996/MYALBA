@@ -20,6 +20,7 @@ import android.net.wifi.SupplicantState
 import android.content.Context.WIFI_SERVICE
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import com.bottotop.model.Community
 import timber.log.Timber
 
 
@@ -32,7 +33,7 @@ class HomeFragment :
     private val todayAdapter: TodayWorkAdapter by lazy { TodayWorkAdapter(viewModel) }
     private val mainViewModel: SharedViewModel by activityViewModels()
     private lateinit var bottomSheet: QrDialog
-
+    private lateinit var community : Community
     override fun setBindings() {
         _binding?.viewModel = viewModel
         _binding?.todayAdapter = this.todayAdapter
@@ -55,12 +56,14 @@ class HomeFragment :
         viewModel.scheduleItem.observe(viewLifecycleOwner, { list ->
             todayAdapter.submitList(list)
         })
-
+        viewModel.community.observe(viewLifecycleOwner,{
+            community = it
+        })
     }
 
     override fun initClick() {
         binding.tvContent.setOnClickListener {
-            val json = Json.encodeToString(viewModel.community.value)
+            val json = Json.encodeToString(community)
             findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(json))
         }
 

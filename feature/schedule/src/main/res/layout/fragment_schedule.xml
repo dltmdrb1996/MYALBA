@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.bottotop.schedule.ScheduleViewModel" />
@@ -33,7 +35,8 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp"
-                        android:text="  "
+                        android:text="@{viewModel.preMonth}"
+                        android:onClick="@{() -> viewModel.preMonth(viewModel.month)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:text="  "
+                        android:text="@{viewModel.currentMonth}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/schedule_Previous_Tv"
                         app:layout_constraintRight_toLeftOf="@id/schedule_Next_Tv"
@@ -56,7 +59,8 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp"
-                        android:text="  "
+                        android:text="@{viewModel.nextMonth}"
+                        android:onClick="@{() -> viewModel.nextMonth(viewModel.month)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/schedule_Current_Tv"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +69,7 @@
                         android:id="@+id/schedule_Back_Btn"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:onClick="@{() -> viewModel.preMonth(viewModel.month)}"
                         android:padding="5dp"
                         android:src="@drawable/ic_baseline_navigate_before_24"
                         app:layout_constraintRight_toLeftOf="@id/schedule_Next_Btn" />
@@ -74,6 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:padding="5dp"
+                        android:onClick="@{() -> viewModel.nextMonth(viewModel.month)}"
                         android:src="@drawable/ic_baseline_navigate_next_24"
                         app:layout_constraintRight_toRightOf="parent" />
 

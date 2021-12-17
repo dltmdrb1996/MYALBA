@@ -17,7 +17,7 @@
 
     <dimen name="layout_height">150dp</dimen>
 
-    <dimen name="pageMargin">10dp</dimen>
-    <dimen name="pagerOffset">310dp</dimen>
-    <dimen name="pageMarginAndoffset">50dp</dimen>
+    <dimen name="toggleHeight">40dp</dimen>
+    <dimen name="toggleWidth">75dp</dimen>
+
 </resources>

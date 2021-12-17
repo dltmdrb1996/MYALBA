@@ -58,46 +58,41 @@ class ScheduleFragment :
     }
 
     override fun initObserver() {
-
         viewModel.isLoading.observe(viewLifecycleOwner, {
             (requireActivity() as ShowLoading).showLoading(it)
         })
-        initViewPager()
-        observeWorkSchedule()
 
+        viewModel.viewPager.observe(viewLifecycleOwner, {
+            initViewPager(it)
+        })
     }
 
     override fun initClick() {
-        setChangeMonthBtn()
     }
 
-    private fun observeWorkSchedule(){
-        viewModel.scheduleItem.observe(viewLifecycleOwner,{
-            viewModel.setViewPagerData(month)
-        })
-    }
+    private fun initViewPager(schedule: Map<Int, List<List<String>>>?) {
+        _binding?.apply {
 
-    private fun initViewPager() {
-        viewModel.viewPager.observe(viewLifecycleOwner, { schedule ->
-            _binding?.apply {
-                val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
-                list.forEachIndexed { index, viewPager ->
-                    viewPager.adapter = Schedule7DayAdapter(
-                        this@ScheduleFragment.viewModel,
-                        schedule[index]!!,
-                        this@ScheduleFragment.viewModel.scheduleItem.value!!
-                        )
-                    val width = getScreenWidth(requireActivity())
-                    val paddingToSet = width / 3
-                    viewPager.setShowSideItems(0,paddingToSet)
-                    setLocationViewPager(viewPager, schedule[index])
-                }
+            val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
+
+            list.forEachIndexed { index, viewPager ->
+                viewPager.adapter = Schedule7DayAdapter(
+                    this@ScheduleFragment.viewModel,
+                    schedule?.get(index)!!,
+                    this@ScheduleFragment.viewModel.scheduleItem.value!!
+                )
+
+                val width = getScreenWidth(requireActivity())
+                val paddingToSet = width / 3
+
+                viewPager.setShowSideItems(0, paddingToSet)
+                setLocationViewPager(viewPager, schedule[index])
+
             }
-        })
+        }
     }
 
-    private fun ViewPager2.setShowSideItems(pageMarginPx : Int, offsetPx : Int) {
-
+    private fun ViewPager2.setShowSideItems(pageMarginPx: Int, offsetPx: Int) {
         clipToPadding = false
         clipChildren = false
         offscreenPageLimit = 3
@@ -120,77 +115,24 @@ class ScheduleFragment :
         viewPager: ViewPager2,
         schedule: List<List<String>>?,
     ) {
-        val today = if(dateUtil.getToday().length==1) "0"+dateUtil.getToday() else dateUtil.getToday()
-        val currentMonth = if(dateUtil.currentMonth<=9) "0"+dateUtil.currentMonth.toString() else dateUtil.currentMonth.toString()
+        val today =
+            if (dateUtil.getToday().length == 1) "0" + dateUtil.getToday() else dateUtil.getToday()
+        val currentMonth =
+            if (dateUtil.currentMonth <= 9) "0" + dateUtil.currentMonth.toString() else dateUtil.currentMonth.toString()
         schedule?.forEach {
             if (it[1] == today && it[0] == currentMonth.toString()) {
                 val day = today.take(2).toInt()
-                val start = DateTime().getDayTimeToString(dateUtil.getWeekStartDate(day, month))?.toInt()
+                val start =
+                    DateTime().getDayTimeToString(dateUtil.getWeekStartDate(day, month))?.toInt()
                 val focus = day - start!!
                 viewPager.setCurrentItem(97 + focus!!, false)
                 viewPager.requestFocus(View.FOCUS_LEFT)
                 viewPager.waitForMeasure { view, width, height, x, y ->
-                    _binding?.scheduleScroll?.scrollTo(0, y.toInt() + 100)
+                    _binding?.scheduleScroll?.scrollTo(0, y.toInt() + 500)
                 }
                 return
             }
             viewPager.setCurrentItem(98, false)
         }
     }
-
-    private fun setChangeMonthBtn() {
-        binding.apply {
-            if(month!=1) schedulePreviousTv.text = (month - 1).toString() + "월"
-            scheduleCurrentTv.text = month.toString() + "월"
-            if(month!=12) scheduleNextTv.text = (month + 1).toString() + "월"
-
-            scheduleBackBtn.setOnSingleClickListener {
-                if (month <= 1) return@setOnSingleClickListener
-                changeMonthBack()
-            }
-            schedulePreviousTv.setOnSingleClickListener {
-                if (month <= 1) return@setOnSingleClickListener
-                changeMonthBack()
-            }
-            scheduleNextBtn.setOnSingleClickListener {
-                if (month >= 12) return@setOnSingleClickListener
-                changeMonthPrev()
-            }
-            scheduleNextTv.setOnSingleClickListener {
-                if (month >= 12) return@setOnSingleClickListener
-                changeMonthPrev()
-            }
-        }
-    }
-
-    private fun changeMonthBack() {
-        binding.apply {
-            if (scheduleNextTv.isInvisible) scheduleNextTv.isVisible()
-            month = month - 1
-            this@ScheduleFragment.viewModel.setViewPagerData(month)
-            schedulePreviousTv.text = (month - 1).toString() + "월"
-            scheduleCurrentTv.text = month.toString() + "월"
-            scheduleNextTv.text = (month + 1).toString() + "월"
-            if (month == 1) {
-                schedulePreviousTv.isInvisible()
-            }
-        }
-    }
-
-    private fun changeMonthPrev() {
-        binding.apply {
-            if (schedulePreviousTv.isInvisible) schedulePreviousTv.isVisible()
-            month = month + 1
-            this@ScheduleFragment.viewModel.setViewPagerData(month)
-            schedulePreviousTv.text = (month - 1).toString() + "월"
-            scheduleCurrentTv.text = month.toString() + "월"
-            scheduleNextTv.text = (month + 1).toString() + "월"
-            if (month == 12) {
-                if (month == 12) scheduleNextTv.isInvisible()
-            }
-        }
-    }
-
-
-
 }

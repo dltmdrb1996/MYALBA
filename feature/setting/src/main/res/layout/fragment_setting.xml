@@ -50,33 +50,44 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/darkMode_Tab"
-                android:background="@drawable/radius_toggle_off_30dp"
-                app:tabMode="scrollable"
-                app:tabBackground="@drawable/tab_selector"
-                app:tabSelectedTextColor="@color/colorPrimary"
-                app:tabIndicatorHeight="0dp"
+            <TextView
+                android:id="@+id/tv_Dark_On"
+                android:layout_width="@dimen/toggleWidth"
+                android:layout_height="@dimen/toggleHeight"
+                android:text="켜기"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:translationZ="90dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                />
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/darkMode_off"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="켜기" />
+            <TextView
+                android:id="@+id/tv_Dark_Off"
+                android:layout_width="@dimen/toggleWidth"
+                android:layout_height="@dimen/toggleHeight"
+                android:text="끄기"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:translationZ="90dp"
+                app:layout_constraintEnd_toStartOf="@id/tv_Dark_On"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/darkMode_On"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="끄기" />
-
-            </com.google.android.material.tabs.TabLayout>
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_DarkMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/text_normal"
+                android:thumb="@drawable/custom_toggle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:track="@drawable/custom_toggle_back"
+                />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -103,36 +114,48 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/fcm_tab"
-                android:background="@drawable/radius_toggle_off_30dp"
-                app:tabMode="scrollable"
-                app:tabBackground="@drawable/tab_selector"
-                app:tabSelectedTextColor="@color/colorPrimary"
-                app:tabIndicatorHeight="0dp"
+            <TextView
+                android:id="@+id/tv_Fcm_On"
+                android:layout_width="@dimen/toggleWidth"
+                android:layout_height="@dimen/toggleHeight"
+                android:text="켜기"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:translationZ="90dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                />
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/fcm_Off"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="켜기" />
+            <TextView
+                android:id="@+id/tv_Fcm_Off"
+                android:layout_width="@dimen/toggleWidth"
+                android:layout_height="@dimen/toggleHeight"
+                android:text="끄기"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:translationZ="90dp"
+                app:layout_constraintEnd_toStartOf="@id/tv_Fcm_On"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/fcm_On"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="끄기" />
-
-            </com.google.android.material.tabs.TabLayout>
-
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_Fcm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/text_normal"
+                android:onCheckedChanged="@{()->viewModel.clickFcm()}"
+                android:thumb="@drawable/custom_toggle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:track="@drawable/custom_toggle_back"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

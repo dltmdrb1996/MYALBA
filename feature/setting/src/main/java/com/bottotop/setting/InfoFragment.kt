@@ -40,20 +40,8 @@ class InfoFragment :
 
     private fun unRegister(){
         binding.btnUnRegister.setOnClickListener {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("회원탈퇴").setMessage("이 앱에 관련된 모든 데이터가 삭제됩니다.")
-            builder.setPositiveButton("OK",
-                DialogInterface.OnClickListener { dialog, id ->
-                    viewModel.unRegister()
-                })
-
-            builder.setNegativeButton("Cancel",
-                DialogInterface.OnClickListener { dialog, id ->
-
-                })
-
-            val alertDialog: AlertDialog = builder.create()
-            alertDialog.show()
+            val dialog = UnRegisterDialog(viewModel)
+            dialog.show(childFragmentManager,dialog.tag)
         }
     }
 
