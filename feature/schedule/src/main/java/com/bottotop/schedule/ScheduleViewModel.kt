@@ -32,6 +32,7 @@ class ScheduleViewModel @Inject constructor(
 
     private lateinit var member : List<User>
     private lateinit var company : List<Company>
+    private lateinit var schedules : List<Schedule>
 
 
     init {
@@ -40,6 +41,9 @@ class ScheduleViewModel @Inject constructor(
             try{
                 company = dataRepository.getCompanies()
                 member = dataRepository.getMembers()
+                schedules = dataRepository.getScheduleAll(
+                    mapOf(Pair("com_id", member[0].company))
+                ).getOrNull()!!
                 getMemberWorkDay()
                 setViewPagerData(month.value!!)
             }catch (e : Throwable){

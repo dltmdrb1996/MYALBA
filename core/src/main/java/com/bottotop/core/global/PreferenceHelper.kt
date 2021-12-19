@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.bottotop.core.global.PreferenceHelper.edit
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 object PreferenceHelper {
 
-    fun defaultPrefs(context: Context): SharedPreferences =
+    fun defaultPrefs(@ApplicationContext context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {

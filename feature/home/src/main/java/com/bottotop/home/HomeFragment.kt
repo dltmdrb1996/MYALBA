@@ -31,7 +31,7 @@ class HomeFragment :
     private val vm by viewModels<HomeViewModel>()
     override val viewModel get() = vm
     private val todayAdapter: TodayWorkAdapter by lazy { TodayWorkAdapter(viewModel) }
-    private val mainViewModel: SharedViewModel by activityViewModels()
+//    private val mainViewModel: SharedViewModel by activityViewModels()
     private lateinit var bottomSheet: QrDialog
     private lateinit var community : Community
     override fun setBindings() {
@@ -66,10 +66,8 @@ class HomeFragment :
             val json = Json.encodeToString(community)
             findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(json))
         }
-
         binding.btnQr.setOnClickListener {
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
-
     }
 }

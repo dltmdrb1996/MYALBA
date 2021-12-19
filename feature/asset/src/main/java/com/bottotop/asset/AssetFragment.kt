@@ -39,6 +39,8 @@ class AssetFragment :
         })
     }
 
-    override fun initClick() {}
+    override fun initClick() {
+
+    }
 
 }

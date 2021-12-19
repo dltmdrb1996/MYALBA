@@ -10,6 +10,7 @@ import com.bottotop.register.register.alba.AlbaFragment
 import com.bottotop.register.register.manager.ManagerFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class RegisterFragment :
@@ -23,10 +24,10 @@ class RegisterFragment :
             lifecycle = lifecycle
         )
     }
+
     override fun setBindings() {
         _binding?.viewModel = viewModel
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,8 +54,4 @@ class RegisterFragment :
             }.attach()
         }
     }
-
-
-
-
 }

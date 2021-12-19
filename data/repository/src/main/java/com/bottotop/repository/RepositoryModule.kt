@@ -11,17 +11,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal object RepositoryModule {
-
     @Singleton
     @Provides
     fun providesDataRepository(repository: DataRepositoryImpl): DataRepository {
         return repository
     }
-
     @Singleton
     @Provides
     fun providesLoginRepository(repository: SocialLoginRepositoryImpl): SocialLoginRepository {
         return repository
     }
-
 }

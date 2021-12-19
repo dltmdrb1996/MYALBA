@@ -110,10 +110,10 @@ class RegisterViewModel @Inject constructor(
             showToast("시간을 입력해주세요")
             return true
         }
-        if(startTime.value!!.first()=='0' ) {
+        if(startTime.value!!.first()=='0' && startTime.value!!.length >= 2 ) {
             startTime.postValue(startTime.value!![1].toString())
         }
-        if(endTime.value!!.first()=='0') {
+        if(endTime.value!!.first()=='0' && endTime.value!!.length >= 2) {
             endTime.postValue(endTime.value!![1].toString())
         }
         if(startTime.value!!.toInt() > 24 || endTime.value!!.toInt() >24){

@@ -4,7 +4,8 @@ object NavigationRouter {
     var arg = "none"
     lateinit var currentState : NavigationTable
     fun saveState(destination : String){
-        when(destination){
+        when(destination)
+        {
             "splash" -> currentState=NavigationTable.Splash
             "login" -> currentState= NavigationTable.Login
             "member" -> currentState=NavigationTable.Member

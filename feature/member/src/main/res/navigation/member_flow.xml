@@ -27,7 +27,6 @@
                 android:defaultValue="none"
                 android:name="msg"
                 app:argType="string" />
-
         </action>
 
     </fragment>

@@ -7,10 +7,8 @@ android {
         targetSdkVersion Apps.TARGET_SDK
         versionCode Apps.VERSION_CODE
         versionName Apps.VERSION_NAME
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false

@@ -26,83 +26,83 @@ interface ApiService {
 
     @GET("user")
     suspend fun getUser(
-        @Query("id") id : String
-    ) : Response<UserEntity>
+        @Query("id") id: String
+    ): Response<UserEntity>
 
     @POST("user")
     suspend fun setUser(
-        @Query("user") user : String
-    ) : Response<ResponseBody>
+        @Query("user") user: String
+    ): Response<ResponseBody>
 
     @PUT("user")
     suspend fun updateUser(
-        @Query("query") query : String ,
-    ) : Response<ResponseBody>
+        @Query("query") query: String
+    ): Response<ResponseBody>
 
     @DELETE("user")
     suspend fun deleteUser(
-        @Query("query") id : String ,
-    ) : Response<ResponseBody>
+        @Query("query") id: String
+    ): Response<ResponseBody>
 
     /// 컴패니 ////////////////////////////////////////////
 
     @GET("companies")
     suspend fun getCompanies(
-        @Query("id") id : String
-    ) : Response<CompaniesEntity>
+        @Query("id") id: String
+    ): Response<CompaniesEntity>
 
     @POST("companies")
     suspend fun setCompany(
-        @Query("company") company : String
-    ) : Response<ResponseBody>
+        @Query("company") company: String
+    ): Response<ResponseBody>
 
     /// 스케쥴 ////////////////////////////////////////////
 
     @POST("schedule")
     suspend fun setSchedule(
-        @Query("query") query : String
-    ) : Response<ResponseBody>
+        @Query("query") query: String
+    ): Response<ResponseBody>
 
     @GET("schedule")
     suspend fun getSchedule(
-        @Query("id") id : String,
-        @Query("month") month : String,
-    ) : Response<ScheduleEntity>
+        @Query("id") id: String,
+        @Query("month") month: String
+    ): Response<ScheduleEntity>
 
     @PUT("schedule")
     suspend fun updateSchedule(
-        @Query("query") query : String ,
-    ) : Response<ResponseBody>
+        @Query("query") query: String,
+    ): Response<ResponseBody>
 
     @PATCH("schedule")
     suspend fun updateDetailSchedule(
         @Query("query") query: String
-    ) : Response<ResponseBody>
+    ): Response<ResponseBody>
 
     @GET("schedule/all")
     suspend fun getAllSchedule(
-        @Query("query") query : String
-    ) : Response<ScheduleGetAllEntity>
+        @Query("query") query: String
+    ): Response<ScheduleGetAllEntity>
 
     /// 커뮤니티 ////////////////////////////////////////////
 
     @POST("community")
     suspend fun setCommunity(
-        @Query("query") query : String
-    ) : Response<ResponseBody>
+        @Query("query") query: String
+    ): Response<ResponseBody>
 
     @GET("community")
     suspend fun getCommunity(
-        @Query("com_id") query : String
-    ) : Response<CommunityListEntity>
+        @Query("com_id") query: String
+    ): Response<CommunityListEntity>
 
-   @GET("community/detail")
-   suspend fun getCommunityDetail(
-       @Query("query") query : String
-   ) : Response<CommunityEntity>
+    @GET("community/detail")
+    suspend fun getCommunityDetail(
+        @Query("query") query: String
+    ): Response<CommunityEntity>
 
     @POST("community/comment")
     suspend fun setComment(
-        @Query("query") query : String
-    ) : Response<ResponseBody>
+        @Query("query") query: String
+    ): Response<ResponseBody>
 }

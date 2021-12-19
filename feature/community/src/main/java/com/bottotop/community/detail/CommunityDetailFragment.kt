@@ -23,7 +23,7 @@ class CommunityDetailFragment :
     private val vm by viewModels<CommunityDetailViewModel>()
     override val viewModel get() = vm
 
-    val args: CommunityDetailFragmentArgs by navArgs() //Args 만든 후
+    val args: CommunityDetailFragmentArgs by navArgs()
     private val adapter : CommunityDetailAdapter by lazy { CommunityDetailAdapter(viewModel) }
 
     override fun setBindings() {

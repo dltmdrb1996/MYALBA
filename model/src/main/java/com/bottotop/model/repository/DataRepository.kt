@@ -36,7 +36,7 @@ interface DataRepository {
     suspend fun deleteALL(id : String) : APIResult
 
     //local
-    suspend fun getDaySchedule() : DaySchedule
+    suspend fun getDaySchedule() : Result<DaySchedule>
     suspend fun insertDaySchedule(day : String , time :String)
     suspend fun deleteDaySchedule()
     suspend fun deleteAllTable()

@@ -34,8 +34,10 @@ class CommunityAdapter(private val viewModel: CommunityViewModel) :
             binding.item = item
             binding.communityViewHolderTvCommentSize.text = item.comment.size.toString()
             binding.viewModel = viewModel
-            val json = Json.encodeToString(item)
-            binding.viewHolder.setOnClickListener { it.findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(json)) }
+            val community = Json.encodeToString(item)
+            binding.viewHolder.setOnClickListener {
+                it.findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(community))
+            }
             binding.executePendingBindings()
         }
 

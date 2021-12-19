@@ -12,12 +12,14 @@ import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.bottotop.core.global.PreferenceHelper
 import com.bottotop.core.global.PreferenceHelper.get
 import com.bottotop.core.global.PreferenceHelper.set
+import com.bottotop.core.global.SharedViewModel
 import com.bottotop.model.Notification
 import com.bottotop.model.repository.DataRepository
 import com.google.firebase.messaging.FirebaseMessagingService

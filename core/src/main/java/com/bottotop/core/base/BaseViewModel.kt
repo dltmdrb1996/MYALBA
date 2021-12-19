@@ -53,7 +53,7 @@ open class BaseViewModel(name : String) : ViewModel() {
                 showToast("데이터가 존재하지 않습니다.")
             }
             is APIError.Error ->  {
-                Timber.tag(stack.fileName).e("[${stack.lineNumber}]  [${stack.className.split("$")[1]}]  : ${error.e}")
+                Timber.tag(stack.fileName).e("[${stack.className.split("$")[1]}] [${stack.lineNumber}] : ${error.e}")
                 showToast("에러가 발생하였습니다.")
             }
         }

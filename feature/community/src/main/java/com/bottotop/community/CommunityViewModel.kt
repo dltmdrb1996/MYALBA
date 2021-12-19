@@ -10,7 +10,10 @@ import com.bottotop.core.model.Event
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.*
 import com.bottotop.model.query.SetCommunityQuery
+import com.bottotop.model.query.UpdateUserQuery
 import com.bottotop.model.repository.DataRepository
+import com.bottotop.model.wrapper.APIError
+import com.bottotop.model.wrapper.APIResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -37,7 +40,12 @@ class CommunityViewModel @Inject constructor(
 
     private lateinit var user: User
 
-    fun initCommunity() {
+    init {
+        initCommunity()
+
+    }
+
+    private fun initCommunity() {
         viewModelScope.launch(dispatcherProvider.io){
             try {
                 handleLoading(true)

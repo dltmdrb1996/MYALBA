@@ -1,7 +1,6 @@
 package com.bottotop.model.repository
 
 interface SocialLoginRepository {
-
     suspend fun checkNaver() : Boolean
     suspend fun getNaverInfo() : Boolean
     suspend fun logoutNaver()
@@ -13,5 +12,4 @@ interface SocialLoginRepository {
     suspend fun loagoutKakao()
     suspend fun disconectKakao()
     suspend fun refreshKakao()
-
 }

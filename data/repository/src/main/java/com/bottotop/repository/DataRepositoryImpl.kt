@@ -8,7 +8,6 @@ import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
 import com.bottotop.remote.ApiService
-import com.bottotop.repository.mapper.*
 import com.bottotop.repository.mapper.CommunityMapper
 import com.bottotop.repository.mapper.CompanyEntityMapper
 import com.bottotop.repository.mapper.CompanyMapper
@@ -72,7 +71,6 @@ internal class DataRepositoryImpl @Inject constructor(
             APIResult.Error(APIError.Error(e))
         }
     }
-
 
     // GET //
     ////////////////////////////////////////////////////////////////
@@ -299,6 +297,7 @@ internal class DataRepositoryImpl @Inject constructor(
         return try {
             val json = Json.encodeToString(updateUserQuery)
             val response = apiService.updateUser(json)
+            Timber.e("${response.code()}")
             when {
                 response.code() == 200 -> APIResult.Success
                 else -> handleError(response.code(), "updateUser")
@@ -362,8 +361,12 @@ internal class DataRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDaySchedule(): DaySchedule {
-        return localDataSource.getDaySchedule()
+    override suspend fun getDaySchedule(): Result<DaySchedule> {
+        return try {
+            Result.success(localDataSource.getDaySchedule())
+        } catch (e : Throwable) {
+            Result.failure(e)
+        }
     }
 
     override suspend fun insertDaySchedule(day : String , time : String) {

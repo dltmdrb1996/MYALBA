@@ -25,11 +25,9 @@ class CommunityFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheet = CreateBottomSheet(viewModel)
-        viewModel.initCommunity()
         initObserver()
         initClick()
     }
-
 
     override fun initObserver() {
         viewModel.isLoading.observe(viewLifecycleOwner, {
@@ -52,5 +50,4 @@ class CommunityFragment :
             }
         }
     }
-
 }

@@ -61,9 +61,6 @@ internal class LocalDataSourceImpl @Inject constructor(
         return DaySchedule(entity.day,entity.time)
     }
 
-
-
-
     override suspend fun nukeAll() {
         userDao.deleteUser()
         userDao.deleteSchedule()

@@ -76,17 +76,21 @@ class ScheduleFragment :
             val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
 
             list.forEachIndexed { index, viewPager ->
-                viewPager.adapter = Schedule7DayAdapter(
+
+                val adapter: Schedule7DayAdapter by lazy { Schedule7DayAdapter(
                     this@ScheduleFragment.viewModel,
                     schedule?.get(index)!!,
                     this@ScheduleFragment.viewModel.scheduleItem.value!!
-                )
+                ) }
+
+                viewPager.adapter = adapter
+
 
                 val width = getScreenWidth(requireActivity())
                 val paddingToSet = width / 3
 
                 viewPager.setShowSideItems(0, paddingToSet)
-                setLocationViewPager(viewPager, schedule[index])
+                setLocationViewPager(viewPager, schedule?.get(index))
 
             }
         }

@@ -31,13 +31,16 @@ class Schedule7DayAdapter(
 
         fun bind(item: List<String>, scheduleList: List<ScheduleItem>) {
             binding.apply {
-                title.text = "${item[1]}일 ${item[2]}"
 
-                if(item[2]=="일요일" || item[2] == "토요일") title.setTextColor(Color.rgb(186, 7, 9))
+                val currentMonth = item[0]
+                val day = item[1]
+                val week = item[2]
+                val scheduleMonth = item[3]
 
-                if(item[0] != item[3]) this.itemCard.alpha = 0.5f
-
-                if (item[1] == today && item[0] == month) this.itemCard.strokeWidth = 8
+                title.text = "${day}일 ${week}"
+                if(week=="일요일" || week == "토요일") title.setTextColor(Color.rgb(186, 7, 9))
+                if(currentMonth != scheduleMonth) this.itemCard.alpha = 0.5f
+                if (day == today && currentMonth == month) this.itemCard.strokeWidth = 8
                 else this.itemCard.strokeWidth = 0
 
                 var str  = StringBuilder()

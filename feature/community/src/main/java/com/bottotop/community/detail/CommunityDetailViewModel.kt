@@ -20,7 +20,6 @@ class CommunityDetailViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val dataRepository: DataRepository,
     savedStateHandle: SavedStateHandle
-
 ) : BaseViewModel("커뮤니티디테일뷰모델") {
 
     private val dateUtil = DateTime()

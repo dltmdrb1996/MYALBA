@@ -28,8 +28,8 @@ import android.content.Context.WIFI_SERVICE
 import androidx.core.content.ContextCompat.getSystemService
 
 import android.net.wifi.WifiManager
-
-
+import com.bottotop.model.wrapper.APIError
+import com.bottotop.model.wrapper.APIResult
 
 
 @HiltViewModel
@@ -97,16 +97,23 @@ class HomeViewModel @Inject constructor(
         Timber.e("뷰모델제거")
         super.onCleared()
     }
+
     private suspend fun initFirst() {
         val getCommunity = dataRepository.getCommunity(user.company)
         _companyName.postValue(company.com_id)
-        if (getCommunity.isSuccess && getCommunity.getOrNull()?.isNotEmpty()!!) { _community.postValue(getCommunity.getOrNull()!!.last()) }
+        if (getCommunity.isSuccess && getCommunity.getOrNull()?.isNotEmpty()!!) {
+            _community.postValue(getCommunity.getOrNull()!!.last())
+        }
         if (company.position == "A") _master.postValue(true)
         if (user.workOn == "off") {
             _workOn.postValue("출근하기")
         } else {
             _workOn.postValue("퇴근하기")
-            val daySchedule = dataRepository.getDaySchedule()
+            val daySchedule = getDaySchedule()
+            if(daySchedule.day == "none") {
+                showToast("에러발생")
+                return
+            }
             patchSchedule(daySchedule)
         }
     }
@@ -121,7 +128,11 @@ class HomeViewModel @Inject constructor(
     private fun endWork() {
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
-            val daySchedule = dataRepository.getDaySchedule()
+            val daySchedule = getDaySchedule()
+            if(daySchedule.day == "none") {
+                showToast("에러발생")
+                return@launch
+            }
             val current = dataUtil.getCurrentDateTimeAsLong()
             val startTime = daySchedule.time
             val workTime =
@@ -157,7 +168,6 @@ class HomeViewModel @Inject constructor(
                 initWorking()
                 _workPay.postValue("")
                 _workTime.postValue("")
-
             }
             handleLoading(false)
         }
@@ -167,7 +177,6 @@ class HomeViewModel @Inject constructor(
         handleLoading(true)
         viewModelScope.launch(dispatcherProvider.io) {
             val current = dataUtil.getCurrentDateTimeAsLong()
-
             val updateSchedule = dataRepository.updateSchedule(
                 UpdateScheduleQuery(
                     current,
@@ -177,8 +186,8 @@ class HomeViewModel @Inject constructor(
                     (dataUtil.getCurrentDateTimeAsLong().toLong() - current.toLong()).toString()
                 )
             ).result(Error().stackTrace)
-
             if (updateSchedule) {
+
                 val updateUser =
                     dataRepository.updateUser(
                         UpdateUserQuery(SocialInfo.id, "workOn", "on")
@@ -206,7 +215,6 @@ class HomeViewModel @Inject constructor(
             company = dataRepository.getCompany(SocialInfo.id)
             companise = dataRepository.getCompanies()
             member = dataRepository.getMembers()
-
             true
         } catch (e: Throwable) {
             Timber.e("initData: $e")
@@ -273,6 +281,22 @@ class HomeViewModel @Inject constructor(
                         mPref["fcm"] = true
                     }
                 }
+        }
+    }
+
+    private suspend fun getDaySchedule() : DaySchedule{
+        val result = dataRepository.getDaySchedule()
+        return if(result.isSuccess){
+            result.getOrNull()!!
+        } else {
+            val schedule = dataRepository.getSchedule(user.id , dataUtil.getYearMonth())
+            if(schedule.isSuccess) {
+                val scheduleInfo = schedule.getOrNull()?.scheduleInfo?.last()!!
+                dataRepository.insertDaySchedule(scheduleInfo.day , scheduleInfo.content.startTime)
+                DaySchedule(scheduleInfo.day , scheduleInfo.content.startTime)
+            } else {
+                DaySchedule("none", "none")
+            }
         }
     }
 }
