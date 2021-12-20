@@ -9,6 +9,7 @@ interface DataRepository {
     //refresh
     suspend fun refreshUser(id : String) : APIResult
     suspend fun refreshCompanies(id : String) : APIResult
+    suspend fun refreshCommunity(com_id : String) : APIResult
 
     //get
     suspend fun getUser(id : String) : User
@@ -16,9 +17,8 @@ interface DataRepository {
     suspend fun getMembers() : List<User>
     suspend fun getCompany(id : String) : Company
     suspend fun getSchedule(id : String , month : String) : Result<Schedule>
-    suspend fun getCommunity(com_id : String) : Result<List<Community>>
     suspend fun getScheduleAll(com_id_id : Map<String,String>) : Result<List<Schedule>>
-    suspend fun getCommunityDetail(com_id_idx : Map<String,String>) : Result<Community>
+    suspend fun getCommunity() : Result<List<Community>>
 
     //set
     suspend fun setCompany(setCompanyQuery: SetCompanyQuery): APIResult

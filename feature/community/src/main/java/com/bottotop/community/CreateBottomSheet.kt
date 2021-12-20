@@ -61,10 +61,7 @@ class CreateBottomSheet(private val viewModel: CommunityViewModel) : BottomSheet
                 binding.btnCreate.alpha = 1f
             }
         })
-        viewModel.success.observe(viewLifecycleOwner, EventObserver{
-            if(it) this.dismiss()
-            else showToast("등록에 실패했습니다.")
-        })
+
     }
 
     private fun showLoading(isLoading: Boolean) {

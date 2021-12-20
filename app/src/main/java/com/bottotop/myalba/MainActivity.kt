@@ -278,6 +278,12 @@ class MainActivity : AppCompatActivity(), ToFlowNavigation, ShowLoading {
                     finish()
                 }
             }
+            is NavigationTable.Notification -> {
+                CoroutineScope(Dispatchers.IO).launch {
+                    dataRepository.nukeNotification()
+                }
+                super.onBackPressed()
+            }
             else -> super.onBackPressed()
         }
     }

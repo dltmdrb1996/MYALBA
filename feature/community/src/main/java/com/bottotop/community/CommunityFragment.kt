@@ -3,10 +3,18 @@ package com.bottotop.community
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.bottotop.community.databinding.FragmentCommunityBinding
 import com.bottotop.core.global.ShowLoading
 import com.bottotop.core.base.BaseFragment
+import com.bottotop.core.ext.showToast
+import com.bottotop.core.model.EventObserver
+import com.bottotop.core.navigation.DeepLinkDestination
+import com.bottotop.core.navigation.deepLinkNavigateTo
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -24,6 +32,7 @@ class CommunityFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.initCommunity()
         bottomSheet = CreateBottomSheet(viewModel)
         initObserver()
         initClick()
@@ -34,12 +43,19 @@ class CommunityFragment :
             (requireActivity() as ShowLoading).showLoading(it)
         })
 
-        viewModel.success.observe(viewLifecycleOwner,{
-            binding.recyclerView.smoothScrollToPosition(0)
+        viewModel.success.observe(viewLifecycleOwner,EventObserver{
+            bottomSheet.dismiss()
+            val community = Json.encodeToString(it)
+            findNavController().deepLinkNavigateTo(DeepLinkDestination.CommunityDetail(community))
         })
 
         viewModel.communityList.observe(viewLifecycleOwner,{
             adapter.submitList(it)
+        })
+
+        viewModel.failure.observe(viewLifecycleOwner,EventObserver{
+            bottomSheet.dismiss()
+            showToast("등록에 실패했습니다.")
         })
     }
 

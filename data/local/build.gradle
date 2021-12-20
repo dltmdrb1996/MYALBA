@@ -15,6 +15,7 @@ dependencies {
     implementation(Kotlin.KOTLIN_STDLIB)
     implementation(Kotlin.COROUTINES_CORE)
     implementation(Kotlin.COROUTINES_ANDROID)
+    implementation(Kotlin.SERIALIZATION)
 
     implementation(Android_Libraries.HILT_ANDROID)
     kapt          (Android_Libraries.HILT_ANDROID_COMPILER)

@@ -2,10 +2,7 @@ package com.bottotop.local
 
 import com.bottotop.local.dao.CompanyDao
 import com.bottotop.local.dao.UserDao
-import com.bottotop.local.entity.DayScheduleEntity
-import com.bottotop.local.entity.LocalCompanyEntity
-import com.bottotop.local.entity.LocalUserEntity
-import com.bottotop.local.entity.NotificationEntity
+import com.bottotop.local.entity.*
 import com.bottotop.model.DaySchedule
 import javax.inject.Inject
 
@@ -61,10 +58,17 @@ internal class LocalDataSourceImpl @Inject constructor(
         return DaySchedule(entity.day,entity.time)
     }
 
+    override suspend fun getCommunity(): List<LocalCommunityEntity> = companyDao.getCommunity()
+
+    override suspend fun insertCommunity(localCommunityEntity: LocalCommunityEntity) {
+        companyDao.insertCommunity(localCommunityEntity)
+    }
+
     override suspend fun nukeAll() {
         userDao.deleteUser()
         userDao.deleteSchedule()
         nukeCompany()
         userDao.nukeNotification()
+        companyDao.deleteCommunity()
     }
 }

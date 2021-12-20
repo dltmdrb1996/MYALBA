@@ -15,6 +15,7 @@ import javax.inject.Inject
 class AndroidApplication : Application() {
     lateinit var context: Context
 
+
     override fun onCreate() {
         super.onCreate()
         KakaoSdk.init(this, getString(R.string.kakao_appKey))

@@ -26,3 +26,4 @@ data class LocalCompanyEntity(
     @ColumnInfo(name = "end" )
     val end: String,
 )
+

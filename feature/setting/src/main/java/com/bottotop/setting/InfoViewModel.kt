@@ -16,6 +16,7 @@ import com.bottotop.model.Company
 import com.bottotop.model.User
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -88,6 +89,7 @@ class InfoViewModel @Inject constructor(
     fun unRegister(){
         viewModelScope.launch(dispatcherProvider.io){
             handleLoading(true)
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(company.value!!.com_id)
             if(user.value!!.social == "naver") socialLoginRepository.disconectNaver()
             else socialLoginRepository.disconectKakao()
             dataRepository.deleteAllTable()

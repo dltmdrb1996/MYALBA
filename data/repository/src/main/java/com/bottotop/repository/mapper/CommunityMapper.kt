@@ -1,5 +1,6 @@
 package com.bottotop.repository.mapper
 
+import com.bottotop.local.entity.LocalCommunityEntity
 import com.bottotop.local.entity.LocalCompanyEntity
 import com.bottotop.model.Comment
 import com.bottotop.model.Community
@@ -31,10 +32,10 @@ internal object CommunityMapper : Mapper<CommunityEntity, Community>() {
             comment = to.comment.map { CommentMapper.to(it) }
         )
     }
-
 }
 
 internal object CommentMapper : Mapper<CommentEntity, Comment>() {
+
     override fun from(from: CommentEntity): Comment {
         return Comment(
             id = from.id,
@@ -52,5 +53,30 @@ internal object CommentMapper : Mapper<CommentEntity, Comment>() {
             time = to.time
         )
     }
-
 }
+
+internal object LocalCommunityMapper : Mapper<LocalCommunityEntity, Community>() {
+
+    override fun from(from: LocalCommunityEntity): Community {
+        return Community(
+            id = from.id,
+            name = from.name,
+            content = from.content,
+            time = from.time,
+            idx =from.idx,
+            comment = from.comment
+        )
+    }
+
+    override fun to(to: Community): LocalCommunityEntity {
+        return LocalCommunityEntity(
+            id = to.id,
+            name = to.name,
+            content = to.content,
+            time = to.time,
+            idx = to.idx,
+            comment = to.comment
+        )
+    }
+}
+

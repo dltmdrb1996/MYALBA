@@ -1,6 +1,7 @@
 package com.bottotop.repository
 
 import com.bottotop.local.LocalDataSource
+import com.bottotop.local.entity.LocalCommunityEntity
 import com.bottotop.local.entity.NotificationEntity
 import com.bottotop.model.*
 import com.bottotop.model.query.*
@@ -8,9 +9,11 @@ import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.wrapper.APIResult
 import com.bottotop.remote.ApiService
+import com.bottotop.repository.mapper.*
 import com.bottotop.repository.mapper.CommunityMapper
 import com.bottotop.repository.mapper.CompanyEntityMapper
 import com.bottotop.repository.mapper.CompanyMapper
+import com.bottotop.repository.mapper.LocalCommunityMapper
 import com.bottotop.repository.mapper.NotificationMapper
 import com.bottotop.repository.mapper.ScheduleMapper
 import com.bottotop.repository.mapper.UserEntityMapper
@@ -72,6 +75,26 @@ internal class DataRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun refreshCommunity(com_id : String): APIResult {
+        return try {
+            val response = apiService.getCommunity(com_id)
+            when {
+                response.code() == 200 -> {
+                    val community = response.body()?.community?.map { CommunityMapper.from(it) }
+                    community?.forEach {
+                        val local = LocalCommunityMapper.to(it)
+                        localDataSource.insertCommunity(local)
+                    }
+                    APIResult.Success
+                }
+                else -> handleError(response.code() , "refreshCommunity")
+            }
+        } catch (e: Throwable) {
+            Timber.e("setSchedule: $e")
+            APIResult.Error(APIError.Error(e))
+        }
+    }
+
     // GET //
     ////////////////////////////////////////////////////////////////
     override suspend fun getUser(id: String): User {
@@ -128,30 +151,6 @@ internal class DataRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCommunity(com_id: String): Result<List<Community>> {
-        try {
-            val response = apiService.getCommunity(com_id)
-            return when (response.code()) {
-                200 -> {
-                    val entity = response.body()!!
-                    val schedule = entity.community.map { CommunityMapper.from(it) }
-                    Result.success(schedule)
-                }
-                404 -> {
-                    Timber.e("getSchedule: 404에러")
-                    Result.failure(Throwable("찾는 데이터가 없습니다."))
-                }
-                else -> {
-                    Timber.e("getSchedule: 서버에러")
-                    Result.failure(Throwable("서버에러"))
-                }
-            }
-        } catch (e: Throwable) {
-            Timber.e("getSchedule: 에러발생 ${e.message}")
-            return Result.failure(e)
-        }
-    }
-
     override suspend fun getScheduleAll(com_id_id: Map<String, String>): Result<List<Schedule>> {
         try {
             val json = Json.encodeToString(com_id_id)
@@ -177,29 +176,8 @@ internal class DataRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCommunityDetail(com_id_idx: Map<String, String>): Result<Community> {
-        try {
-            val json = Json.encodeToString(com_id_idx)
-            val response = apiService.getCommunityDetail(json)
-            return when (response.code()) {
-                200 -> {
-                    val entity = response.body()!!
-                    val schedule = CommunityMapper.from(entity)
-                    return Result.success(schedule)
-                }
-                404 -> {
-                    Timber.e("getCommunityDetail: 404에러")
-                    Result.failure(Throwable("찾는 데이터가 없습니다."))
-                }
-                else -> {
-                    Timber.e("getCommunityDetail: 서버에러")
-                    Result.failure(Throwable("서버에러"))
-                }
-            }
-        } catch (e: Throwable) {
-            Timber.e("getCommunityDetail: $e")
-            return Result.failure(e)
-        }
+    override suspend fun getCommunity(): Result<List<Community>> {
+        return Result.success(localDataSource.getCommunity().map { LocalCommunityMapper.from(it) } )
     }
 
     override suspend fun getCompanies(): List<Company> {

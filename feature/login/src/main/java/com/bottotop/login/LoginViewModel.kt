@@ -11,6 +11,7 @@ import com.bottotop.core.global.PreferenceHelper.set
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.model.LoginState
 import com.bottotop.model.User
+import com.bottotop.model.query.SetCommunityQuery
 import com.bottotop.model.repository.DataRepository
 import com.bottotop.model.repository.SocialLoginRepository
 import com.bottotop.model.wrapper.APIError
@@ -64,8 +65,11 @@ class LoginViewModel @Inject constructor(
 
                     APIResult.Success -> {
                         user = dataRepository.getUser(SocialInfo.id)
-                        if(user.company != "null") dataRepository.refreshCompanies(user.company).result(Throwable().stackTrace).let {
-                            if(it) _login.postValue(LoginState.Success)
+                        if(user.company != "null") {
+                            dataRepository.refreshCommunity(user.company).result(Throwable().stackTrace)
+                            dataRepository.refreshCompanies(user.company).result(Throwable().stackTrace).let {
+                                if(it) _login.postValue(LoginState.Success)
+                            }
                         }
                         else _login.postValue(LoginState.NoCompany)
                     }

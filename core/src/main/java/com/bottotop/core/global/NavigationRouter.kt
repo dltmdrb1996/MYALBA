@@ -3,6 +3,7 @@ package com.bottotop.core.global
 object NavigationRouter {
     var arg = "none"
     lateinit var currentState : NavigationTable
+    var homeInit = false
     fun saveState(destination : String){
         when(destination)
         {
@@ -10,7 +11,10 @@ object NavigationRouter {
             "login" -> currentState= NavigationTable.Login
             "member" -> currentState=NavigationTable.Member
             "community" -> currentState=NavigationTable.Community
-            "home" -> currentState=NavigationTable.Home
+            "home" -> {
+                homeInit = true
+                currentState=NavigationTable.Home
+            }
             "schedule" -> currentState=NavigationTable.Schedule
             "asset" -> currentState=NavigationTable.Asset
             "scheduleDetail" -> currentState=NavigationTable.ScheduleDetail

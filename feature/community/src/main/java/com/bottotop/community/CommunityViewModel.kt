@@ -28,8 +28,11 @@ class CommunityViewModel @Inject constructor(
     private val _communityList = MutableLiveData<List<Community>>()
     val communityList: LiveData<List<Community>> = _communityList
 
-    private val _success by lazy { MutableLiveData<Event<Boolean>>() }
-    val success: LiveData<Event<Boolean>> by lazy { _success }
+    private val _success by lazy { MutableLiveData<Event<Community>>() }
+    val success: LiveData<Event<Community>> by lazy { _success }
+
+    private val _failure by lazy { MutableLiveData<Event<Boolean>>() }
+    val failure: LiveData<Event<Boolean>> by lazy { _failure }
 
     private val _bottomLoading = MutableLiveData<Boolean>()
     val bottomLoading : LiveData<Boolean> = _bottomLoading
@@ -38,19 +41,20 @@ class CommunityViewModel @Inject constructor(
     val content = MutableLiveData<String>()
 
 
+
     private lateinit var user: User
 
     init {
-        initCommunity()
-
+        viewModelScope.launch(dispatcherProvider.io) {
+            user = dataRepository.getUser(SocialInfo.id)
+        }
     }
 
-    private fun initCommunity() {
+    fun initCommunity() {
         viewModelScope.launch(dispatcherProvider.io){
+            handleLoading(true)
             try {
-                handleLoading(true)
-                user = dataRepository.getUser(SocialInfo.id)
-                val getCommunity = dataRepository.getCommunity(user.company)
+                val getCommunity = dataRepository.getCommunity()
                 if(getCommunity.isSuccess) _communityList.postValue(getCommunity.getOrNull()?.reversed())
             } catch (e: Throwable) {
                 showToast("데이터를 불러오는데 실패했습니다.")
@@ -70,12 +74,14 @@ class CommunityViewModel @Inject constructor(
 
             if(setCommunity){
                 content.postValue("")
-                val getCommunity = dataRepository.getCommunity(user.company)
-                if(getCommunity.isSuccess) {
-                    _communityList.postValue(getCommunity.getOrNull()?.reversed())
-                    _success.postValue(Event(true))
+                val refresh = dataRepository.refreshCommunity(user.company).result(Throwable().stackTrace)
+                val community = dataRepository.getCommunity()
+                if(refresh && community.isSuccess) {
+                    _communityList.postValue(community.getOrNull()?.reversed())
+                    _success.postValue(Event(community.getOrNull()?.last()!!))
+                } else {
+                    _failure.postValue(Event(true))
                 }
-                else Timber.e("makeCommunity: getCommunity")
             }
             _bottomLoading.postValue(false)
         }

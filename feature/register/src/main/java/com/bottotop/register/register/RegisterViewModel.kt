@@ -8,6 +8,7 @@ import com.bottotop.core.di.DispatcherProvider
 import com.bottotop.core.global.SocialInfo
 import com.bottotop.core.model.Event
 import com.bottotop.core.util.DateTime
+import com.bottotop.model.query.SetCommunityQuery
 import com.bottotop.model.query.SetCompanyQuery
 import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.query.UpdateUserQuery
@@ -50,6 +51,7 @@ class RegisterViewModel @Inject constructor(
             handleLoading(true)
             val refreshCompanies1 = dataRepository.refreshCompanies(code.value!!).result(Throwable().stackTrace)
             if (refreshCompanies1) {
+                dataRepository.refreshCommunity(code.value!!).result(Throwable().stackTrace)
                 val companies = dataRepository.getCompanies()
                 val company = companies[0]
                 if(!updateUserCompany(code.value!!)) return@launch
@@ -63,7 +65,8 @@ class RegisterViewModel @Inject constructor(
                         dataRepository.setSchedule(SetScheduleQuery(SocialInfo.id , DateTime().getYearMonth() , com_id))
                         firebaseMessaging(com_id)
                         val refreshCompanies1_2 = dataRepository.refreshCompanies(code.value!!).result(Throwable().stackTrace)
-                        if(refreshCompanies1_2){
+                        val refreshCommunity = dataRepository.refreshCommunity(code.value!!).result(Throwable().stackTrace)
+                        if(refreshCompanies1_2 && refreshCommunity){
                             handleLoading(false)
                             _albaComplete.postValue(Event(true))
                         }

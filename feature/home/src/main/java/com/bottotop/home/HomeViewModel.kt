@@ -99,7 +99,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun initFirst() {
-        val getCommunity = dataRepository.getCommunity(user.company)
+        val getCommunity = dataRepository.getCommunity()
         _companyName.postValue(company.com_id)
         if (getCommunity.isSuccess && getCommunity.getOrNull()?.isNotEmpty()!!) {
             _community.postValue(getCommunity.getOrNull()!!.last())

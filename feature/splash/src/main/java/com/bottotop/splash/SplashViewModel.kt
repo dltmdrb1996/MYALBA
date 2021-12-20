@@ -18,6 +18,7 @@ import com.bottotop.core.model.LoginState
 import com.bottotop.core.util.DateTime
 import com.bottotop.model.wrapper.APIError
 import com.bottotop.model.User
+import com.bottotop.model.query.SetCommunityQuery
 import com.bottotop.model.query.SetScheduleQuery
 import com.bottotop.model.wrapper.APIResult
 import timber.log.Timber
@@ -80,6 +81,7 @@ class SplashViewModel @Inject constructor(
             if (user.company == "null") _login.postValue(LoginState.NoCompany)
             else {
                 val refreshCompanies = dataRepository.refreshCompanies(user.company).result(Error().stackTrace)
+                dataRepository.refreshCommunity(user.company).result(Throwable().stackTrace)
                 dataRepository.setSchedule(SetScheduleQuery(id!!, timeUtil.getYearMonth(), user.company))
                 if (refreshCompanies) _login.postValue(LoginState.Success)
             }
@@ -96,6 +98,7 @@ class SplashViewModel @Inject constructor(
             if (user.company == "null") _login.postValue(LoginState.NoCompany)
             else {
                 val refreshCompanies = dataRepository.refreshCompanies(user.company).result(Error().stackTrace)
+                dataRepository.refreshCommunity(user.company).result(Throwable().stackTrace)
                 dataRepository.setSchedule(
                     SetScheduleQuery(
                         id!!,

@@ -41,7 +41,6 @@ class NotificationViewModel @Inject constructor(
 
     init {
         loadNotification()
-        Timber.e("${id}")
         mPref.set("badge", 0)
     }
 
@@ -60,9 +59,7 @@ class NotificationViewModel @Inject constructor(
         }
     }
 
-    override fun onCleared() {
-        Timber.e("test")
-    }
+
 
 
 }

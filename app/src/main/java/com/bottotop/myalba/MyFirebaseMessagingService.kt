@@ -16,12 +16,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.bottotop.core.global.PreferenceHelper
+import com.bottotop.core.global.*
 import com.bottotop.core.global.PreferenceHelper.get
 import com.bottotop.core.global.PreferenceHelper.set
-import com.bottotop.core.global.SharedViewModel
 import com.bottotop.model.Notification
 import com.bottotop.model.repository.DataRepository
+import com.bottotop.model.wrapper.APIError
+import com.bottotop.model.wrapper.APIResult
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +36,7 @@ import javax.inject.Inject
 class MyFirebaseMessagingService (): FirebaseMessagingService() {
     val job = SupervisorJob()
 
-    private var isAppInForeground = false
     lateinit var mPref : SharedPreferences
-
     @Inject lateinit var dataRepository: DataRepository
     override fun onCreate() {
         super.onCreate()
@@ -66,19 +65,32 @@ class MyFirebaseMessagingService (): FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        when(remoteMessage.from?.split('/')?.last()){
+            "update" -> "업데이트FCM // 아직 미구현"
+            "notice" -> "공지FCM // 아직 미구현"
+            else -> fcmCommunity(remoteMessage)
+            }
+    }
+
+    private fun fcmCommunity(remoteMessage: RemoteMessage){
+
         val title = setTitle(remoteMessage.from!!)
         val content = remoteMessage.data["body"]!!
         val time = remoteMessage.sentTime
         val badge : Int = mPref["badge" , 0]
         mPref["badge"] = badge+1
+
         CoroutineScope(job).launch {
             val notification = Notification(title,time,content)
             dataRepository.insertNotification(notification)
-        }
 
-        if (remoteMessage.data.isNotEmpty() && !isForegrounded() ) {
-            sendNotification(title , content)
+            if(isForegrounded() && NavigationRouter.homeInit) {
+                val user = dataRepository.getUser(SocialInfo.id)
+                dataRepository.refreshCommunity(user.company)
+            }
+
         }
+        if (remoteMessage.data.isNotEmpty() && !isForegrounded()) sendNotification(title , content)
     }
 
     override fun onNewToken(token: String) {

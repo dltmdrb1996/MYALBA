@@ -1,5 +1,6 @@
 package com.bottotop.local
 
+import com.bottotop.local.entity.LocalCommunityEntity
 import com.bottotop.local.entity.LocalCompanyEntity
 import com.bottotop.local.entity.LocalUserEntity
 import com.bottotop.local.entity.NotificationEntity
@@ -23,6 +24,9 @@ interface LocalDataSource {
     suspend fun deleteDaySchedule()
     suspend fun insertDaySchedule(day : String , time : String)
     suspend fun getDaySchedule() : DaySchedule
+
+    suspend fun getCommunity() : List<LocalCommunityEntity>
+    suspend fun insertCommunity(localCommunityEntity: LocalCommunityEntity)
 
     suspend fun nukeAll()
 }
