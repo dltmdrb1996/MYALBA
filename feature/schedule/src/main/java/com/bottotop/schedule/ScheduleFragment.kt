@@ -72,26 +72,18 @@ class ScheduleFragment :
 
     private fun initViewPager(schedule: Map<Int, List<List<String>>>?) {
         _binding?.apply {
-
             val list = listOf<ViewPager2>(viewPager1, viewPager2, viewPager3, viewPager4, viewPager5)
-
             list.forEachIndexed { index, viewPager ->
-
                 val adapter: Schedule7DayAdapter by lazy { Schedule7DayAdapter(
                     this@ScheduleFragment.viewModel,
                     schedule?.get(index)!!,
                     this@ScheduleFragment.viewModel.scheduleItem.value!!
                 ) }
-
                 viewPager.adapter = adapter
-
-
                 val width = getScreenWidth(requireActivity())
                 val paddingToSet = width / 3
-
                 viewPager.setShowSideItems(0, paddingToSet)
                 setLocationViewPager(viewPager, schedule?.get(index))
-
             }
         }
     }
@@ -132,7 +124,7 @@ class ScheduleFragment :
                 viewPager.setCurrentItem(97 + focus!!, false)
                 viewPager.requestFocus(View.FOCUS_LEFT)
                 viewPager.waitForMeasure { view, width, height, x, y ->
-                    _binding?.scheduleScroll?.scrollTo(0, y.toInt() + 500)
+                    _binding?.scheduleScroll?.scrollTo(0, y.toInt()+(height*2))
                 }
                 return
             }
