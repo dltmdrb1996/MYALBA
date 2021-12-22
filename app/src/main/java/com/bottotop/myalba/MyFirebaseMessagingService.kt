@@ -66,8 +66,8 @@ class MyFirebaseMessagingService (): FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         when(remoteMessage.from?.split('/')?.last()){
-            "update" -> "업데이트FCM // 아직 미구현"
-            "notice" -> "공지FCM // 아직 미구현"
+            "update" -> fcmUpdate()
+            "notice" -> fcmNotice()
             else -> fcmCommunity(remoteMessage)
             }
     }
@@ -93,6 +93,13 @@ class MyFirebaseMessagingService (): FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty() && !isForegrounded()) sendNotification(title , content)
     }
 
+    private fun fcmUpdate(){
+
+    }
+
+    private fun fcmNotice(){
+
+    }
     override fun onNewToken(token: String) {
         Timber.e("Refreshed token: $token")
         sendRegistrationToServer(token)
